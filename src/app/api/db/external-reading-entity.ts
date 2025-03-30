@@ -1,8 +1,9 @@
 export type ExternalReading = {
     _id: string,
-    current: number,
     datetime: Date,
+    current: number,
     temperature: number,
+    light: number,
     voltage: number,
     wattage: number
 };
