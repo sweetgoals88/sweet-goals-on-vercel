@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
 
 import { JwtApiPayload, signJwt } from "@/app/api/lib/jwt";
-import { getPrototypeByKey } from "../db/prototype-entity";
-import { makeErrorResponse } from "../lib/make-error-response";
+import { getPrototypeByKey } from "../../db/prototype-entity";
+import { makeErrorResponse } from "../../lib/make-error-response";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();

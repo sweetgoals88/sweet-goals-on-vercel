@@ -23,4 +23,5 @@ export class FirebaseConfiguration {
     static INTERNAL_READING = FirebaseConfiguration.getCollection("InternalReading");
     static EXTERNAL_READING = FirebaseConfiguration.getCollection("ExternalReading");
     static VERSION = FirebaseConfiguration.getCollection("Version");
+    static USER = FirebaseConfiguration.getCollection("User");
 };
