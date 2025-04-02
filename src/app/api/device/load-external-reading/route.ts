@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { addDoc, arrayUnion, DocumentData, getDoc, Timestamp, updateDoc, where } from "firebase/firestore";
 import { authenticateDevice } from "../../lib/authenticate-device";
-import { ExternalReading } from "../../db/external-reading-entity";
+import { ExternalReadingEntity } from "../../db/entities/external-reading-entity";
 
 export async function POST(request: NextRequest) {
     return await authenticateDevice(request)
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
             const { number_of_panels, peak_voltage, temperature_rate } = prototypeData.device_specifications;
             const voltage = peak_voltage * (light / 120) / 1000 - temperature * temperature_rate;
 
-            const finalPayload: ExternalReading = {
+            const finalPayload: ExternalReadingEntity = {
                 datetime,
                 light,
                 temperature,

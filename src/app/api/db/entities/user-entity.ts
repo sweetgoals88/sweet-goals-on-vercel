@@ -1,9 +1,9 @@
 import { addDoc, arrayUnion, getDocsFromServer, query, updateDoc, where } from "firebase/firestore";
 import { PanelSpecifications, PrototypeEntity } from "./prototype-entity";
-import { FirebaseConfiguration } from "./firebase-configuration";
-import { ApiResponseError } from "../lib/api-response-error";
-import { parseEntity } from "./parse-entity";
-import { encryptString } from "../lib/encryption";
+import { FirebaseConfiguration } from "../firebase-configuration";
+import { ApiResponseError } from "../../lib/api-response-error";
+import { parseEntity } from "../parse-entity";
+import { encryptString } from "../../lib/encryption";
 import crypto from "crypto";
 
 export type CustomerLabel = "customer";
@@ -36,7 +36,7 @@ export type CustomerRegistrationInput = _UserRegistrationInput & {
 
 export type UserRegistrationInput = AdminRegistrationInput | CustomerRegistrationInput;
 
-export type UserControlData = {
+export type _UserEntity = {
     _id?: string,
     name: string,
     surname: string,
@@ -44,12 +44,12 @@ export type UserControlData = {
     encrypted_password: string,
 };
 
-export type CustomerEntity = UserControlData & {
+export type CustomerEntity = _UserEntity & {
     type: CustomerLabel,
     prototypes: string[]
 };
 
-export type AdminEntity = UserControlData & {
+export type AdminEntity = _UserEntity & {
     type: AdminLabel,
     admin_code: string,
     invited_admins: string[],
@@ -71,7 +71,7 @@ export async function getUnactivePrototype(activationCode: string) {
     
         const device = parseEntity<PrototypeEntity>(prototypes.docs[0]);
         if (device.active) {
-            throw new ApiResponseError(`The activation code provided as already been used (${activationCode})`, 400);
+            throw new ApiResponseError(`The activation code provided has already been used (${activationCode})`, 400);
         }
     
         return prototypes.docs[0].ref;

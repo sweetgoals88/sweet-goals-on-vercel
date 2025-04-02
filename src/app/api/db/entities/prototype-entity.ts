@@ -1,7 +1,7 @@
 import { getDocsFromServer, query, where, GeoPoint } from "firebase/firestore";
-import { FirebaseConfiguration } from "./firebase-configuration";
-import { parseEntity } from "./parse-entity";
-import { ApiResponseError } from "../lib/api-response-error";
+import { FirebaseConfiguration } from "../firebase-configuration";
+import { parseEntity } from "../parse-entity";
+import { ApiResponseError } from "../../lib/api-response-error";
 
 export type PanelSpecifications = {
   number_of_panels: number,
