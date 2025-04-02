@@ -1,6 +1,7 @@
 import { Timestamp } from "firebase/firestore";
+import { PanelSpecifications } from "./prototype-entity";
 
-export type ExternalReading = {
+export type ExternalReadingEntity = {
     _id?: string,
     datetime: Timestamp,
     light: number,
@@ -8,9 +9,5 @@ export type ExternalReading = {
     current: number,
     voltage: number,
     wattage: number,
-    panel_specifications: {
-        number_of_panels: number,
-        peak_voltage: number,
-        temperature_rate: number
-    }
+    panel_specifications: PanelSpecifications
 };
