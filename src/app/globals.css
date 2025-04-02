@@ -1,26 +1,642 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('/images/cards-background.jpg'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  font-family: 'Montserrat', sans-serif;
+  position: relative; /* Para contener el pseudo-elemento */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.h222{
+  font-size: 2.5em;
+  color: #fff;
+  text-align: center;
+  margin: 6%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra del texto */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 14, 51, 0.5); /* Opacidad negra */
+  backdrop-filter: blur(5px); /* Borrosidad */
+  z-index: -1; /* Asegurar que esté detrás del contenido */
+}
+
+.container {
+  font-family: 'Montserrat', Arial, sans-serif; /* Aplicar la fuente Montserrat */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.header {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  color: #34556D;
+  padding-left: 20px;
+}
+
+.header .logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.header .logo-title img {
+  margin-right: 10px;
+  height: 50px; /* Ajustar el tamaño del logo */
+}
+
+
+
+nav {
+  margin-left: auto;
+}
+
+nav ul {
+  list-style: none;
+  margin-bottom: 0;
+  display: flex;
+  gap: 10px;
+  margin: 20px; /* Aumentar margen superior */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.3em; /* Aumentar el tamaño de la letra */
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  margin-top: 80px;
+}
+
+.intro-image {
+  width: 50%;
+  height: auto;
+}
+
+.intro-text {
+  padding: 20px;
+}
+
+.card {
+  width: 80%; /* Aumentar el ancho */
+  background: linear-gradient(to left, #f7faf77a, #ffffff77);
+  color: #4A4A4A;
+  border: 4px solid #ffffff; /* Cambiar el borde a 4px */
+  display: flex; /* Cambiar a flexbox */
+  justify-content: space-between; /* Espacio entre columnas */
+  padding: 16px;
+  gap: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto 20px; /* Centrar horizontalmente y añadir margen inferior */
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: fadeInUpScale 1s forwards; /* Añadir animación */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Añadir transición */
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02); /* Efecto hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+.card-title {
+  font-size: 1.5em; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffffff; /* Cambiar color del título */
+  text-transform: uppercase; /* Transformar texto a mayúsculas */
+  letter-spacing: 1.5px; /* Espaciado entre letras */
+}
+
+.card-content {
+  flex: 1; /* Asegurar que el contenido ocupe el espacio disponible */
+  font-size: 1.1em; /* Aumentar tamaño de la fuente */
+  line-height: 1.6; /* Mejorar la legibilidad */
+  color: #333; /* Cambiar color del texto */
+  text-align: justify; /* Justificar el texto */
+}
+
+.intro-image {
+  flex: 1; /* Asegurar que la imagen ocupe el espacio disponible */
+  max-width: 50%; /* Limitar el ancho máximo de la imagen */
+  height: auto;
+  border-radius: 10px; /* Añadir bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añadir sombra */
+  transition: transform 0.3s ease; /* Añadir transición */
+}
+
+.intro-image:hover {
+  transform: scale(1.05); /* Efecto hover */
+}
+
+
+.footer {
+    position: relative;
+    width: 100%;
+    background: #34556D;
+    min-height: 100px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 0;
+    margin-top: 150px;
+}
+
+footer .social_icon,
+footer .menu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+footer .social_icon li,
+footer .menu li {
+    list-style: none;
+}
+
+footer .social_icon li a {
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+
+footer .social_icon li a:hover {
+    transform: translateY(-10px);
+}
+
+footer .menu li a {
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+    text-decoration: none;
+    opacity: 0.50;
+}
+
+footer .menu li a:hover {
+    opacity: 1;
+}
+
+footer p {
+    color: #fff;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+footer .wave {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('/images/wave.png');
+    background-size: 1000px 100px;
+}
+
+footer .wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateWave 4s linear infinite;
+}
+
+footer .wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animateWave_02 4s linear infinite;
+}
+
+footer .wave#wave3 {
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 15px;
+    animation: animateWave 3s linear infinite;
+}
+
+footer .wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animateWave_02 3s linear infinite;
+}
+
+@keyframes animateWave {
+    0% {
+        background-position-x: 1000px;
+    }
+    100% {
+        background-position-x: 0px;
+    }
+}
+
+@keyframes animateWave_02 {
+    0% {
+        background-position-x: 0px;
+    }
+    100% {
+        background-position-x: 1000px;
+    }
+}
+
+.carousel {
+  width: 100%;
+  height: 700px; /* Ajustar el tamaño del carrusel */
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto; /* Centrar horizontalmente el carrusel */
+  background-color: black; /* Añadir fondo negro */
+}
+
+.carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  animation: slide 10s infinite; /* Añadir animación automática */
+}
+
+.carousel-image {
+  min-width: 100%;
+  height: 700px;
+  min-height: 100%; /* Ajustar la altura de la imagen al tamaño del carrusel */
+  object-fit: cover; /* Asegurar que la imagen cubra todo el área del carrusel */
+  object-position: center; /* Centrar la imagen */
+}
+
+.carousel-buttons {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+
+.carousel-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+}
+
+.carousel-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.carousel-indicator.active {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+@keyframes slide {
+  0% { transform: translateX(0); }
+  33.33% { transform: translateX(0); }
+  38.33% { transform: translateX(-100%); }
+  71.66% { transform: translateX(-100%); }
+  76.66% { transform: translateX(-200%); }
+  100% { transform: translateX(-200%); }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 700px; /* Ajustar el tamaño al alto del carrusel */
+  background-color: rgba(0, 0, 0, 0.381); /* Fondo negro con opacidad */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+  z-index: 1; /* Asegurar que esté encima del carrusel */
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fadeInUpScale {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(10px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+button {
+  padding: 1.3em 3em;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #2D404E;
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background-color: #2D404E;
+  box-shadow: 0px 15px 20px rgba(26, 95, 133, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 120px;
+  margin: 40px 0;
+  padding: 20px;
+  background-color: transparent; /* Quitar el fondo rojo */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+.card-small {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: #f2f2f2;
+  border-radius: 10px; /* Bordes con forma de cápsula */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1000px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+  transition: all 0.4s ease-in-out; /* Transición más fluida */
+}
+
+.card-small:hover {
+  transform: scale(1.08); /* Efecto hover más sutil */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+}
+
+.card-small-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+  border-radius: 10px; /* Coincidir con los bordes de la tarjeta */
+  transform: rotateX(-90deg);
+  transform-origin: bottom;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-small:hover .card-small-content {
+  transform: rotateX(0deg);
+}
+
+.card-small svg {
+  width: 48px;
+  fill: #333;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-small:hover svg {
+  scale: 0;
+}
+
+.card-small-title {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 700;
+}
+
+.card-small-description {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #777;
+  line-height: 1.4;
+  text-align: justify; /* Justificar el texto */
+}
+
+.card-small-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px; /* Bordes redondeados para la imagen */
+}
+
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  padding: 20px;
+  background: linear-gradient(to right, #f7faf7, #ffffff);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.upload-section h2 {
+  font-size: 1.8em;
+  color: #016630;
+  margin-bottom: 20px;
+}
+
+.upload-section p {
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.upload-section input[type="file"] {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1em;
+}
+
+.upload-section button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #016630;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-section button:hover {
+  background-color: #014d24;
+}
+
+.photo-gallery {
+  background-color: transparent; /* Quitar el fondo gris */
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.photo-gallery img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photo-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.photo-gallery + section {
+  background-color: #E5E4EC; /* Restaurar el fondo gris */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.gray-card {
+  background-color: #fff; /* Fondo gris */
+  padding: 20px;
+  margin: 20px auto;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+}
+
+.gray-card h2 {
+  font-size: 1.8em;
+  color: #016630;
+  margin-bottom: 10px;
+}
+
+.gray-card p {
+  font-size: 1.1em;
+  color: #333;
+  line-height: 1.6;
+}
+
+.promo-banner {
+  position: absolute;
+  top: 640px; /* Posición ajustada */
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #36df7c, #016630);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  animation: bounce 2s infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999; /* Asegurar que esté al frente */
+}
+
+.promo-banner p {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.promo-banner button {
+  padding: 5px 15px;
+  font-size: 1em;
+  width: 35%;
+  color: #016630;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.promo-banner button:hover {
+  background-color: #f0f0f0;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -10px);
+  }
 }
