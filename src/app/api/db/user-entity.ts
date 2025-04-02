@@ -145,6 +145,8 @@ export async function signupAdmin(input: AdminRegistrationInput) {
         // validate admin stuff
         const authorizingAdmin = await validateAuthorizingAdmin(input.adminEmail, input.adminCode);
         await validateUniqueEmail(input.email);
+
+        console.log("Hello world!");
     
         const encryptedPassword = await encryptString(input.password);
     
