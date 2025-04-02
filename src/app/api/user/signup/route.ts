@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { makeErrorResponse } from "../../lib/make-error-response";
-import { UserRegistrationInput, _UserRegistrationInput, signupAdmin, signupCustomer } from "../../db/user-entity";
+import { UserRegistrationInput, _UserRegistrationInput, signupAdmin, signupCustomer } from "../../db/entities/user-entity";
 
 export async function POST(request: NextRequest) {
     try {
@@ -19,3 +19,7 @@ export async function POST(request: NextRequest) {
         return makeErrorResponse("Couldn't sign the user up", 500, error);
     }
 }
+
+// What do I want to do? Give the user a token that contains
+// the user id and the type of permissions; the token should
+// last 1d
