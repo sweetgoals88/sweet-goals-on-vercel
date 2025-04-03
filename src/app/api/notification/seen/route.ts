@@ -1,0 +1,1 @@
+// Gets all seen notifications for a user (either admin or customer)

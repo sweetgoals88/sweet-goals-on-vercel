@@ -1,4 +1,4 @@
-import { getPrototypeByKey } from "../db/prototype-entity";
+import { getPrototypeByKey } from "../db/entities/prototype-entity";
 import { ApiResponseError } from "./api-response-error";
 
 export async function authenticateDevice(request: Request) {

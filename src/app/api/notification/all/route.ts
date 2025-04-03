@@ -1,0 +1,1 @@
+// Gets all notifications of a user (either admin or customer)

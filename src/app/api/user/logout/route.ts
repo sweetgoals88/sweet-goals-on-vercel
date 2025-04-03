@@ -1,0 +1,1 @@
+// Deletes the user token from the cookies of the request

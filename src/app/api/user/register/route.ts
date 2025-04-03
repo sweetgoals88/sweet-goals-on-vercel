@@ -4,7 +4,6 @@ import { UserRegistrationInput, _UserRegistrationInput, signupAdmin, signupCusto
 
 export async function POST(request: NextRequest) {
     try {
-        console.log("Customer signup is being called");
         const input = await request.json() as UserRegistrationInput;
         // validate email, password, etc.
 

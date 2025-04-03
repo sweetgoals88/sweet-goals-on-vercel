@@ -1,0 +1,1 @@
+// Deletes a user's notification (either admin or customer)

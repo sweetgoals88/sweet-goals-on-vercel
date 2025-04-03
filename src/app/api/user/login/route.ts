@@ -3,6 +3,7 @@ import { FirebaseConfiguration } from "../../db/firebase-configuration";
 import { query, where, getDocsFromServer } from "firebase/firestore";
 import { signJwt } from "@/app/api/lib/jwt";
 import { makeErrorResponse } from "../../lib/make-error-response";
+import { validateString } from "../../lib/encryption";
 
 export async function POST(request: NextRequest) {
     try {
@@ -10,30 +11,27 @@ export async function POST(request: NextRequest) {
         const { email, password } = body;
 
         if (!email || !password) {
-            return new Response(JSON.stringify({ error: "Email and password are required" }), { status: 400 });
+            return makeErrorResponse("Email and password are required", 400);
         }
 
-        // 🔹 Buscar usuario en Firestore
         const userQuery = query(FirebaseConfiguration.USER, where("email", "==", email));
         const users = await getDocsFromServer(userQuery);
 
         if (users.empty) {
-            return new Response(JSON.stringify({ error: "Invalid email or password" }), { status: 401 });
+            return makeErrorResponse("Invalid email or password", 401);
         }
-
+        
         const userData = users.docs[0].data();
-
-        // 🔹 Validar contraseña (aquí falta la lógica para desencriptarla si está cifrada)
-        if (userData.encrypted_password !== password) {
-            return new Response(JSON.stringify({ error: "Invalid email or password" }), { status: 401 });
+        
+        if (!(await validateString(password, userData.encrypted_password))) {
+            return makeErrorResponse("Invalid email or password", 401);
         }
 
-        // 🔹 Generar JWT
-        const token = signJwt({ uid: users.docs[0].id, email }, { expiresIn: "1h" });
+        const token = signJwt({ _id: users.docs[0].id, email }, { expiresIn: "1d" });
 
-        return new Response(JSON.stringify({ token }), { status: 200 });
+        return Response.json({ token }, { status: 200 });
 
     } catch (error: any) {
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+        return makeErrorResponse("Couldn't log the user in", 500, error);
     }
 }

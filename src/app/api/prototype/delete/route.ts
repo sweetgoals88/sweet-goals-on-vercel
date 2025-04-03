@@ -1,0 +1,1 @@
+// Delete the prototype with the id given. Only for customers (not admins)

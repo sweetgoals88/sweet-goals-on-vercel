@@ -27,6 +27,13 @@ export type PrototypeEntity = {
     panel_specifications: PanelSpecifications
 };
 
+/**
+ * Gets a valid prototype from the database. In other words, 
+ * it gets the prototye with the key passed as long as it is
+ * active.
+ * @param prototypeKey The key of the device to find
+ * @returns The device whose API key matches the one passed
+ */
 export async function getPrototypeByKey(prototypeKey: string) {
     const results = query(FirebaseConfiguration.PROTOTYPE, where("key", "==", prototypeKey));
     const resultsArray = await getDocsFromServer(results);

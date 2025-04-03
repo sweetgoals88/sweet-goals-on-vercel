@@ -1,0 +1,1 @@
+// Gets all unseen notifications for a user (either admin or customer)
