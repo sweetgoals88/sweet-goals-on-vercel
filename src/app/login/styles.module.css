@@ -1,0 +1,133 @@
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    margin: 40px;
+
+}
+
+.content {
+    display: flex;
+    width: 80%;
+    max-width: 1000px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.leftPanel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #ffffff;
+    
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #081c24;
+}
+
+.subtitle {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 1px;
+    text-align: center;
+    
+}
+
+.rightPanel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    margin: 20px;
+    
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.formContainer {
+    width: 100%;
+    max-width: 300px;
+    
+}
+
+.formContainer label {
+    font-size: 19px;
+    font-weight: bold;
+    color: #000000;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.formContainer input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    font-size: 1rem;
+}
+
+.formContainer .loginLink {
+    font-size: 14px;
+    color: #3EC577;
+    text-align: center;
+    margin-top: 30px;
+    text-decoration: none;
+}
+
+.formContainer .loginLink:hover {
+    text-decoration: underline;
+    color: #218838;
+}
+
+.formContainer .loginButton {
+    width: 70%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #3EC577;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 20%;
+}
+
+.formContainer .loginButton:hover {
+    background-color: #218838;
+}
+
+.welcomeText{
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 1px;
+    text-align: center;
+}
+
+.welcomeTitle{
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 1px;
+    text-align: center;
+}

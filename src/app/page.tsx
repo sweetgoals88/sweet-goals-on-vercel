@@ -50,8 +50,18 @@ const Page = () => {
                   <Button><BsFillInfoCircleFill /> Acerca de Nosotros</Button>
                 </Link>
               </li>
-              <li><Button><FaUserEdit /> Login</Button></li>
-              <li><Button><FaUserPlus /> Registro</Button></li>
+              <li>
+                <Link href="/login">
+                  <Button><BsFillInfoCircleFill />Login</Button>
+                </Link>
+              </li>
+              <li>
+                
+                <Link href="/register">
+                  <Button><BsFillInfoCircleFill />Register</Button>
+                </Link>
+
+              </li>
             </ul>
           </nav>
         </header>
