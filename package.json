@@ -12,7 +12,6 @@
     "bcrypt": "^5.1.1",
     "crypto": "^1.0.1",
     "firebase": "^11.5.0",
-    "jose": "^6.0.10",
     "jsonwebtoken": "^9.0.2",
     "next": "15.2.4",
     "react": "^19.0.0",
