@@ -17,12 +17,11 @@ export async function POST(request: NextRequest) {
             console.log(e);
             throw e;
         }
+      
         const { email, password } = body;
-
         if (!email || !password) {
             return makeErrorResponse("Email and password are required", 400);
         }
-
         const userQuery = query(FirebaseConfiguration.USER, where("email", "==", email));
         const users = await getDocsFromServer(userQuery);
 
