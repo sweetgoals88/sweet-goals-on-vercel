@@ -4,9 +4,6 @@ import { UserRegistrationInput, signupAdmin, signupCustomer } from "../../db/ent
 
 export async function POST(request: NextRequest) {
     try {
-        console.log("Customer signup is being called");
-
-        // Obtiene y valida la estructura de los datos recibidos
         const input = await request.json() as UserRegistrationInput;
 
         // Verifica que el tipo de usuario sea válido

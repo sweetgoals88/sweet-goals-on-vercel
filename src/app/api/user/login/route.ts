@@ -1,54 +1,64 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
 import { query, where, getDocsFromServer } from "firebase/firestore";
 import { signJwt } from "@/app/api/lib/jwt";
-import bcrypt from "bcryptjs"; 
+import { makeErrorResponse } from "../../lib/make-error-response";
+import { validateString } from "../../lib/encryption";
+import { parseEntity } from "../../db/parse-entity";
+import { UserEntity, UserJwtPayload } from "../../db/entities/user-entity";
+import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const { email, password } = body;
-
-        console.log("📩 Email recibido:", email);
-        console.log("🔑 Password recibido:", password);
-
-        if (!email || !password) {
-            console.log("❌ Falta email o contraseña");
-            return new Response(JSON.stringify({ error: "Email and password are required" }), { status: 400 });
+        let body;
+        try {
+            body = JSON.parse(await request.text());
+        } catch (e) {
+            console.log(e);
+            throw e;
         }
-        
-        // 🔹 Buscar usuario en Firestore
+      
+        const { email, password } = body;
+        if (!email || !password) {
+            return makeErrorResponse("Email and password are required", 400);
+        }
         const userQuery = query(FirebaseConfiguration.USER, where("email", "==", email));
         const users = await getDocsFromServer(userQuery);
 
         if (users.empty) {
-            console.log("❌ Usuario no encontrado en Firebase");
-            return new Response(JSON.stringify({ error: "Invalid email or password" }), { status: 401 });
+            return makeErrorResponse("Invalid email or password", 401);
+        }
+        
+        const userData = parseEntity<UserEntity>(users.docs[0]);
+        
+        if (!(await validateString(password, userData.encrypted_password))) {
+            return makeErrorResponse("Invalid email or password", 401);
         }
 
-        const userData = users.docs[0].data();
-        const userId = users.docs[0].id;
+        const token = await signJwt<UserJwtPayload>(
+            { 
+                _id: userData._id as string, 
+                type: userData.type,
+                encrypted_password: userData.encrypted_password,
+            }, 
+            { expiresIn: "1d" }
+        );
 
-        console.log("✅ Usuario encontrado:", userData);
+        (await cookies()).set("token", token, {
+            httpOnly: true,                                 // Prevents JavaScript access (security)
+            secure: process.env.NODE_ENV === "production",  // Only HTTPS
+            path: "/",                                      // Cross-site availability
+            sameSite: "lax",                                // CSRF protection 
+        });
+        const response = NextResponse.json({ success: true });
 
-        // 🔹 Validar contraseña encriptada con bcrypt
-        const isPasswordValid = await bcrypt.compare(password, userData.encrypted_password);
-        console.log("🔍 Comparación de contraseña:", isPasswordValid);
+        response.headers.set("Access-Control-Allow-Credentials", "true");
+        response.headers.set("Access-Control-Allow-Origin", "*");
+        response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-        if (!isPasswordValid) {
-            console.log("❌ Contraseña incorrecta");
-            return new Response(JSON.stringify({ error: "Invalid email or password" }), { status: 401 });
-        }
-
-        // 🔹 Generar JWT con el rol
-        const token = signJwt({ uid: userId, email, role: userData.role }, { expiresIn: "1h" });
-
-        console.log("✅ Token generado correctamente");
-
-        return new Response(JSON.stringify({ token, user: { role: userData.role } }), { status: 200 });
-
+        return response;
     } catch (error: any) {
-        console.log("🔥 Error en la API:", error.message);
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+        return makeErrorResponse("Couldn't log the user in", 500, error);
     }
 }

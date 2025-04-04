@@ -2,11 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import './globals.css';
 import { IoHome } from "react-icons/io5";
-import { FaUserEdit } from "react-icons/fa";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { FaUserPlus } from "react-icons/fa";
 import Link from 'next/link';
-import Head from "next/head";
 
 const Button: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
