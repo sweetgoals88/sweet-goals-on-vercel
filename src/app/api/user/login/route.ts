@@ -1,39 +1,65 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
 import { query, where, getDocsFromServer } from "firebase/firestore";
 import { signJwt } from "@/app/api/lib/jwt";
 import { makeErrorResponse } from "../../lib/make-error-response";
+import { validateString } from "../../lib/encryption";
+import { parseEntity } from "../../db/parse-entity";
+import { UserEntity, UserJwtPayload } from "../../db/entities/user-entity";
+import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
+        let body;
+        try {
+            body = JSON.parse(await request.text());
+        } catch (e) {
+            console.log(e);
+            throw e;
+        }
         const { email, password } = body;
 
         if (!email || !password) {
-            return new Response(JSON.stringify({ error: "Email and password are required" }), { status: 400 });
+            return makeErrorResponse("Email and password are required", 400);
         }
 
-        // 🔹 Buscar usuario en Firestore
         const userQuery = query(FirebaseConfiguration.USER, where("email", "==", email));
         const users = await getDocsFromServer(userQuery);
 
         if (users.empty) {
-            return new Response(JSON.stringify({ error: "Invalid email or password" }), { status: 401 });
+            return makeErrorResponse("Invalid email or password", 401);
+        }
+        
+        const userData = parseEntity<UserEntity>(users.docs[0]);
+        
+        if (!(await validateString(password, userData.encrypted_password))) {
+            return makeErrorResponse("Invalid email or password", 401);
         }
 
-        const userData = users.docs[0].data();
+        const token = await signJwt<UserJwtPayload>(
+            { 
+                _id: userData._id as string, 
+                type: userData.type,
+                encrypted_password: userData.encrypted_password,
+            }, 
+            { expiresIn: "1d" }
+        );
 
-        // 🔹 Validar contraseña (aquí falta la lógica para desencriptarla si está cifrada)
-        if (userData.encrypted_password !== password) {
-            return new Response(JSON.stringify({ error: "Invalid email or password" }), { status: 401 });
-        }
+        (await cookies()).set("token", token, {
+            httpOnly: true,                                 // Prevents JavaScript access (security)
+            secure: process.env.NODE_ENV === "production",  // Only HTTPS
+            path: "/",                                      // Cross-site availability
+            sameSite: "lax",                                // CSRF protection 
+        });
+        const response = NextResponse.json({ success: true });
 
-        // 🔹 Generar JWT
-        const token = signJwt({ uid: users.docs[0].id, email }, { expiresIn: "1h" });
+        response.headers.set("Access-Control-Allow-Credentials", "true");
+        response.headers.set("Access-Control-Allow-Origin", "*");
+        response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-        return new Response(JSON.stringify({ token }), { status: 200 });
-
+        return response;
     } catch (error: any) {
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+        return makeErrorResponse("Couldn't log the user in", 500, error);
     }
 }

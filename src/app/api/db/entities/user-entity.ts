@@ -168,3 +168,9 @@ export async function signupAdmin(input: AdminRegistrationInput) {
         throw ApiResponseError.aggregateWith("Admin signup wasn't possible", error, 500);
     }
 }
+
+export type UserJwtPayload = {
+    _id: string,
+    type: string,
+    encrypted_password: string,
+};
