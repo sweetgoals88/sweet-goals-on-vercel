@@ -12,9 +12,9 @@ export default function AuthPage() {
 
     const login = async ({ username, password }: { username: string; password: string }) => {
         try {
-            const response = await fetch("/api/user/login", {
+                const response = await fetch(`${process.env.API_ENDPOINT}/user/login`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "text/plain" },
                 body: JSON.stringify({ email: username, password }),
             });
 

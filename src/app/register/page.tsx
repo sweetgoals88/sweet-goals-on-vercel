@@ -57,7 +57,7 @@ export default function Registro() {
                 payload.adminCode = data.adminCode;
             }
 
-            const respuesta = await fetch("/api/user/register", {
+            const respuesta = await fetch(`${process.env.API_ENDPOINT}/user/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
