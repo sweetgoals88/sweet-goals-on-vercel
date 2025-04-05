@@ -2,25 +2,25 @@ import { AdminLabel, CustomerLabel, UserJwtPayload } from "../db/entities/user-e
 import { verifyJwt } from "./jwt";
 import { ApiResponseError } from "./api-response-error";
 import { FirebaseConfiguration } from "../db/firebase-configuration";
-import { doc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { NextRequest } from "next/server";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
-export async function authenticateUser(token: string, options: { requiredType?: CustomerLabel | AdminLabel }) {
-    let userPayload;
-    try {
-        userPayload = await verifyJwt<UserJwtPayload>(token);
-    } catch (error) {
-        throw ApiResponseError.aggregateWith("Invalid token", error, 401);
+export async function authenticateUser(cookies: () => Promise<ReadonlyRequestCookies>, options: { requiredType?: CustomerLabel | AdminLabel }) {
+    const token = (await cookies()).get("token");
+    if (token === undefined) {
+        throw new ApiResponseError("The token is not present", 401);
     }
 
-    if (options.requiredType !== undefined) {
-        if (userPayload.type !== options.requiredType) {
-            throw new ApiResponseError(
-                `The user is not of the type required (${userPayload.type} when ${options.requiredType} expected)`, 
-                403
-            );
-        }
+    const jwtPayload = await verifyJwt<UserJwtPayload>(token.value);
+    const _id = jwtPayload._id;
+
+    const customerReference = doc(FirebaseConfiguration.USER, _id);
+    const customerSnapshot = await getDoc(customerReference);
+
+    if (!customerSnapshot.exists) { 
+        throw new ApiResponseError("User not found", 404);
     }
 
-    const user = doc(FirebaseConfiguration.USER, userPayload._id);
-    return user;
+    return customerReference;
 }

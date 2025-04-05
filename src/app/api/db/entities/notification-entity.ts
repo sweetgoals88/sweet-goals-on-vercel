@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export type Notification = {
+export type NotificationEntity = {
     _id: string,
     user_id: string,
     type: string,

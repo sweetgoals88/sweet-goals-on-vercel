@@ -2,6 +2,7 @@
 
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { makeErrorResponse } from "../../lib/make-error-response";
 
 export async function POST() {
     try {
@@ -24,6 +25,6 @@ export async function POST() {
 
         return response;
     } catch (error: any) {
-        return NextResponse.json({ success: false, message: "Couldn't log the user out", error: error.message }, { status: 500 });
+        return makeErrorResponse("Couldn't log the user out", 500, error);
     }
 }

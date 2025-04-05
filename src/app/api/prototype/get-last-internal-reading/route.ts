@@ -5,61 +5,63 @@
 // customers can use this endpoint and they must be logged in
 
 import { NextRequest, NextResponse } from "next/server";
-import { FirebaseConfiguration } from "../../../db/firebase-configuration";
-import { query, where, orderBy, limit, getDocsFromServer } from "firebase/firestore";
-import { makeErrorResponse } from "../../../lib/make-error-response";
+import { FirebaseConfiguration } from "../../db/firebase-configuration";
+import { query, where, orderBy, limit, getDocsFromServer, documentId, getDocs, getDoc } from "firebase/firestore";
+import { makeErrorResponse } from "../../lib/make-error-response";
 import { verifyJwt } from "@/app/api/lib/jwt";
+import { authenticateUser } from "../../lib/authenticate-user";
+import { cookies } from "next/headers";
+import { InternalReadingEntity } from "../../db/entities/internal-reading-entity";
+import { CustomerEntity } from "../../db/entities/user-entity";
+
 
 export async function GET(request: NextRequest) {
     try {
-        const token = request.headers.get("Authorization")?.replace("Bearer ", "");
-        if (!token) {
-            return makeErrorResponse("Authorization token is required", 401);
-        }
+        const user = await authenticateUser(() => cookies(), { requiredType: "customer" });
 
-        let userPayload;
-        try {
-            userPayload = await verifyJwt(token);
-        } catch (error) {
-            return makeErrorResponse("Invalid or expired token", 401);
-        }
-
-        const userId = userPayload._id;
-        if (!userId) {
-            return makeErrorResponse("Invalid user ID in token", 400);
-        }
-
-        if (userPayload.type !== "customer") {
-            return makeErrorResponse("Only customers can access this endpoint", 403);
-        }
-
-        const { searchParams } = new URL(request.url);
-        const prototypeId = searchParams.get("prototypeId");
-        const lastReadingDate = searchParams.get("lastReadingDate");
+        const body = JSON.parse(await request.text());
+        const { prototypeId, newestReading } = body;
 
         if (!prototypeId) {
-            return makeErrorResponse("Prototype ID is required", 400);
+            // throw new ApiResponseError();
+            // return makeErrorResponse("Prototype ID is required", 400);
         }
 
-        const readingsQuery = query(
-            FirebaseConfiguration.INTERNAL_READINGS,
-            where("prototypeId", "==", prototypeId),
-            ...(lastReadingDate
-                ? [where("timestamp", ">", new Date(lastReadingDate))]
-                : []),
-            orderBy("timestamp", "asc"),
-            limit(1)
-        );
-
-        const readingsSnapshot = await getDocsFromServer(readingsQuery);
-
-        if (readingsSnapshot.empty) {
-            return NextResponse.json({ success: true, reading: null });
+        const userData = (await getDoc(user)).data() as CustomerEntity;
+        if (userData.prototypes.indexOf(prototypeId) === -1) {
+            return makeErrorResponse("The prototype does not belong to the user", 403);
         }
 
-        const reading = readingsSnapshot.docs[0].data();
+        let lastReadingQuery;
+        if (newestReading !== undefined) {
+            const readingQuery = query(
+                FirebaseConfiguration.INTERNAL_READING,
+                where(documentId(), "==", newestReading)
+            );
+            const readingSnapshot = await getDocs(readingQuery);
+            const reading = readingSnapshot.docs[0]?.data() as InternalReadingEntity;
+    
+            const lastReadingDate = reading.datetime;
+            lastReadingQuery = query(
+                FirebaseConfiguration.INTERNAL_READING,
+                where("prototypeId", "==", prototypeId),
+                where("timestamp", ">", lastReadingDate),
+                orderBy("timestamp", "asc"),
+                limit(1)
+            );
+        } else {
+            lastReadingQuery = query(
+                FirebaseConfiguration.INTERNAL_READING,
+                where("prototypeId", "==", prototypeId),
+                orderBy("timestamp", "asc"),
+                limit(1)
+            );
+        }
 
-        return NextResponse.json({ success: true, reading });
+        const lastReadingSnapshot = await getDocs(lastReadingQuery);
+        const lastReading = lastReadingSnapshot.docs[0].data() as InternalReadingEntity;
+
+        return NextResponse.json({ lastReading });
     } catch (error: any) {
         return makeErrorResponse("Couldn't fetch the last internal reading", 500, error);
     }

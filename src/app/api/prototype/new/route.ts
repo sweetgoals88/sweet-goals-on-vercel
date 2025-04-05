@@ -10,16 +10,14 @@ import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        cookies();
+        const body = JSON.parse(await request.text());
         const {
-            token,
             activation_code,
             panel_specifications,
             user_customization
         } = body;
     
-        const user = await authenticateUser(token, { requiredType: "customer" });
+        const user = await authenticateUser(() => cookies(), { requiredType: "customer" });
     
         // do validation stuff
 
