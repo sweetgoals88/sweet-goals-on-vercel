@@ -17,40 +17,45 @@ export async function POST(request: NextRequest) {
             console.log(e);
             throw e;
         }
-      
+
         const { email, password } = body;
         if (!email || !password) {
             return makeErrorResponse("Email and password are required", 400);
         }
+
         const userQuery = query(FirebaseConfiguration.USER, where("email", "==", email));
         const users = await getDocsFromServer(userQuery);
 
         if (users.empty) {
             return makeErrorResponse("Invalid email or password", 401);
         }
-        
+
         const userData = parseEntity<UserEntity>(users.docs[0]);
-        
+
         if (!(await validateString(password, userData.encrypted_password))) {
             return makeErrorResponse("Invalid email or password", 401);
         }
 
+        // ✅ Solo incluimos lo necesario en el JWT
         const token = await signJwt<UserJwtPayload>(
-            { 
-                _id: userData._id as string, 
+            {
+                _id: userData._id as string,
                 type: userData.type,
-                encrypted_password: userData.encrypted_password,
+                encrypted_password: ""
             }, 
             { expiresIn: "1d" }
         );
 
+        // ✅ Guardar cookie segura
         (await cookies()).set("token", token, {
-            httpOnly: true,                                 // Prevents JavaScript access (security)
-            secure: process.env.NODE_ENV === "production",  // Only HTTPS
-            path: "/",                                      // Cross-site availability
-            sameSite: "lax",                                // CSRF protection 
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            path: "/",
+            sameSite: "lax",
         });
-        const response = NextResponse.json({ success: true });
+
+        // ✅ Devolvemos tipo de usuario al frontend
+        const response = NextResponse.json({ success: true, type: userData.type });
 
         response.headers.set("Access-Control-Allow-Credentials", "true");
         response.headers.set("Access-Control-Allow-Origin", "*");
