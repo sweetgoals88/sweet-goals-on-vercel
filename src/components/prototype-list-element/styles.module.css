@@ -1,0 +1,24 @@
+.prototypeListElement {
+    box-shadow: none;
+    padding: 4px;
+    text-transform: none;
+    font-family: "Montserrat", sans-serif;
+    background-color: white;
+    letter-spacing: normal;
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: "8px";
+    cursor: pointer;
+    transition: 250ms ease-in-out;
+    justify-content: space-between;
+    border-radius: 5px;
+    gap: 4px;
+}
+
+.prototypeListElement:hover {
+    transform: none;
+    background-color: rgb(199, 199, 199);
+    color: black;
+    box-shadow: none;
+}

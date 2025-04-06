@@ -12,5 +12,6 @@ const USER = {
 };
 
 export const API_ENDPOINTS = {
-    USER
+    USER,
+    GEOCODING: `${BASE_URL}/geocoding`
 };

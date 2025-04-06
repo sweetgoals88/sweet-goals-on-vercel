@@ -4,6 +4,7 @@ import React, {
   Dispatch,
   FunctionComponent,
   SetStateAction,
+  useRef,
   useState,
 } from "react";
 
@@ -11,14 +12,14 @@ import styles from "./styles.module.css";
 import ActionButton from "../action-button/action-button";
 import PrototypePropertyElement from "../prototype-property-element/prototype-property-element";
 import { UserCustomizationIconTypes } from "@/app/api/db/entities/prototype-entity";
-import Select, { components } from "react-select";
 import IconFragment from "./icon-fragment/icon-fragment";
 import { convertIconToComponent } from "@/utils/convert-icon-to-component";
-import { getCssVariable } from "@/utils/get-css-variable";
 import LabelFragment from "./label-fragment/label-fragment";
 import LocationFragment from "./location-fragment/location-fragment";
 import SpecificationsFragment from "./specifications-fragment/specifications-fragment";
 import { useMemo } from "react";
+import { LocationOption } from "@/app/api/geocoding/route";
+import { useOutsideAlerter } from "@/utils/use-outside-alerter";
 
 const MINI_FORM_INNER_WIDTH = "15vw";
 
@@ -38,6 +39,9 @@ type MiniFormState<T> = {
 export default function PrototypeListElement(props: {
   data: PrototypePreview;
   isDeletable?: boolean;
+  editPrototype: (data: PrototypePreview) => void,
+  deletePrototype: () => void,
+  onClick: () => void
 }) {
   const prototype = props.data;
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +55,7 @@ export default function PrototypeListElement(props: {
     prototype.userCustomization.icon
   );
   const [label, setLabel] = useState(prototype.userCustomization.label);
-  const [location, setLocation] = useState({
+  const [location, setLocation] = useState<LocationOption>({
     latitude: prototype.userCustomization.latitude,
     longitude: prototype.userCustomization.longitude,
     locationName: prototype.userCustomization.locationName,
@@ -81,15 +85,39 @@ export default function PrototypeListElement(props: {
     setMiniFormState({ component, onChange, initialValue });
   };
 
+  const revertPrototypeListElement = () => {
+    setMiniFormIsOpen(false);
+    setIcon(prototype.userCustomization.icon);
+    setLabel(prototype.userCustomization.label);
+    setLocation({
+        latitude: prototype.userCustomization.latitude,
+        longitude: prototype.userCustomization.longitude,
+        locationName: prototype.userCustomization.locationName,
+    });
+    setSpecifications({...prototype.panelSpecifications});
+  }
+
+  const closePrototypeListElement = () => {
+    setIsOpen(false);
+    revertPrototypeListElement();
+  }
+
+  const togglePrototypeListElement = () => {
+    if (isOpen) {
+      revertPrototypeListElement();
+    }
+    setIsOpen(!isOpen);
+  }
+
+  const wrapperReference = useRef<HTMLLIElement>(null);
+  useOutsideAlerter(wrapperReference, () => closePrototypeListElement());
+
   return (
     <li
       key={prototype.id}
-      style={{
-        display: "flex",
-        position: "relative",
-        alignItems: "center",
-        gap: "8px",
-      }}
+      className={`${styles.prototypeListElement}`}
+      ref={wrapperReference}
+      onClick={props.onClick}
     >
       <span>{convertIconToComponent(icon)}</span>
       <span
@@ -104,20 +132,7 @@ export default function PrototypeListElement(props: {
         {label}
       </span>
       <button
-        onClick={() => {
-            setIsOpen(!isOpen);
-            if (isOpen) {
-                setMiniFormIsOpen(false);
-                setIcon(prototype.userCustomization.icon);
-                setLabel(prototype.userCustomization.label);
-                setLocation({
-                    latitude: prototype.userCustomization.latitude,
-                    longitude: prototype.userCustomization.longitude,
-                    locationName: prototype.userCustomization.locationName,
-                });
-                setSpecifications({...prototype.panelSpecifications});
-            }
-        }}
+        onClick={togglePrototypeListElement}
         style={{
           boxShadow: "none",
           padding: "4px",
@@ -219,10 +234,29 @@ export default function PrototypeListElement(props: {
               marginTop: "32px",
             }}
           >
-            <ActionButton backgroundColor="red" isActive={props.isDeletable}>
+            <ActionButton backgroundColor="red" isActive={props.isDeletable} onClick={props.deletePrototype}>
               Eliminar
             </ActionButton>
-            <ActionButton backgroundColor="light-green" isActive={isModified}>
+            <ActionButton backgroundColor="light-green" isActive={isModified} onClick={async () => {
+              props.editPrototype({
+                externalReadings: props.data.externalReadings,
+                internalReadings: props.data.internalReadings,
+                id: props.data.id,
+                oldestExternalReading: props.data.oldestExternalReading,
+                oldestInternalReading: props.data.oldestInternalReading,
+                operational: props.data.operational,
+                panelSpecifications: specifications,
+                userCustomization: {
+                  icon,
+                  label,
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  locationName: location.locationName,
+                },
+                versionId: props.data.versionId
+              });
+              // when using the api, also call closePrototypeListElement on success
+            }}>
               Actualizar
             </ActionButton>
           </div>
