@@ -1,5 +1,5 @@
 import { addDoc, arrayUnion, getDocsFromServer, query, updateDoc, where } from "firebase/firestore";
-import { PanelSpecifications, PrototypeEntity } from "./prototype-entity";
+import { PanelSpecificationsEntity, PrototypeEntity } from "./prototype-entity";
 import { FirebaseConfiguration } from "../firebase-configuration";
 import { ApiResponseError } from "../../lib/api-response-error";
 import { parseEntity } from "../parse-entity";
@@ -31,7 +31,7 @@ export type CustomerRegistrationInput = _UserRegistrationInput & {
         label: string, 
         icon: string,
     },
-    panel_specifications: PanelSpecifications
+    panel_specifications: PanelSpecificationsEntity
 };
 
 export type UserRegistrationInput = AdminRegistrationInput | CustomerRegistrationInput;
@@ -52,6 +52,7 @@ export type CustomerEntity = _UserEntity & {
 export type AdminEntity = _UserEntity & {
     type: AdminLabel,
     admin_code: string,
+    permissions: "read" | "all",
     invited_admins: string[],
 };
 
@@ -152,8 +153,6 @@ export async function signupAdmin(input: AdminRegistrationInput) {
         const authorizingAdmin = await validateAuthorizingAdmin(input.adminEmail, input.adminCode);
         await validateUniqueEmail(input.email);
 
-        console.log("Hello world!");
-    
         const encryptedPassword = await encryptString(input.password);
     
         const adminPayload: AdminEntity = {
@@ -163,6 +162,7 @@ export async function signupAdmin(input: AdminRegistrationInput) {
             name: input.name,
             surname: input.surname,
             invited_admins: [],
+            permissions: "read",
             type: "admin"
         };
     

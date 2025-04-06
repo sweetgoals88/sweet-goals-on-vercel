@@ -1,0 +1,18 @@
+.iconButton {
+    padding: 2px;
+    box-shadow: none;
+    border: 1px auto #a0a0a0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    aspect-ratio: 1 / 1;
+}
+
+.iconButton:hover {
+    transform: none;
+    /* background-color: lightgray; */
+    box-shadow: none;
+}
+
+.iconButton[data-is-selected="true"] {
+    border: 2px solid rgb(52, 148, 180);
+}

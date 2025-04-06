@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import { PanelSpecifications } from "./prototype-entity";
+import { PanelSpecificationsEntity } from "./prototype-entity";
 
 export type ExternalReadingEntity = {
     _id?: string,
@@ -9,5 +9,5 @@ export type ExternalReadingEntity = {
     current: number,
     voltage: number,
     wattage: number,
-    panel_specifications: PanelSpecifications
+    panel_specifications: PanelSpecificationsEntity
 };

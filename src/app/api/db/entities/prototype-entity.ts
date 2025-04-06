@@ -3,11 +3,13 @@ import { FirebaseConfiguration } from "../firebase-configuration";
 import { parseEntity } from "../parse-entity";
 import { ApiResponseError } from "../../lib/api-response-error";
 
-export type PanelSpecifications = {
-  number_of_panels: number,
-  peak_voltage: number,
+export type PanelSpecificationsEntity = {
+  number_of_panels: number, // unidades
+  peak_voltage: number, // voltios; Vpm
   temperature_rate: number
 };
+
+export type UserCustomizationIconTypes = "default" | "battery" | "sun" | "database" | "microchip";
 
 export type PrototypeEntity = {
     _id?: string,
@@ -22,9 +24,9 @@ export type PrototypeEntity = {
       latitude: number,
       longitude: number,
       label: string,
-      icon: string,
+      icon: UserCustomizationIconTypes,
     },
-    panel_specifications: PanelSpecifications
+    panel_specifications: PanelSpecificationsEntity
 };
 
 /**

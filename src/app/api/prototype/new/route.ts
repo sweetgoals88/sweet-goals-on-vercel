@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
             user_customization
         } = body;
     
-        const user = await authenticateUser(() => cookies(), { requiredType: "customer" });
+        const userSnapshot = await authenticateUser(() => cookies(), { requiredType: "customer" });
+        const userReference = userSnapshot.ref;
     
         // do validation stuff
 
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
             user_customization: { ...user_customization },
         });
     
-        await updateDoc(user, {
+        await updateDoc(userReference, {
             prototypes: arrayUnion(prototype.id),
         });
         
