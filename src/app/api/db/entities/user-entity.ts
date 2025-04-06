@@ -57,6 +57,12 @@ export type AdminEntity = _UserEntity & {
 
 export type UserEntity = CustomerEntity | AdminEntity;
 
+export type UserJwtPayload = {
+    _id: string,
+    type: string,
+    encrypted_password: string,
+}
+
 export async function getUnactivePrototype(activationCode: string) {
     try {
         const prototypeQuery = query(FirebaseConfiguration.PROTOTYPE, where("activation_code", "==", activationCode));
@@ -168,9 +174,3 @@ export async function signupAdmin(input: AdminRegistrationInput) {
         throw ApiResponseError.aggregateWith("Admin signup wasn't possible", error, 500);
     }
 }
-
-export type UserJwtPayload = {
-    _id: string,
-    type: string,
-    encrypted_password: string,
-};

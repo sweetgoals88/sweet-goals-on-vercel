@@ -131,3 +131,142 @@
     margin-top: 1px;
     text-align: center;
 }
+
+
+
+                           /* DashBoard Styles */
+
+.dashboardContainer {
+    display: flex;
+    height: 100vh;
+    background-color: #E5E4EC;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    color: rgb(21, 21, 21);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.registerPanel {
+    background-color: #2ECC71;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.locationList {
+    list-style: none;
+    padding: 0;
+}
+
+.locationItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.downloadSectionBorder {
+    padding-top: 10px;
+    border-radius: 5px;
+    margin-top: auto;
+    background-color:#3EC577 ;
+    height: 30%;
+}
+
+.downloadSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    text-align: center;
+    background-color: #016630;
+    height: 80%;
+    color: white;
+    align-items: center;
+}
+
+
+.downloadIcons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+    margin: 5px;
+    background-color: #3EC577;
+    border-radius: 40px;
+    padding: 10px;
+    gap: 70%;
+
+
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    padding: 20px;
+
+}
+
+/* Header */
+.dashboardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    /*background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+}
+
+.headerIcons {
+    display: flex;
+    gap: 15px;
+}
+
+.notificationIcon {
+    color: red;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Dashboard Grid */
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Charts */
+.chartCard {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pieChart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.barChart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+                                                            

@@ -43,7 +43,7 @@ const Page = () => {
             <ul>
               <li><Button><IoHome /> Inicio</Button></li>
               <li>
-                <Link href="/acerca">
+                <Link href="/acercade">
                   <Button><BsFillInfoCircleFill /> Acerca de Nosotros</Button>
                 </Link>
               </li>
