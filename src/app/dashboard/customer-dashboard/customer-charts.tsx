@@ -13,7 +13,7 @@ import {
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import styles from "./Dashboard.module.css";
-import { PrototypePreview } from "@/app/api/db/previews/prototype-preview";
+import { PrototypePreview } from "@/app/api/db/entities/prototype/preview";
 
 const defaultLayout: Layout[] = [
   { i: "voltage", x: 0, y: 0, w: 4, h: 4, static: false, resizeHandles: ["se"] },

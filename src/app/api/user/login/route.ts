@@ -5,7 +5,7 @@ import { signJwt } from "@/app/api/lib/jwt";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { validateString } from "../../lib/encryption";
 import { parseEntity } from "../../db/parse-entity";
-import { UserEntity, UserJwtPayload } from "../../db/entities/user-entity";
+import { UserEntity, UserJwtPayload } from "../../db/entities/user/entity";
 import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
             return makeErrorResponse("Invalid email or password", 401);
         }
 
-        // ✅ Solo incluimos lo necesario en el JWT
         const token = await signJwt<UserJwtPayload>(
             {
                 _id: userData._id as string,
@@ -46,7 +45,6 @@ export async function POST(request: NextRequest) {
             { expiresIn: "1d" }
         );
 
-        // ✅ Guardar cookie segura
         (await cookies()).set("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -54,7 +52,6 @@ export async function POST(request: NextRequest) {
             sameSite: "lax",
         });
 
-        // ✅ Devolvemos tipo de usuario al frontend
         const response = NextResponse.json({ success: true, type: userData.type });
 
         response.headers.set("Access-Control-Allow-Credentials", "true");

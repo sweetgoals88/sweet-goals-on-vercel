@@ -1,4 +1,4 @@
-import { PrototypePreview } from "@/app/api/db/previews/prototype-preview";
+import { PrototypePreview } from "@/app/api/db/entities/prototype/preview";
 import { BatteryCharging, ChevronLeft, CircleX, Cpu, Ellipsis, LocateFixed, Smile, Sun, Tag, Zap } from "lucide-react";
 import React, {
   Dispatch,

@@ -7,7 +7,7 @@ import { query, where, getDocsFromServer } from "firebase/firestore";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { verifyJwt } from "@/app/api/lib/jwt";
 import { parseEntity } from "../../db/parse-entity";
-import { UserEntity } from "../../db/entities/user-entity";
+import { UserEntity } from "../../db/entities/user/entity";
 
 export async function GET(request: NextRequest) {
     try {

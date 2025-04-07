@@ -1,4 +1,4 @@
-import { getPanelSpecificationsPreviewFromJson, PanelSpecificationsPreview } from "./prototype-preview";
+import { getPanelSpecificationsPreviewFromJson, PanelSpecificationsPreview } from "../prototype/preview";
 
 export type ExternalReadingPreview = {
     id: string,

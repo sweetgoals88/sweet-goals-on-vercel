@@ -1,4 +1,4 @@
-import { CustomerPreview } from "@/app/api/db/previews/user-preview";
+import { CustomerPreview } from "@/app/api/db/entities/user/preview";
 import PrototypeListElement from "@/components/prototype-list-element/prototype-list-element";
 import { Bell, HelpCircle, Plus, User } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { makeErrorResponse } from "../../lib/make-error-response";
-import { UserRegistrationInput, signupAdmin, signupCustomer } from "../../db/entities/user-entity";
+import { UserRegistrationInput, signupAsAdmin, signupAsCustomer } from "../../db/entities/user/entity";
 
 export async function POST(request: NextRequest) {
     try {
@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
 
         // Registra al usuario dependiendo de su tipo
         if (input.type === "customer") {
-            await signupCustomer(input);
+            await signupAsCustomer(input);
         } else {
-            await signupAdmin(input);
+            await signupAsAdmin(input);
         }
         
         return NextResponse.json({ message: "Successful operation" }, { status: 201 });

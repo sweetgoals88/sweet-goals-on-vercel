@@ -1,4 +1,4 @@
-import { AdminLabel, CustomerLabel, UserEntity, UserJwtPayload } from "../db/entities/user-entity";
+import { AdminLabel, CustomerLabel, UserEntity, UserJwtPayload } from "../db/entities/user/entity";
 import { verifyJwt } from "./jwt";
 import { ApiResponseError } from "./api-response-error";
 import { FirebaseConfiguration } from "../db/firebase-configuration";

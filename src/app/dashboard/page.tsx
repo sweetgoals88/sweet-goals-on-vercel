@@ -8,7 +8,7 @@ import { FaApple, FaGooglePlay } from "react-icons/fa";
 
 import styles from "./styles.module.css";
 import { API_ENDPOINTS } from "../api/endpoints";
-import { CustomerPreview, getCustomerPreviewFromJson, UserPreview } from "../api/db/previews/user-preview";
+import { CustomerPreview, getCustomerPreviewFromJson, UserPreview } from "../api/db/entities/user/preview";
 import PrototypeListElement from "@/components/prototype-list-element/prototype-list-element";
 import LoadingScreen from "./loading-screen/loading-screen";
 import { CustomerDashboard } from "./customer-dashboard/customer-dashboard";
@@ -68,31 +68,4 @@ export default function DashboardPage() {
         );
     }
     return <p>Rol desconocido.</p>;
-}
-  
-
-  function AdminTable() {
-    // Esto se puede conectar luego a una API para obtener usuarios
-    return (
-        <div style={{ padding: "2rem" }}>
-            <h1>Vista de Administrador</h1>
-            <table border={1} cellPadding="10" style={{ marginTop: "1rem" }}>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Usuario de ejemplo</td>
-                        <td>correo@ejemplo.com</td>
-                    </tr>
-                    {/* Aquí puedes mapear una lista real más adelante */}
-                </tbody>
-            </table>
-        </div>
-    );
 }

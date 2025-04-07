@@ -1,4 +1,4 @@
-import { PanelSpecificationsPreview } from "@/app/api/db/previews/prototype-preview";
+import { PanelSpecificationsPreview } from "@/app/api/db/entities/prototype/preview";
 import { OnChangeProps } from "../prototype-list-element";
 import { ChangeEventHandler } from "react";
 

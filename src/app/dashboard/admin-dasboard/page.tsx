@@ -27,7 +27,6 @@ interface ThirdTableItem {
 }
 
 export const AdminDashboard: React.FC = () => {
-  // Estados con tipos explícitos
   const [users, setUsers] = useState<User[]>([]);
   const [prototypes, setPrototypes] = useState<Prototype[]>([]);
   const [thirdTable, setThirdTable] = useState<ThirdTableItem[]>([]);

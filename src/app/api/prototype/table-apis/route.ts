@@ -76,7 +76,6 @@ export async function GET() {
   }
 }
 
-// PATCH - Desactivar un prototipo
 export async function PATCH(request: NextRequest) {
   try {
     const userSnapshot = await authenticateUser(
