@@ -1,9 +1,10 @@
-import { PrototypePreview } from "@/app/api/db/previews/prototype-preview";
+import { PrototypePreview } from "@/app/api/db/entities/prototype/preview";
 import { BatteryCharging, ChevronLeft, CircleX, Cpu, Ellipsis, LocateFixed, Smile, Sun, Tag, Zap } from "lucide-react";
 import React, {
   Dispatch,
   FunctionComponent,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -11,7 +12,6 @@ import React, {
 import styles from "./styles.module.css";
 import ActionButton from "../action-button/action-button";
 import PrototypePropertyElement from "../prototype-property-element/prototype-property-element";
-import { UserCustomizationIconTypes } from "@/app/api/db/entities/prototype-entity";
 import IconFragment from "./icon-fragment/icon-fragment";
 import { convertIconToComponent } from "@/utils/convert-icon-to-component";
 import LabelFragment from "./label-fragment/label-fragment";
@@ -20,6 +20,7 @@ import SpecificationsFragment from "./specifications-fragment/specifications-fra
 import { useMemo } from "react";
 import { LocationOption } from "@/app/api/geocoding/route";
 import { useOutsideAlerter } from "@/utils/use-outside-alerter";
+import { UserCustomizationIconTypes } from "@/app/api/db/entities/prototype/entity";
 
 const MINI_FORM_INNER_WIDTH = "15vw";
 
@@ -64,6 +65,17 @@ export default function PrototypeListElement(props: {
     prototype.panelSpecifications
   );
 
+  useEffect(() => {
+    setIcon(prototype.userCustomization.icon);
+    setLabel(prototype.userCustomization.label);
+    setLocation({
+      latitude: prototype.userCustomization.latitude,
+      longitude: prototype.userCustomization.longitude,
+      locationName: prototype.userCustomization.locationName,
+    });
+    setSpecifications({ ...prototype.panelSpecifications });
+  }, [prototype]);
+
   const isModified = useMemo(() => {
     return (
       icon !== prototype.userCustomization.icon ||
@@ -74,7 +86,6 @@ export default function PrototypeListElement(props: {
       JSON.stringify(specifications) !== JSON.stringify(prototype.panelSpecifications)
     );
   }, [icon, label, location, specifications, prototype]);
-  
 
   const openMiniForm = <T,>(
     component: FunctionComponent<OnChangeProps<T>>,

@@ -11,8 +11,8 @@ import { makeErrorResponse } from "../../lib/make-error-response";
 import { verifyJwt } from "@/app/api/lib/jwt";
 import { authenticateUser } from "../../lib/authenticate-user";
 import { cookies } from "next/headers";
-import { InternalReadingEntity } from "../../db/entities/internal-reading-entity";
-import { CustomerEntity } from "../../db/entities/user-entity";
+import { InternalReadingEntity } from "../../db/entities/internal-reading/entity";
+import { CustomerEntity } from "../../db/entities/user/entity";
 
 
 export async function GET(request: NextRequest) {

@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { addDoc, arrayUnion, DocumentData, getDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { authenticateDevice } from "../../lib/authenticate-device";
-import { ExternalReadingEntity } from "../../db/entities/external-reading-entity";
+import { ExternalReadingEntity } from "../../db/entities/external-reading/entity";
 
 export async function POST(request: NextRequest) {
     return await authenticateDevice(request)

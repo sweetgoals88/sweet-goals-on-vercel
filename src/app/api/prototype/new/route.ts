@@ -3,7 +3,7 @@
 
 import { NextRequest } from "next/server";
 import { authenticateUser } from "../../lib/authenticate-user";
-import { getUnactivePrototype } from "../../db/entities/user-entity";
+import { validateIsNewPrototype } from "../../db/entities/user/entity";
 import { arrayUnion, updateDoc } from "firebase/firestore";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { cookies } from "next/headers";
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     
         // do validation stuff
 
-        const prototype = await getUnactivePrototype(activation_code);
+        const prototype = await validateIsNewPrototype(activation_code);
 
         await updateDoc(prototype, {
             active: true,

@@ -1,9 +1,11 @@
-import { AdminLabel, CustomerLabel, UserEntity, UserJwtPayload } from "../db/entities/user-entity";
+import { UserEntity, UserJwtPayload } from "../db/entities/user/entity";
 import { verifyJwt } from "./jwt";
 import { ApiResponseError } from "./api-response-error";
 import { FirebaseConfiguration } from "../db/firebase-configuration";
 import { doc, DocumentData, DocumentReference, DocumentSnapshot, getDoc } from "firebase/firestore";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { AdminLabel } from "../db/entities/user/admin/entity";
+import { CustomerLabel } from "../db/entities/user/customer/entity";
 
 export async function authenticateUser(cookies: () => Promise<ReadonlyRequestCookies>, options: { requiredType?: CustomerLabel | AdminLabel }): Promise<DocumentSnapshot<DocumentData, DocumentData>> {
     const token = (await cookies()).get("token");

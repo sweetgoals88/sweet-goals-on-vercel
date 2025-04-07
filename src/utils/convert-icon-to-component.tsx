@@ -1,6 +1,5 @@
-import { UserCustomizationIconTypes } from "@/app/api/db/entities/prototype-entity";
-import { BatteryCharging, ChevronLeft, CircleX, Database, Ellipsis, Microchip, Sun, Zap } from "lucide-react";
-import { getCssVariable } from "./get-css-variable";
+import { UserCustomizationIconTypes } from "@/app/api/db/entities/prototype/entity";
+import { BatteryCharging, Database, Microchip, Sun, Zap } from "lucide-react";
 
 export function convertIconToComponent(icon: UserCustomizationIconTypes) {
     switch (icon) {

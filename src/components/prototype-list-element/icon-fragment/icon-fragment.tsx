@@ -1,8 +1,8 @@
-import { UserCustomizationIconTypes } from "@/app/api/db/entities/prototype-entity";
 import { OnChangeProps } from "../prototype-list-element";
 import { convertIconToComponent } from "@/utils/convert-icon-to-component";
 import styles from "./styles.module.css";
 import { useState } from "react";
+import { UserCustomizationIconTypes } from "@/app/api/db/entities/prototype/entity";
 
 export default function IconFragment(props: OnChangeProps<UserCustomizationIconTypes>) {
     const { onChange, initialValue } = props.props;
