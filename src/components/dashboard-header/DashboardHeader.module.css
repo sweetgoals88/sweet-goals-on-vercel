@@ -1,0 +1,102 @@
+/* Header */
+.dashboardHeader {
+    background-color: white;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: var(--navbar-height);
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+.headerIcons {
+    display: flex;
+    gap: 15px;
+}
+
+.notificationIcon {
+    color: red;
+}
+
+.userInfoWrapper {
+    position: relative;
+}
+
+.userInfo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgb(231, 231, 231);
+    padding: 0.75rem;
+    border-radius: 1000px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    transition: 
+        250ms ease-in-out background-color,
+        250ms ease-in-out border-color
+        ;
+}
+
+.userInfo:hover {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.optionsPanel {
+    transition: 
+        250ms ease-in-out max-height,
+        250ms ease-in-out opacity,
+        250ms ease-in-out top
+        ;
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 15vw;
+    overflow: hidden;
+    isolation: isolate;
+    z-index: 5;
+}
+
+.optionsPanelList {
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 15vw;
+    margin: 0;
+    padding: 0;
+}
+
+.option > button {
+    text-transform: none;
+    font-family: "Montserrat", sans-serif;
+    padding: 0.75rem;
+    width: 100%;
+    letter-spacing: normal;
+    box-shadow: none;
+    border: 1px solid black;
+}
+
+.option > button:hover {
+    background: lightgray;
+    color: black;
+    transform: none;
+    box-shadow: none;
+}
+
+.logoutOption > button {
+    background-color: indianred;
+    color: white;
+}
+
+.logoutOption > button:hover {
+    background-color: firebrick;
+    color: white;
+}

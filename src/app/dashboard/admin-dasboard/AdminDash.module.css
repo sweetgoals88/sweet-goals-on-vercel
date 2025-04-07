@@ -2,9 +2,11 @@
 
 .container {
     background-color: white;
-    padding: 6rem;
+    padding: 0rem 4rem;
     box-shadow: 0 4px 6px #001E2B;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
   }
   
   .title {
@@ -15,7 +17,6 @@
   }
   
   .sectionContainer {
-    margin-bottom: 2rem;
   }
   
   .sectionTitle {
@@ -24,10 +25,25 @@
     margin-bottom: 1rem;
   }
   
+.tablesWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+  .tableSuperContainer {
+    position: relative;
+    overflow: scroll;
+  }
+
   .tableContainer {
     background-color: #d1fae5;
     border-radius: 0.5rem;
-    overflow: hidden;
+    width: max-content;
+    top: 0;
+    left: 0;
+    position: absolute;
+    min-width: 100%;
   }
   
   .tableHeader {
@@ -37,6 +53,8 @@
     grid-template-columns: repeat(4, 1fr);
     padding: 1rem;
     font-weight: 500;
+    height: 8vh;
+    box-sizing: border-box;
   }
 
   .tableProtoHeader {
@@ -54,7 +72,10 @@
     padding: 1rem;
     background-color: #66D8A1;
     border-bottom: 1px solid #ffffff;
-    
+    height: 10vh;
+    box-sizing: border-box;
+    width: max-content;
+    min-width: 100%;
   }
   
   .tableRow:last-child {

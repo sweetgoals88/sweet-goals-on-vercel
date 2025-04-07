@@ -9,6 +9,7 @@ const USER = {
     GET_USERS: `${BASE_USER_URL}/get-users`,
     GET_DEVICES: `${BASE_USER_URL}/get-devices`,
     GET_DASHBOARD_DATA: `${BASE_USER_URL}/get-dashboard-data`,
+    IS_LOGGED_IN: `${BASE_USER_URL}/is-logged-in`,
 };
 
 export const API_ENDPOINTS = {

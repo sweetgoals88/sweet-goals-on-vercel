@@ -1,4 +1,3 @@
-import { CustomerPreview } from "@/app/api/db/entities/user/preview";
 import PrototypeListElement from "@/components/prototype-list-element/prototype-list-element";
 import { Bell, HelpCircle, Plus, User } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -6,6 +5,8 @@ import { FaApple, FaGooglePlay } from "react-icons/fa";
 import styles from "../styles.module.css";
 import CustomerCharts from "./customer-charts";
 import Image from 'next/image';
+import { CustomerPreview } from "@/app/api/db/entities/user/customer/preview";
+import DashboardHeader from "@/components/dashboard-header/dashboard-header";
 
 export function CustomerDashboard(props: {
   data: CustomerPreview;
@@ -41,22 +42,18 @@ export function CustomerDashboard(props: {
                 }}
                 deletePrototype={() => {
                     const prototypesArray = props.data.prototypes.filter(
-                    (value, localIndex) => localIndex != index
+                        (value, localIndex) => localIndex != index
                     );
-                    if (index === selectedPrototypeIndex) {
-                    selectSelectedPrototypeIndex(
-                        props.data.prototypes.length - 2
-                    );
-                    }
+
                     props.setUserData({
-                    email: props.data.email,
-                    id: props.data.id,
-                    name: props.data.name,
-                    notifications: props.data.notifications,
-                    oldestNotification: props.data.oldestNotification,
-                    prototypes: prototypesArray,
-                    surname: props.data.surname,
-                    type: props.data.type,
+                        email: props.data.email,
+                        id: props.data.id,
+                        name: props.data.name,
+                        notifications: props.data.notifications,
+                        oldestNotification: props.data.oldestNotification,
+                        prototypes: prototypesArray,
+                        surname: props.data.surname,
+                        type: props.data.type,
                     });
                 }}
                 onClick={() => selectSelectedPrototypeIndex(index)}
@@ -74,39 +71,19 @@ export function CustomerDashboard(props: {
             </div>
         </aside>
 
-        <header className={styles.dashboardHeader}>
-            <div style={{
-                height: "48px",
-                position: "relative",
-                aspectRatio: "1 / 1",
-                marginRight: "auto"
-            }}>
-                <Image 
-                    src={"/images/LOGO.png"}
-                    alt="Logo de Solar Sync"
-                    fill
-                    />
-            </div>
-            <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px"
-            }}>
-                <div className={styles.headerIcons}>
-                    <HelpCircle size={20} />
-                    <Bell size={20} className={styles.notificationIcon} />
-                </div>
-                <div className={styles.userInfo}>
-                    <User size={24} />
-                    <span>{`${props.data.name} ${props.data.surname}`}</span>
-                </div>
-            </div>
-        </header>
-        {/* Main Content */}
+        
+        <DashboardHeader data={props.data} style={{
+            gridColumn: "1 / 3",
+            gridRow: "1 / 2"
+        }} />
+        
         <main className={styles.mainContent}>
-            <CustomerCharts 
-                prototype={props.data.prototypes[selectedPrototypeIndex]}
-                />
+            {
+                selectedPrototypeIndex < props.data.prototypes.length &&
+                (<CustomerCharts 
+                    prototype={props.data.prototypes[selectedPrototypeIndex]}
+                    />)
+            }
         </main>
     </div>
   );

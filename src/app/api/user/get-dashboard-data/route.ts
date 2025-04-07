@@ -9,8 +9,8 @@ import { getDashboardDataOfAdmin } from "../../db/entities/user/admin/behavior/g
 export async function POST(request: NextApiRequest) {
   try {
     const userSnapshot = await authenticateUser(() => cookies(), {});
-
     const user = userSnapshot.data() as UserEntity;
+
     if (user.type === "customer") {
       return Response.json(
         await getDashboardDataOfCustomer(user, userSnapshot.id)

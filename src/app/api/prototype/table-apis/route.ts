@@ -4,10 +4,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { cookies } from "next/headers";
 import { authenticateUser } from "../../lib/authenticate-user";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
-import { PrototypeEntity } from "../../db/entities/prototype-entity";
 import { doc, documentId, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { makeErrorResponse } from "../../lib/make-error-response";
 import { NextRequest, NextResponse } from "next/server";
+import { PrototypeEntity } from "../../db/entities/prototype/entity";
 // Interfaz para los datos de la tabla
 interface PrototypeTableRow {
   id: string;

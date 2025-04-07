@@ -1,8 +1,8 @@
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
 import { getNotificationsOfUser } from "../../behavior/get-notifications-of-user";
 import { CustomerEntity } from "../entity";
-import { getPrototypesOfCustomer } from "./get-prototypes-of-customer";
 import { CustomerPreview } from "../preview";
+import { getPrototypesOfCustomer } from "./get-prototypes-of-customer";
 
 export async function getDashboardDataOfCustomer(
   user: CustomerEntity,

@@ -6,6 +6,7 @@ import { PrototypeEntity } from "../../../prototype/entity";
 import { getExternalReadingsOfPrototype } from "../../../prototype/behavior/get-external-readings-of-prototype";
 import { reverseGeocoding } from "@/app/api/lib/geocoding";
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
+import { getInternalReadingsOfPrototype } from "../../../prototype/behavior/get-internal-readings-of-prototype";
 
 export async function getPrototypesOfCustomer(customer: CustomerEntity, id: string) {
   try {
@@ -54,8 +55,4 @@ export async function getPrototypesOfCustomer(customer: CustomerEntity, id: stri
   } catch (error) {
     throw ApiResponseError.aggregateWith("Couldn't get the customer prototypes", error, 500);
   }
-}
-
-function getInternalReadingsOfPrototype(prototype: PrototypeEntity): any {
-    throw new Error("Function not implemented.");
 }
