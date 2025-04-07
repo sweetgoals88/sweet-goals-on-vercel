@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+:root {
+  --sidebar-width: 20vw;
+  --navbar-height: 10vh;
+  --light-green: #2ecc71;
+  --dark-green: #27ae60;
+  --dark-blue: #2d404e;
+  --red: #e74c3c;
+  --default-icon-size: 24px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -640,3 +650,4 @@ button:active {
     transform: translate(-50%, -10px);
   }
 }
+

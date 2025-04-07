@@ -1,0 +1,7 @@
+
+.actionButton[data-is-active="true"] {
+    color: white;
+}
+.actionButton[data-is-active="false"]:hover {
+    transform: none;
+}

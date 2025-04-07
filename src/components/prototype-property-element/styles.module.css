@@ -1,0 +1,19 @@
+.prototypePropertyElement {
+    padding: 8px 8px;
+    width: 100%;
+    transition: 250ms ease-in-out background-color;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.prototypePropertyElement:hover {
+    background-color: lightgray
+}
+
+.prototypePropertyIcon {
+    color: rgb(151, 151, 151);
+}

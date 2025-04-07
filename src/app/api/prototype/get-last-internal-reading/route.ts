@@ -17,7 +17,7 @@ import { CustomerEntity } from "../../db/entities/user-entity";
 
 export async function GET(request: NextRequest) {
     try {
-        const user = await authenticateUser(() => cookies(), { requiredType: "customer" });
+        const userSnapshot = await authenticateUser(() => cookies(), { requiredType: "customer" });
 
         const body = JSON.parse(await request.text());
         const { prototypeId, newestReading } = body;
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
             // return makeErrorResponse("Prototype ID is required", 400);
         }
 
-        const userData = (await getDoc(user)).data() as CustomerEntity;
+        const userData = userSnapshot.data() as CustomerEntity;
         if (userData.prototypes.indexOf(prototypeId) === -1) {
             return makeErrorResponse("The prototype does not belong to the user", 403);
         }
