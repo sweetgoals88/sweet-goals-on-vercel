@@ -42,7 +42,7 @@ export async function POST(request: NextApiRequest) {
     if (user.type === "customer") {
       return Response.json(await getCustomerDashboardData(user, userSnapshot.id), { status: 200 });
     } else if (user.type === "admin") {
-      return makeErrorResponse("Admin dashboard not implemented yet", 501);
+      return Response.json({ success: true, type: "admin" });
     } else {
       return makeErrorResponse("User type not recognized", 400);
     }

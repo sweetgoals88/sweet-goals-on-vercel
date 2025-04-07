@@ -1,0 +1,133 @@
+/* AdminDashboard.module.css */
+
+.container {
+    background-color: white;
+    padding: 6rem;
+    box-shadow: 0 4px 6px #001E2B;
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .sectionContainer {
+    margin-bottom: 2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .tableContainer {
+    background-color: #d1fae5;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .tableHeader {
+    background-color: #001E2B;
+    color: #4ade80;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1rem;
+    font-weight: 500;
+  }
+
+  .tableProtoHeader {
+    background-color: #001E2B;
+    color: #4ade80;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 1rem;
+    font-weight: 500;
+  }
+  
+  .tableRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 1rem;
+    background-color: #66D8A1;
+    border-bottom: 1px solid #ffffff;
+    
+  }
+  
+  .tableRow:last-child {
+    border-bottom: none;
+  }
+  
+  .tableCell {
+    display: flex;
+    align-items: center;
+    max-width: 200px;
+  }
+  
+  .viewMoreContainer {
+    text-align: right;
+    margin-top: 0.5rem;
+  }
+  
+  .viewMoreButton {
+    color: #2563eb;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .viewMoreButton:hover {
+    text-decoration: underline;
+  }
+  
+  .deleteButton {
+    background-color: #ef4444;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+  
+  .deleteButton:hover {
+    background-color: #dc2626;
+  }
+  
+  .loadingContainer {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .errorContainer {
+    text-align: center;
+    padding: 2rem;
+    color: #ef4444;
+  }
+
+  /* Añade esto a tu archivo AdminDash.module.css */
+.activeButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .inactiveButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .activeButton:hover, .inactiveButton:hover {
+    opacity: 0.8;
+  }

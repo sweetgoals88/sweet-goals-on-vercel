@@ -12,6 +12,7 @@ import { CustomerPreview, getCustomerPreviewFromJson, UserPreview } from "../api
 import PrototypeListElement from "@/components/prototype-list-element/prototype-list-element";
 import LoadingScreen from "./loading-screen/loading-screen";
 import { CustomerDashboard } from "./customer-dashboard/customer-dashboard";
+import {AdminDashboard} from "./admin-dasboard/page";
 
 export default function DashboardPage() {
     const [userData, setUserData] = useState<UserPreview | null>(null);
@@ -30,8 +31,13 @@ export default function DashboardPage() {
 
                 const json = await response.json();
                 console.log(json);
-                const data = getCustomerPreviewFromJson(json);
-                setUserData(data);
+
+                if (json.type === "customer") {
+                    const data = getCustomerPreviewFromJson(json);
+                    setUserData(data);
+                } else {
+                    setUserData({ type: "admin" } as UserPreview); 
+                }
             } catch (err) {
                 console.error("Error fetching dashboard data", err);
             } finally {
@@ -58,7 +64,7 @@ export default function DashboardPage() {
     }
     if (userData?.type === "admin") {
         return (
-            <AdminTable />
+            <AdminDashboard />
         );
     }
     return <p>Rol desconocido.</p>;
