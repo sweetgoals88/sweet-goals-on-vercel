@@ -49,10 +49,12 @@ export type CustomerEntity = _UserEntity & {
     prototypes: string[]
 };
 
+export type AdminPermissions = "read" | "all";
+
 export type AdminEntity = _UserEntity & {
     type: AdminLabel,
     admin_code: string,
-    permissions: "read" | "all",
+    permissions: AdminPermissions,
     invited_admins: string[],
 };
 

@@ -12,6 +12,7 @@ import {
   getDocFromServer,
   getDocs,
   limit,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -60,6 +61,7 @@ async function getPrototypeInternalReadings(prototype: PrototypeEntity): Promise
       query(
         FirebaseConfiguration.INTERNAL_READING,
         where(documentId(), "in", prototype.internal_readings),
+        orderBy("datetime", "desc"),
         limit(20)
       )
     );
@@ -96,6 +98,7 @@ async function getPrototypeExternalReadings(prototype: PrototypeEntity): Promise
       query(
         FirebaseConfiguration.EXTERNAL_READING,
         where(documentId(), "in", prototype.external_readings),
+        orderBy("datetime", "desc"),
         limit(20)
       )
     );

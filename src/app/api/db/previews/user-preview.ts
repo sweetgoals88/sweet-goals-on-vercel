@@ -1,4 +1,4 @@
-import { AdminLabel, CustomerLabel } from "../entities/user-entity";
+import { AdminLabel, AdminPermissions, CustomerLabel } from "../entities/user-entity";
 import { getNotificationPreviewFromJson, NotificationPreview } from "./notification-preview";
 import { getPrototypePreviewFromJson, PrototypePreview } from "./prototype-preview";
 
@@ -14,7 +14,14 @@ export type CustomerPreview = {
 };
 
 export type AdminPreview = {
+    id: string;
+    name: string;
+    surname: string;
+    email: string;
     type: AdminLabel;
+    adminCode: string;
+    permissions: AdminPermissions;
+    invitedAdmins: string[];
 };
 
 export type UserPreview = CustomerPreview | AdminPreview;
