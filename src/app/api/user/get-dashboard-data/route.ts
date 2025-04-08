@@ -1,12 +1,12 @@
-import { NextApiRequest } from "next";
 import { cookies } from "next/headers";
 import { UserEntity } from "../../db/entities/user/entity";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { authenticateUser } from "../../lib/authenticate-user";
 import { getDashboardDataOfCustomer } from "../../db/entities/user/customer/behavior/get-dashboard-data-of-customer";
 import { getDashboardDataOfAdmin } from "../../db/entities/user/admin/behavior/get-dashboard-data-of-admin";
+import { NextRequest } from "next/server";
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: NextRequest) {
   try {
     const userSnapshot = await authenticateUser(() => cookies(), {});
     const user = userSnapshot.data() as UserEntity;
