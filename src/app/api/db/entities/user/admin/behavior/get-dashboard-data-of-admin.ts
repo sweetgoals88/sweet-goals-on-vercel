@@ -18,6 +18,7 @@ import { PrototypeEntity } from "../../../prototype/entity";
 import { PrototypeEntry } from "../../../prototype/entry";
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
 import { UserEntity } from "../../entity";
+import { getNotificationsOfUser } from "../../behavior/get-notifications-of-user";
 
 export async function getAdminAsEntry(adminId: string): Promise<AdminEntry> {
     try {
@@ -137,10 +138,11 @@ export async function getDashboardDataOfAdmin(
   id: string
 ): Promise<AdminPreview> {
     try {
-        const [ adminEntries, customerEntries, prototypeEntries ] = await Promise.all([
+        const [ adminEntries, customerEntries, prototypeEntries, [ notifications, lastNotification ] ] = await Promise.all([
           getAdminEntriesOfAdmin(admin),
           getCustomerEntriesOfAdmin(),
-          getPrototypeEntriesOfAdmin()
+          getPrototypeEntriesOfAdmin(),
+          getNotificationsOfUser(id)
         ]);
       
         return {
@@ -155,7 +157,9 @@ export async function getDashboardDataOfAdmin(
           permissions: admin.permissions,
           prototypes: prototypeEntries,
           surname: admin.surname,
-          type: admin.type
+          type: admin.type,
+          notifications,
+          lastNotification
         };
     } catch (error) {
         throw ApiResponseError.aggregateWith("Couldn't get the admin's dashboard data", error, 500);

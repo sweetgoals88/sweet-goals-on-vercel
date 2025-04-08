@@ -1,6 +1,6 @@
-import { PanelSpecificationsEntity, UserCustomizationIconTypes } from "../entities/prototype-entity";
 import { ExternalReadingPreview, getExternalReadingPreviewFromJson } from "../external-reading/preview";
 import { getInternalReadingPreviewFromJson, InternalReadingPreview } from "../internal-reading/preview";
+import { PanelSpecificationsEntity, UserCustomizationIconTypes } from "./entity";
 
 export type PrototypePreview = {
     id: string;

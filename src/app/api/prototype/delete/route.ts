@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { FirebaseConfiguration } from "../../../db/firebase-configuration";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
-import { makeErrorResponse } from "../../../lib/make-error-response";
 import { verifyJwt } from "@/app/api/lib/jwt";
+import { FirebaseConfiguration } from "../../db/firebase-configuration";
+import { makeErrorResponse } from "../../lib/make-error-response";
 
 // Delete the prototype with the id given for the logged in user. Only for customers (not admins).
 // When deleted, the prototype is not deleted from the database, but only unlinked from the 

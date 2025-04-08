@@ -1,5 +1,4 @@
 import { encryptString } from "@/app/api/lib/encryption";
-import { validateIsNewUser } from "../../entity";
 import { AdminRegistrationInput } from "../input";
 import { AdminEntity } from "../entity";
 import { addDoc, arrayUnion, updateDoc } from "firebase/firestore";
@@ -7,6 +6,7 @@ import { FirebaseConfiguration } from "@/app/api/db/firebase-configuration";
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
 import crypto from "crypto";
 import { validateIsAuthorizingAdmin } from "./validate-is-authorizing-admin";
+import { validateIsNewUser } from "../../behavior/validate-is-new-user";
 
 export async function signupAsAdmin(input: AdminRegistrationInput) {
   try {
@@ -31,7 +31,7 @@ export async function signupAsAdmin(input: AdminRegistrationInput) {
     };
 
     const admin = await addDoc(FirebaseConfiguration.USER, adminPayload);
-    await updateDoc(authorizingAdmin, {
+    await updateDoc(authorizingAdmin.ref, {
       invited_admins: arrayUnion(admin.id),
     });
   } catch (error) {

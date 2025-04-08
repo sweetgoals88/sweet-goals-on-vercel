@@ -1,60 +1,53 @@
-import { NextRequest, NextResponse } from "next/server";
-import { FirebaseConfiguration } from "../../db/firebase-configuration";
-import { query, where, getDocsFromServer, updateDoc } from "firebase/firestore";
+import { NextRequest } from "next/server";
+import { updateDoc } from "firebase/firestore";
 import { makeErrorResponse } from "../../lib/make-error-response";
-import { verifyJwt } from "@/app/api/lib/jwt";
+import { authenticateUser } from "../../lib/authenticate-user";
+import { cookies } from "next/headers";
+import { _UserUpdateInput } from "../../db/entities/user/_user/input";
+import { validateIsNewUser } from "../../db/entities/user/behavior/validate-is-new-user";
+import { encryptString, validateString } from "../../lib/encryption";
+import { UserEntity } from "../../db/entities/user/entity";
+import { ApiResponseError } from "../../lib/api-response-error";
+import { _UserEntity } from "../../db/entities/user/_user/entity";
 
 // Updates the user profile with the new data given
-export async function PUT(request: NextRequest) {
+export async function POST(request: NextRequest) {
     try {
-        const token = request.headers.get("Authorization")?.replace("Bearer ", "");
-        if (!token) {
-            return makeErrorResponse("Authorization token is required", 401);
+        const user = await authenticateUser(() => cookies(), {});
+        const payload = JSON.parse(await request.text()) as _UserUpdateInput;
+
+        // do validation of the payload
+
+        const { name, surname } = payload;
+        const updateEntries: { [K in keyof _UserEntity]?: _UserEntity[K] }[] = [
+            { name }, { surname }
+        ];
+
+        if (payload.email.length !== 0) {
+            await validateIsNewUser(payload.email);
+            updateEntries.push({ email: payload.email });
         }
 
-        let userPayload;
-        try {
-            userPayload = await verifyJwt(token);
-        } catch (error) {
-            return makeErrorResponse("Invalid or expired token", 401);
+        if (payload.newPassword.length !== 0 && payload.oldPassword.length !== 0) {
+            const userData = user.data() as UserEntity;
+            const isSamePassword = await validateString(payload.oldPassword, userData.encrypted_password);
+            if (!isSamePassword) {
+                throw new ApiResponseError("The given password doesn't match the previous password set", 400);
+            }
+    
+            const newPassword = await encryptString(payload.newPassword);
+            updateEntries.push({ encrypted_password: newPassword });
         }
 
-        const userId = userPayload._id;
-        if (!userId) {
-            return makeErrorResponse("Invalid user ID in token", 400);
-        }
-
-        let body;
-        try {
-            body = JSON.parse(await request.text());
-        } catch (error) {
-            return makeErrorResponse("Invalid JSON body", 400);
-        }
-
-        const { name, email, otherFields } = body; // Replace `otherFields` with actual fields to update
-        if (!name && !email && !otherFields) {
-            return makeErrorResponse("At least one field to update is required", 400);
-        }
-
-        const userQuery = query(FirebaseConfiguration.USER, where("_id", "==", userId));
-        const userSnapshot = await getDocsFromServer(userQuery);
-
-        if (userSnapshot.empty) {
-            return makeErrorResponse("User not found", 404);
-        }
-
-        const userDocRef = userSnapshot.docs[0].ref;
-
-        // Actualizar los campos proporcionados
-        const updates: Record<string, any> = {};
-        if (name) updates.name = name;
-        if (email) updates.email = email;
-        if (otherFields) Object.assign(updates, otherFields);
-
-        await updateDoc(userDocRef, updates);
-
-        return NextResponse.json({ success: true, message: "User profile updated successfully" });
+        const updateObject = Object.fromEntries(
+            updateEntries.flatMap(entry => Object.entries(entry))
+        );
+        console.log("This is the update object", updateObject);
+        await updateDoc(user.ref, updateObject);
+        
+        return Response.json({ message: "Successful operation" }, { status: 200 })
     } catch (error: any) {
+        console.log(error);
         return makeErrorResponse("Couldn't update the user profile", 500, error);
     }
 }

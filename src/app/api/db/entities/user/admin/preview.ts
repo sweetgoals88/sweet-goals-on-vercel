@@ -1,3 +1,4 @@
+import { NotificationPreview } from "../../notification/preview";
 import { PrototypeEntry } from "../../prototype/entry";
 import { CustomerEntry } from "../customer/entry";
 import { AdminLabel, AdminPermissions } from "./entity";
@@ -16,4 +17,6 @@ export type AdminPreview = {
     lastCustomer: string | null,
     prototypes: PrototypeEntry[],
     lastPrototype: string | null,
+    notifications: NotificationPreview[],
+    lastNotification: string | null,
 };

@@ -1,7 +1,6 @@
 import { NextApiRequest } from "next";
 import { authenticateUser } from "../../lib/authenticate-user";
 import { cookies } from "next/headers";
-import { UserEntity } from "../../db/entities/user/entity";
 import { makeErrorResponse } from "../../lib/make-error-response";
 
 export async function POST(request: NextApiRequest) {
