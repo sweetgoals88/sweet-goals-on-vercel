@@ -1,10 +1,9 @@
-import { NextApiRequest } from "next";
 import { authenticateUser } from "../../lib/authenticate-user";
 import { cookies } from "next/headers";
-import { UserEntity } from "../../db/entities/user/entity";
 import { makeErrorResponse } from "../../lib/make-error-response";
+import { NextRequest } from "next/server";
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: NextRequest) {
   try {
     await authenticateUser(() => cookies(), {});
     console.log("Authentication passed");

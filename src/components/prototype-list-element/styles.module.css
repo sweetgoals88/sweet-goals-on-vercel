@@ -1,9 +1,7 @@
-:root {
-    --button-size: 38px;
-    --button-separation: 4px;
-}
-
 .prototypeListElement {
+    --button-separation: 4px;
+    --button-size: 38px;
+
     box-shadow: none;
     box-sizing: border-box;
     text-transform: none;
@@ -19,7 +17,7 @@
     justify-content: space-between;
     border-radius: 5px;
     gap: 4px;
-    height: calc(var(--button-separation) * 2 + var(--button-size));
+    height: calc(var(--button-separation, 4px) * 2 + var(--button-size, 38px));
     border: 1px solid transparent;
     border-radius: 6px;
 }
@@ -36,10 +34,10 @@
 
 .prototypeListElement_button {
     position: absolute;
-    top: var(--button-separation);
-    right: var(--button-separation);
-    width: var(--button-size);
-    height: var(--button-size);
+    top: var(--button-separation, 4px);
+    right: var(--button-separation, 4px);
+    width: var(--button-size, 38px);
+    height: var(--button-size, 38px);
     box-sizing: border-box;
     box-shadow: none;
     padding: 0;

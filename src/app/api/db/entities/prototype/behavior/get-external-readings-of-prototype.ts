@@ -1,10 +1,11 @@
-import { documentId, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { documentId, getDocs, limit, orderBy, query, where, doc, getDoc } from "firebase/firestore";
 import { ExternalReadingPreview } from "../../external-reading/preview";
 import { PrototypeEntity } from "../entity";
 import { FirebaseConfiguration } from "../../../firebase-configuration";
 import { ExternalReadingEntity } from "../../external-reading/entity";
 import { panelSpecificationsEntityToPreview } from "../preview";
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
+import { parseEntity } from "../../../parse-entity";
 
 export async function getExternalReadingsOfPrototype(prototype: PrototypeEntity): Promise<[ExternalReadingPreview[], string | null]> {
   try {

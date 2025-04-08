@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { makeErrorResponse } from "../../lib/make-error-response";
-import { UserRegistrationInput, signupAsAdmin, signupAsCustomer } from "../../db/entities/user/entity";
+import { UserRegistrationInput } from "../../db/entities/user/entity";
+import { signupAsCustomer } from "../../db/entities/user/customer/behavior/signup-as-customer";
+import { signupAsAdmin } from "../../db/entities/user/admin/behavior/signup-as-admin";
+import { ApiResponseError } from "../../lib/api-response-error";
 
 export async function POST(request: NextRequest) {
     try {
-        const input = await request.json() as UserRegistrationInput;
+        const input: UserRegistrationInput = JSON.parse(await request.text());
 
-        // Verifica que el tipo de usuario sea válido
-        if (!input.type || (input.type !== "customer" && input.type !== "admin")) {
-            return NextResponse.json({ error: "Tipo de usuario inválido" }, { status: 400 });
+        if (!input.type) {
+            throw new ApiResponseError(`El tipo de usuario no fue dado`, 400);
         }
 
-        // Registra al usuario dependiendo de su tipo
+        if (input.type !== "customer" && input.type !== "admin") {
+            throw new ApiResponseError(`Tipo de usuario inválido (${input["type"]})`, 400);
+        }
+
         if (input.type === "customer") {
             await signupAsCustomer(input);
         } else {
@@ -19,8 +24,8 @@ export async function POST(request: NextRequest) {
         }
         
         return NextResponse.json({ message: "Successful operation" }, { status: 201 });
-
     } catch (error) {
+        console.log(error);
         return makeErrorResponse("Couldn't sign the user up", 500, error);
     }
 }

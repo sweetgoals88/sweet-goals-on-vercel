@@ -17,12 +17,13 @@ export async function validateIsAuthorizingAdmin(email: string, adminCode: strin
             throw new ApiResponseError(`There is not admin with the given email (${email})`, 400);
         }
         
-        const admin = parseEntity<AdminEntity>(admins.docs[0]);
+        const adminSnapshot = admins.docs[0];
+        const admin = adminSnapshot.data() as AdminEntity;
         if (admin.admin_code !== adminCode) {
             throw new ApiResponseError(`The code provided (${adminCode}) doesn't match the admin's`, 400);
         }
 
-        return admins.docs[0].ref;
+        return adminSnapshot;
     } catch (error) {
         throw ApiResponseError.aggregateWith("Couldn't validate the authorizing admin", error, 500);
     }

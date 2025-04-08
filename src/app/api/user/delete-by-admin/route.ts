@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
-import { query, where, getDocsFromServer, updateDoc, deleteDoc } from "firebase/firestore";
+import { query, where, getDocsFromServer, updateDoc, deleteDoc, documentId, getDocs } from "firebase/firestore";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { verifyJwt } from "@/app/api/lib/jwt";
+import { authenticateUser } from "../../lib/authenticate-user";
+import { cookies } from "next/headers";
+import { ApiResponseError } from "../../lib/api-response-error";
+import { AdminEntity } from "../../db/entities/user/admin/entity";
+import { UserEntity } from "../../db/entities/user/entity";
 
 // Deletes the account of a user (either an admin or customer); only allowed
 // for admins. When their accounts are deleted, regular users' prototypes are
@@ -13,48 +18,32 @@ import { verifyJwt } from "@/app/api/lib/jwt";
 // transferred to D). Admins can delete any customer, but if they want to 
 // delete an admin, they must be the one who invited them.
 
-export async function DELETE(request: NextRequest) {
+export async function POST(request: NextRequest) {
     try {
-        const token = request.headers.get("Authorization")?.replace("Bearer ", "");
-        if (!token) {
-            return makeErrorResponse("Authorization token is required", 401);
-        }
+        const currentUserSnapshot = await authenticateUser(() => cookies(), {});
+        const currentUser = currentUserSnapshot.data() as AdminEntity;
 
-        let userPayload;
-        try {
-            userPayload = await verifyJwt(token);
-        } catch (error) {
-            return makeErrorResponse("Invalid or expired token", 401);
-        }
-
-        const { userIdToDelete } = await request.json();
+        const { userIdToDelete } = JSON.parse(await request.text());
         if (!userIdToDelete) {
-            return makeErrorResponse("User ID to delete is required", 400);
+            throw new ApiResponseError("User ID to delete is required", 400);
         }
 
-        const currentUserQuery = query(FirebaseConfiguration.USER, where("_id", "==", userPayload._id));
-        const currentUserSnapshot = await getDocsFromServer(currentUserQuery);
-
-        if (currentUserSnapshot.empty) {
-            return makeErrorResponse("Current user not found", 404);
-        }
-
-        const currentUser = currentUserSnapshot.docs[0].data();
         if (currentUser.type !== "admin") {
-            return makeErrorResponse("Only admins can delete accounts", 403);
+            throw new ApiResponseError("Only admins can delete accounts", 403);
         }
 
-        const userToDeleteQuery = query(FirebaseConfiguration.USER, where("_id", "==", userIdToDelete));
-        const userToDeleteSnapshot = await getDocsFromServer(userToDeleteQuery);
+        const usersQuery = query(FirebaseConfiguration.USER, where(documentId(), "==", userIdToDelete));
+        const usersSnapshot = await getDocsFromServer(usersQuery);
 
-        if (userToDeleteSnapshot.empty) {
-            return makeErrorResponse("User to delete not found", 404);
+        if (usersSnapshot.empty) {
+            throw new ApiResponseError("User to delete not found", 404);
         }
 
-        const userToDelete = userToDeleteSnapshot.docs[0].data();
+        const userToDeleteSnapshot = usersSnapshot.docs[0];
+        const userToDelete = userToDeleteSnapshot.data() as UserEntity;
 
-        if (userToDelete.type === "admin" && userToDelete.invitedBy !== currentUser._id) {
-            return makeErrorResponse("Admins can only delete admins they invited", 403);
+        if (userToDelete.type === "admin" && !currentUser.invited_admins.includes(userToDeleteSnapshot.id)) {
+            throw new ApiResponseError("Admins can only delete admins they invited", 403);
         }
 
         if (userToDelete.type === "customer") {
@@ -63,12 +52,12 @@ export async function DELETE(request: NextRequest) {
             const prototypesSnapshot = await getDocsFromServer(prototypesQuery);
 
             for (const prototypeDoc of prototypesSnapshot.docs) {
-                await updateDoc(prototypeDoc.ref, { active: false, apiKey: null, activationCode: null });
+                await updateDoc(prototypeDoc.ref, { active: false, operational: false });
             }
         } else if (userToDelete.type === "admin") {
             // Transferir admins invitados al admin actual
             const invitedAdminsQuery = query(FirebaseConfiguration.USER, where("invitedBy", "==", userIdToDelete));
-            const invitedAdminsSnapshot = await getDocsFromServer(invitedAdminsQuery);
+            const invitedAdminsSnapshot = await getDocs(invitedAdminsQuery);
 
             for (const invitedAdminDoc of invitedAdminsSnapshot.docs) {
                 await updateDoc(invitedAdminDoc.ref, { invitedBy: currentUser._id });
@@ -76,7 +65,7 @@ export async function DELETE(request: NextRequest) {
         }
 
         // Eliminar la cuenta del usuario
-        await deleteDoc(userToDeleteSnapshot.docs[0].ref);
+        await deleteDoc(usersSnapshot.docs[0].ref);
 
         return NextResponse.json({ success: true, message: "User account deleted successfully" });
     } catch (error: any) {

@@ -25,64 +25,9 @@ export const AdminDashboard: React.FC<{ data: AdminPreview }> = ({ data }) => {
     setCustomers(customers.filter(user => user.id !== userId));
   };
 
-  // Función actualizada para desactivar un prototipo mediante la API
-  const handleDeactivatePrototype = async (prototypeId: string) => {
-    try {
-      const response = await fetch('/api/prototype/table-apis', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prototypeId,
-          active: false
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      
-    } catch (err) {
-      console.error('Error al desactivar el prototipo:', err);
-      setError('Error al desactivar el prototipo');
-    }
-  };
-
-  // Función para cambiar el estado operacional de un prototipo
-  const handleToggleOperational = async (prototypeId: string, currentOperational: boolean) => {
-    try {
-      const response = await fetch('/api/prototype/table-apis', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prototypeId,
-          operational: !currentOperational
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      
-    } catch (err) {
-      console.error('Error al cambiar estado operacional:', err);
-      setError('Error al cambiar estado operacional');
-    }
-  };
-
   // Función para dar de baja un elemento de la tercera tabla
   const handleDeleteThirdItem = (itemId: string) => {
     setAdmins(admins.filter(item => item.id !== itemId));
-  };
-
-  // Función para mostrar más o menos elementos
-  const toggleShowAll = (table: 'users' | 'prototypes' | 'third') => {
-    if (table === 'users') setShowAllUsers(!showAllUsers);
-    if (table === 'prototypes') setShowAllPrototypes(!showAllPrototypes);
-    if (table === 'third') setShowAllThirdTable(!showAllThirdTable);
   };
 
   if (error) return <div className={styles.errorContainer}>{error}</div>;
@@ -147,11 +92,10 @@ export const AdminDashboard: React.FC<{ data: AdminPreview }> = ({ data }) => {
                   <div>Versión</div>
                   <div>Dueño</div>
                   <div>Operacional</div>
-                  <div>Desactivar</div>
                 </div>
                 {prototypes.map((prototype) => (
                   <div key={prototype.id} className={styles.tableRow} style={{
-                    gridTemplateColumns: `repeat(7, 1fr)`
+                    gridTemplateColumns: `repeat(6, 1fr)`
                   }}>
                     <div className={styles.tableCell}>{prototype.id}</div>
                     <div className={styles.tableCell}>{prototype.key.slice(0, 16) + "..."}</div>
@@ -159,20 +103,7 @@ export const AdminDashboard: React.FC<{ data: AdminPreview }> = ({ data }) => {
                     <div className={styles.tableCell}>{prototype.version}</div>
                     <div className={styles.tableCell}>{prototype.owner? `${prototype.owner.name} ${prototype.owner.surname}`: ""}</div>
                     <div className={styles.tableCell}>
-                      <button 
-                        onClick={() => handleToggleOperational(prototype.id, prototype.operational)}
-                        className={prototype.operational ? styles.activeButton : styles.inactiveButton}
-                      >
-                        {prototype.operational ? 'Operativo' : 'No operativo'}
-                      </button>
-                    </div>
-                    <div className={styles.tableCell}>
-                      <button 
-                        onClick={() => handleDeactivatePrototype(prototype.id)}
-                        className={styles.deleteButton}
-                      >
-                        Desactivar
-                      </button>
+                      {prototype.operational ? 'Operativo' : 'No operativo'}
                     </div>
                   </div>
                 ))}
