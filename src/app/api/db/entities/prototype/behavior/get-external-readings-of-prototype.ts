@@ -16,7 +16,7 @@ export async function getExternalReadingsOfPrototype(prototype: PrototypeEntity)
       query(
         FirebaseConfiguration.EXTERNAL_READING,
         where(documentId(), "in", prototype.external_readings),
-        orderBy("datetime", "desc"),
+        orderBy("datetime", "asc"),
         limit(20)
       )
     );

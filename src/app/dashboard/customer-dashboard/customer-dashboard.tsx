@@ -26,6 +26,7 @@ export function CustomerDashboard(props: {
                 key={prototype.id}
                 data={prototype}
                 isDeletable={props.data.prototypes.length > 1}
+                isSelected={index === selectedPrototypeIndex}
                 editPrototype={(prototypeData) => {
                     const prototypesArray = [...props.data.prototypes];
                     prototypesArray[index] = prototypeData;

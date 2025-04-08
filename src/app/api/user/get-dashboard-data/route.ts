@@ -23,6 +23,7 @@ export async function POST(request: NextApiRequest) {
       return makeErrorResponse("User type not recognized", 400);
     }
   } catch (error) {
+    console.log(error);
     return makeErrorResponse("Couldn't get the dashboard data", 500, error);
   }
 }

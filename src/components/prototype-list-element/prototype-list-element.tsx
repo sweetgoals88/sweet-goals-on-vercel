@@ -40,8 +40,9 @@ type MiniFormState<T> = {
 export default function PrototypeListElement(props: {
   data: PrototypePreview;
   isDeletable?: boolean;
-  editPrototype: (data: PrototypePreview) => void,
-  deletePrototype: () => void,
+  isSelected: boolean;
+  editPrototype: (data: PrototypePreview) => void;
+  deletePrototype: () => void;
   onClick: () => void
 }) {
   const prototype = props.data;
@@ -96,26 +97,14 @@ export default function PrototypeListElement(props: {
     setMiniFormState({ component, onChange, initialValue });
   };
 
-  const revertPrototypeListElement = () => {
-    setMiniFormIsOpen(false);
-    setIcon(prototype.userCustomization.icon);
-    setLabel(prototype.userCustomization.label);
-    setLocation({
-        latitude: prototype.userCustomization.latitude,
-        longitude: prototype.userCustomization.longitude,
-        locationName: prototype.userCustomization.locationName,
-    });
-    setSpecifications({...prototype.panelSpecifications});
-  }
-
   const closePrototypeListElement = () => {
     setIsOpen(false);
-    revertPrototypeListElement();
+    setMiniFormIsOpen(false);
   }
 
   const togglePrototypeListElement = () => {
     if (isOpen) {
-      revertPrototypeListElement();
+      setMiniFormIsOpen(false);
     }
     setIsOpen(!isOpen);
   }
@@ -126,28 +115,30 @@ export default function PrototypeListElement(props: {
   return (
     <li
       key={prototype.id}
-      className={`${styles.prototypeListElement}`}
       ref={wrapperReference}
-      onClick={props.onClick}
+      className={`${styles.prototypeListElement}`}
+      data-is-selected={props.isSelected? "true": "false"}
     >
-      <span>{convertIconToComponent(icon)}</span>
-      <span
-        style={{
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          width: "100%",
-          maxWidth: "100%",
-        }}
-      >
-        {label}
-      </span>
+      <button 
+        onClick={props.onClick}
+        className={styles.prototypeListElement_buttonBody}
+        >
+        <span>{convertIconToComponent(icon)}</span>
+        <span
+          style={{
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            width: "100%",
+            maxWidth: "100%",
+          }}
+        >
+          {label}
+        </span>
+      </button>
       <button
         onClick={togglePrototypeListElement}
-        style={{
-          boxShadow: "none",
-          padding: "4px",
-        }}
+        className={styles.prototypeListElement_button}
       >
         {isOpen ? <CircleX /> : <Ellipsis />}
       </button>

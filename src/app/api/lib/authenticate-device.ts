@@ -1,4 +1,4 @@
-import { getPrototypeByKey } from "../db/entities/prototype-entity";
+import { validateIsAuthorizedPrototype } from "../db/entities/prototype/behavior/validate-is-authorized-prototype";
 import { ApiResponseError } from "./api-response-error";
 
 export async function authenticateDevice(request: Request) {
@@ -13,7 +13,7 @@ export async function authenticateDevice(request: Request) {
         let prototypeReference;
 
         try {
-            prototypeReference = await getPrototypeByKey(prototypeKey);
+            prototypeReference = await validateIsAuthorizedPrototype(prototypeKey);
         } catch (error) {
             throw ApiResponseError.aggregateWith("The provided key is invalid", error, 400);
         }

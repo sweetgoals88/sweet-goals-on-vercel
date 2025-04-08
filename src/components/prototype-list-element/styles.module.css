@@ -1,6 +1,11 @@
+:root {
+    --button-size: 38px;
+    --button-separation: 4px;
+}
+
 .prototypeListElement {
     box-shadow: none;
-    padding: 4px;
+    box-sizing: border-box;
     text-transform: none;
     font-family: "Montserrat", sans-serif;
     background-color: white;
@@ -14,11 +19,55 @@
     justify-content: space-between;
     border-radius: 5px;
     gap: 4px;
+    height: calc(var(--button-separation) * 2 + var(--button-size));
+    border: 1px solid transparent;
+    border-radius: 6px;
 }
 
 .prototypeListElement:hover {
     transform: none;
-    background-color: rgb(199, 199, 199);
     color: black;
     box-shadow: none;
+}
+
+.prototypeListElement[data-is-selected="true"] {
+    border: 1px solid #2d404e;
+}
+
+.prototypeListElement_button {
+    position: absolute;
+    top: var(--button-separation);
+    right: var(--button-separation);
+    width: var(--button-size);
+    height: var(--button-size);
+    box-sizing: border-box;
+    box-shadow: none;
+    padding: 0;
+}
+
+.prototypeListElement_button:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.prototypeListElement_buttonBody {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    letter-spacing: normal;
+    text-transform: none;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    padding: 12px;
+    gap: 1rem;
+    justify-content: start;
+    text-align: left;
+    box-shadow: none;
+    border-radius: 6px;
+}
+
+.prototypeListElement_buttonBody:hover {
+    transform: none;
 }
