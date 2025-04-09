@@ -1,5 +1,5 @@
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
-import { query, where, getDocsFromServer } from "firebase/firestore";
+import { query, where, getDocs } from "firebase/firestore";
 import { FirebaseConfiguration } from "../../../firebase-configuration";
 import { parseEntity } from "../../../parse-entity";
 import { PrototypeEntity } from "../entity";
@@ -13,7 +13,7 @@ import { PrototypeEntity } from "../entity";
  */
 export async function validateIsAuthorizedPrototype(prototypeKey: string) {
     const results = query(FirebaseConfiguration.PROTOTYPE, where("key", "==", prototypeKey));
-    const resultsArray = await getDocsFromServer(results);
+    const resultsArray = await getDocs(results);
   
     if (resultsArray.size > 1) {
       throw new ApiResponseError("There was an internal database configuration error", 500);

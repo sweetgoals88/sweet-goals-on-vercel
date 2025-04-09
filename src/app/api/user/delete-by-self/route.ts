@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
-import { query, where, getDocsFromServer, deleteDoc, updateDoc, documentId, getDocs } from "firebase/firestore";
+import { query, where, deleteDoc, updateDoc, documentId, getDocs } from "firebase/firestore";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { verifyJwt } from "@/app/api/lib/jwt";
 import { authenticateUser } from "../../lib/authenticate-user";

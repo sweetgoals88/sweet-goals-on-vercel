@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
-import { query, where, getDocsFromServer, updateDoc, deleteDoc, documentId, getDocs } from "firebase/firestore";
+import { query, where, updateDoc, deleteDoc, documentId, getDocs } from "firebase/firestore";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { verifyJwt } from "@/app/api/lib/jwt";
 import { authenticateUser } from "../../lib/authenticate-user";
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         }
 
         const usersQuery = query(FirebaseConfiguration.USER, where(documentId(), "==", userIdToDelete));
-        const usersSnapshot = await getDocsFromServer(usersQuery);
+        const usersSnapshot = await getDocs(usersQuery);
 
         if (usersSnapshot.empty) {
             throw new ApiResponseError("User to delete not found", 404);
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
         if (userToDelete.type === "customer") {
             // Marcar prototipos como inactivos y eliminar claves API y códigos de activación
             const prototypesQuery = query(FirebaseConfiguration.PROTOTYPE, where("userId", "==", userIdToDelete));
-            const prototypesSnapshot = await getDocsFromServer(prototypesQuery);
+            const prototypesSnapshot = await getDocs(prototypesQuery);
 
             for (const prototypeDoc of prototypesSnapshot.docs) {
                 await updateDoc(prototypeDoc.ref, { active: false, operational: false });

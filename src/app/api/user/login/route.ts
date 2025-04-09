@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
-import { query, where, getDocsFromServer } from "firebase/firestore";
+import { query, where, getDocs } from "firebase/firestore";
 import { signJwt } from "@/app/api/lib/jwt";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { validateString } from "../../lib/encryption";
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
         }
 
         const userQuery = query(FirebaseConfiguration.USER, where("email", "==", email));
-        const users = await getDocsFromServer(userQuery);
+        const users = await getDocs(userQuery);
 
         if (users.empty) {
             return makeErrorResponse("Invalid email or password", 401);
