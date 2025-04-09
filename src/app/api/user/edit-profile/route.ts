@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
         if (payload.newPassword.length !== 0 && payload.oldPassword.length !== 0) {
             const userData = user.data() as UserEntity;
             const isSamePassword = await validateString(payload.oldPassword, userData.encrypted_password);
+            
             if (!isSamePassword) {
                 throw new ApiResponseError("The given password doesn't match the previous password set", 400);
             }
