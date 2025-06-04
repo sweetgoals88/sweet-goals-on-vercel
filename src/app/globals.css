@@ -13,19 +13,19 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url('/images/backgound.jpeg'); /* Imagen de fondo */
-  background-size: cover;
-  background-position: center;
+  background-color: white;
   font-family: 'Montserrat', sans-serif;
   position: relative; /* Para contener el pseudo-elemento */
 }
 
 .h222{
-  font-size: 2.5em;
-  color: #fff;
+  margin-top: -10 rem ;
+  font-size: 4.5em;
+  font-weight: bold;
+  color: #ffffff;
   text-align: center;
   margin: 6%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+  margin-bottom: 2%;
 }
 
 body::before {
@@ -35,7 +35,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(8, 14, 51, 0.5); /* Opacidad negra */
+  background: rgb(255, 255, 255); /* Opacidad negra */
   backdrop-filter: blur(5px); /* Borrosidad */
   z-index: -1; /* Asegurar que esté detrás del contenido */
 }
@@ -54,17 +54,25 @@ main {
 }
 
 .header {
+  position: absolute;
+  top: 15px;
+  left: 10%;
+  z-index: 2;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
-  color: #34556D;
+  background-color: #cfcbcb53;
+  color: #ffffff;
   padding-left: 20px;
+  border-radius: 50px;
+  border: 1px solid #ffffff; /* Añadir borde */
+  
 }
 
 .header .logo-title {
+  font-size: 5 rem;
   display: flex;
   align-items: center;
 }
@@ -96,6 +104,27 @@ nav a {
 
 .intro {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-top: 80px;
+}
+
+.intro2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  padding-top: 35px;
+  background-color: #0F1F2C;
+  width: 85%;
+  margin: 0 auto; 
+  margin-top: 30px;
+}
+
+.intro3 {
+ display: flex;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
   margin-top: 80px;
@@ -104,6 +133,7 @@ nav a {
 .intro-image {
   width: 50%;
   height: auto;
+  margin-bottom: 40px;
 }
 
 .intro-text {
@@ -111,34 +141,102 @@ nav a {
 }
 
 .card {
-  width: 80%; /* Aumentar el ancho */
-  background: linear-gradient(to left, #f7faf77a, #ffffff77);
+  width: 90%; /* Aumentar el ancho */
   color: #4A4A4A;
   display: flex; /* Cambiar a flexbox */
-  justify-content: space-between; /* Espacio entre columnas */
-  padding: 50px;
-  gap: 16px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 0 auto 20px; /* Centrar horizontalmente y añadir margen inferior */
   opacity: 0;
   transform: translateY(20px) scale(0.95);
   animation: fadeInUpScale 1s forwards; /* Añadir animación */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Añadir transición */
 }
 
-.card:hover {
-  transform: translateY(-10px) scale(1.02); /* Efecto hover */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+.intro-imgtext{
+  display: flex;
+  flex-direction: row; /* Cambiar a fila */
+  align-items: start; /* Alinear verticalmente */
+  gap: 5%; /* Espacio entre imagen y texto */
+  width: 90%;
+
+}
+
+.texto-int{
+    font-size: 1.5rem; 
+    margin: 0px;/* Aumentar tamaño de la fuente */
+}
+
+.texto-int2{
+    font-size: 1.5rem; 
+    margin: 0px;
+    color: white;/* Aumentar tamaño de la fuente */
 }
 
 .card-title {
-  font-size: 1.5em; /* Aumentar tamaño de la fuente */
+  font-size: 3rem; /* Aumentar tamaño de la fuente */
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #ffffff; /* Cambiar color del título */
+  color: #016630; /* Cambiar color del título */
   text-transform: uppercase; /* Transformar texto a mayúsculas */
-  letter-spacing: 1.5px; /* Espaciado entre letras */
+  margin-bottom: -2.7%;
+}
+
+
+.card-title2 {
+  font-size: 3rem; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  color: #34556D; /* Cambiar color del título */
+  text-transform: uppercase; /* Transformar texto a mayúsculas */
+}
+.card-title3 {
+  font-size: 3rem; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  color: #34556D; /* Cambiar color del título */
+  text-transform: uppercase;
+  text-align: end; /* Transformar texto a mayúsculas */
+}
+
+.card-title33 {
+  font-size: 3rem; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  color: #4fabec; /* Cambiar color del título */
+  text-transform: uppercase;
+  text-align: end; /* Transformar texto a mayúsculas */
+}
+
+.tittle-solucion {
+  position: relative;
+  font-size: 2rem; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  color: #4fabec; /* Cambiar color del título */
+  text-transform: uppercase;
+  text-align: center; 
+  margin-bottom: 50px; /* Añadir margen inferior */
+  margin-top: 50px; /* Añadir margen superior */
+}
+
+.tittle-solucion2 {
+  position: absolute;
+  top: 100;
+  font-size: 2rem; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  color: #1f4967; /* Cambiar color del título */
+  text-transform: uppercase;
+  text-align: center; 
+  z-index: 22;/* Añadir margen superior */
+}
+
+
+.card-title22 {
+  font-size: 3rem; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  color: #7fffbb; /* Cambiar color del título */
+  text-transform: uppercase; /* Transformar texto a mayúsculas */
+  margin-bottom: -2.7%;
+}
+
+.card-title222 {
+  font-size: 3rem; /* Aumentar tamaño de la fuente */
+  font-weight: bold;
+  color: #81c9fc; /* Cambiar color del título */
+  text-transform: uppercase; /* Transformar texto a mayúsculas */
 }
 
 .card-content {
@@ -149,11 +247,26 @@ nav a {
   text-align: justify; /* Justificar el texto */
 }
 
+.card-content3{
+  flex: 1; /* Asegurar que el contenido ocupe el espacio disponible */
+  font-size: 1.1em; /* Aumentar tamaño de la fuente */
+  line-height: 1.6; /* Mejorar la legibilidad */
+  color: #333; /* Cambiar color del texto */
+  text-align:end; /* Justificar el texto */
+}
+
+.card-content4{
+  flex: 1; /* Asegurar que el contenido ocupe el espacio disponible */
+  font-size: 1.1em; /* Aumentar tamaño de la fuente */
+  line-height: 1.6; /* Mejorar la legibilidad */
+  color: #333; /* Cambiar color del texto */
+  text-align: center; /* Justificar el texto */
+}
+
 .intro-image {
   flex: 1; /* Asegurar que la imagen ocupe el espacio disponible */
   max-width: 50%; /* Limitar el ancho máximo de la imagen */
   height: auto;
-  border-radius: 10px; /* Añadir bordes redondeados */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Añadir sombra */
   transition: transform 0.3s ease; /* Añadir transición */
 }
@@ -162,6 +275,15 @@ nav a {
   transform: scale(1.05); /* Efecto hover */
 }
 
+.knowMore{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  color: #fff;
+  background-color: #34556D;
+  border-radius: 0%;
+}
 
 .footer {
     position: relative;
@@ -363,8 +485,9 @@ footer .wave#wave4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: rgba(0, 0, 0, 0.211);
   font-size: 2rem;
+  border-radius: 60px 60px 60px 60px; 
   z-index: 1; /* Asegurar que esté encima del carrusel */
 }
 
@@ -399,8 +522,7 @@ button {
   color: #2D404E;
   background-color: #fff;
   border: none;
-  border-radius: 10px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
@@ -506,7 +628,6 @@ button:active {
   justify-content: center;
   margin: 40px 0;
   padding: 20px;
-  background: linear-gradient(to right, #f7faf7, #ffffff);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -540,7 +661,7 @@ button:active {
   color: #fff;
   background-color: #016630;
   border: none;
-  border-radius: 10px;
+  border-radius: 0%;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -604,10 +725,10 @@ button:active {
 
 .promo-banner {
   position: absolute;
-  top: 640px; /* Posición ajustada */
+  top: 470px; /* Posición ajustada */
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(to right, #36df7c, #016630);
+  background-color: #016630;
   color: white;
   padding: 10px 20px;
   border-radius: 10px;
@@ -617,7 +738,8 @@ button:active {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  z-index: 9999; /* Asegurar que esté al frente */
+  z-index: 9999;
+  border: 1px solid #ffffff; /* Añadir borde blanco */
 }
 
 .promo-banner p {
@@ -658,7 +780,10 @@ button:active {
   margin: 1rem 0;
 }
 
-.card-problema, .card-justificacion, .card-metodologia {
+.card-problema1 {
+  position: absolute;
+  top: 50%;
+  left: 2%;
   background-color: #f4f4f488;
   padding: 1.2rem;
   border-radius: 16px;
@@ -666,6 +791,69 @@ button:active {
   transition: transform 0.3s ease;
   text-align: center;
 }
+
+.card-problema2 {
+  position: absolute;
+  top: 10%;
+  left: 6%;
+  background-color: #f4f4f488;
+  padding: 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+
+.card-problema3 {
+  position: absolute;
+  top: 90%;
+  left: 10%;
+  background-color: #f4f4f488;
+  padding: 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+
+.card-problema4, .card-justificacion, .card-metodologia {
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  background-color: #f4f4f488;
+  padding: 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.card-problema5, .card-justificacion, .card-metodologia {
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  background-color: #f4f4f488;
+  padding: 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.card-problema6, .card-justificacion, .card-metodologia {
+  position: absolute;
+  top: 90%;
+  left: 70%;
+  background-color: #f4f4f488;
+  padding: 1.2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
 
 .card-problema:hover, .card-justificacion:hover, .card-metodologia:hover {
   transform: translateY(-5px);
@@ -681,14 +869,23 @@ button:active {
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-
-
 .info{
+  padding-top: 40%;
   color:white;
-  width: 80%;
+  width: 100%;
   text-align: center;
-  margin: auto;
-  text-justify: auto;
+  margin-top: 0px;
+  background: linear-gradient(
+    to bottom,
+    #fff 3%,
+    #fff -4%,
+    #38688a 28%,
+    #0f1f2c 40% 60%,
+    #38688a 70%,
+    #58b7c6 90%,
+    #fff 100%
+  );
+  padding-bottom: 40%;
 }
 
 .imagenes-resultados img{
@@ -701,8 +898,210 @@ button:active {
 
 .titulo-seccion{
   font-size: 2.5em;
-  color: #fff;
+  color: #ffffff;
+  text-align:start;
+  margin: 6%;
+  margin-bottom: 2%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+}
+
+
+.titulo-seccion_ANT{
+  font-size: 2.5em;
+  color: #38688a;
   text-align: center;
   margin: 6%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+  margin-bottom: 2%;
+}
+
+.texto-solucion{
+  font-size: 1.5em;
+  color: #383838;
+  text-align: center;
+  margin: 20px auto; /* Centrar y añadir margen */
+  max-width: 800px; /* Limitar el ancho máximo */
+  line-height: 1.6; /* Mejorar la legibilidad */
+}
+
+.antecedentes-section{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0px;
+  width: 100%;
+  margin-bottom: 80px;
+}
+
+.problem-cards-section{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.justificacion-section{
+    margin-top:100px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items:baseline;
+    width: 100%
+}
+
+.texto_antecedentes{
+  font-size: 1.5rem;
+  color: #090828;
+  text-align: center;
+  margin: 20px auto; 
+  max-width: 40%; 
+  line-height: 1.6; 
+}
+
+.texto_problematica{
+  font-size: 1.5em;
+  color: #ffffff;
+  text-align: center;
+  margin-top:3px ; /* Centrar y añadir margen */
+  max-width: 800px; /* Limitar el ancho máximo */
+  line-height: 1.6; /* Mejorar la legibilidad */
+}
+
+
+.texto_justificacion{
+  font-size: 1.5em;
+  color: #ffffff;
+  text-align:start;
+  margin-top:3px ; /* Centrar y añadir margen */
+  max-width: 800px; /* Limitar el ancho máximo */
+  line-height: 1.6;
+}
+
+.hero-container{
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.hero-text{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.slogan{
+  font-size: 1.2rem;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 10px; /* Añadir margen superior */
+  margin-bottom: 20px; /* Añadir margen inferior */
+}
+
+
+.antecedentes-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  width: 100%;
+  margin-bottom: 80px;
+}
+
+
+.antecedentes-section .ant-img1 img{
+  width: 400px;
+  border-radius: 20px;
+  position: absolute;
+  top: 80%;
+  left: 75%;
+}
+
+
+.antecedentes-section .ant-img2 img{
+  width: 400px;
+  border-radius: 20px;
+  position: absolute;
+  top: 10%;
+  left: -2%;
+}
+
+
+.antecedentes-section .ant-img3 img{
+  width: 100px;
+  border-radius: 20px;
+  position: absolute;
+  top: 112%;
+  left: 47%;
+}
+
+.ns-img img{
+  width: 500px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.full-moon img{
+  position:absolute;
+
+  top: 86%;
+  left: 45%;
+  width: 100px;
+  border-radius: 20px;
+  margin-top: 20px;
+  z-index: 1;
+}
+
+
+.ns-img1 img{
+  position:absolute;
+  top: 8%;
+  left: -3%;
+  width: 300px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+
+.ns-img2 img{
+  position:absolute;
+  top: 76%;
+  left: 80%;
+  width: 300px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.ns-img3 img{
+  position:absolute;
+  top: 8%;
+  left: 62%;
+  width: 250px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.ns-img4 img{
+  position:absolute;
+  top: 65%;
+  left: 15%;
+  width: 300px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+
+
+.core-value-gif {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+.core-value-gif img {
+  width: 20%;
+  height: auto;
 }
