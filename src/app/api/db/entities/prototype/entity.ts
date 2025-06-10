@@ -4,6 +4,13 @@ export type PanelSpecificationsEntity = {
   temperature_rate: number
 };
 
+export type UserCustomizationType = {
+  latitude: number,
+  longitude: number,
+  label: string,
+  icon: UserCustomizationIconTypes,
+};
+
 export type UserCustomizationIconTypes = "default" | "battery" | "sun" | "database" | "microchip";
 
 export type PrototypeEntity = {
@@ -15,12 +22,7 @@ export type PrototypeEntity = {
     external_readings: string[],
     internal_readings: string[],
     version_id: string,
-    user_customization: {
-      latitude: number,
-      longitude: number,
-      label: string,
-      icon: UserCustomizationIconTypes,
-    },
+    user_customization: UserCustomizationType,
     panel_specifications: PanelSpecificationsEntity
 };
 

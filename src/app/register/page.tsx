@@ -1,43 +1,122 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { JSX, useMemo, useState } from "react";
 import Link from "next/link";
 import styles from "./styles.module.css";
+import { AdminRegistrationInput, AdminRegistrationInputFragment } from "../api/db/entities/user/admin/input";
+import { CustomerRegistrationInput, CustomerRegistrationInputFragment } from "../api/db/entities/user/customer/input";
+import { _UserRegistrationInput } from "../api/db/entities/user/_user/input";
+import { CustomerLabel } from "../api/db/entities/user/customer/entity";
+import { AdminLabel } from "../api/db/entities/user/admin/entity";
+import CustomerPanelSpecsFormFragment from "./customer-form-fragments/panel-specs-form-fragment";
+import RegularInputComponent from "@/components/inputs/regular-input-component/regular-input-component";
+import SelectInputComponent from "@/components/inputs/select-input-component/select-input-component";
+import AdminFormFragment from "./admin-form-fragments/admin-form-fragment";
+import UserCustomizationFormFragment from "./customer-form-fragments/user-customization-form-fragment";
+import PanelSpecsFormFragment from "./customer-form-fragments/panel-specs-form-fragment";
+import VerificationCodeFormFragment from "./customer-form-fragments/verification-code-form-fragment";
+import UserFormFragment from "./user-form-fragment";
+import FormFragmentWrapper from "./form-fragment-wrapper";
+import { FormFragmentProps } from "./form-fragment-props";
 
-// Definir el tipo de los datos del formulario
-interface RegistroFormData {
-    nombre: string;
-    apellido: string;
-    email: string;
-    password: string;
-    type: "customer" | "admin";
-    activation_code?: string;
-    user_customization?: {
-        latitude: number;
-        longitude: number;
-        label: string;
-        icon: string;
+export function SignupForm() {
+    const [ userType, setUserType ] = useState<CustomerLabel | AdminLabel | null>(null);
+    const [ formStatus, setFormStatus ] = useState(0);
+    const [ formIndex, setFormIndex ] = useState(0);
+
+    const [ formData, setFormData ] = useState<object[]>([]);
+
+    const customerFragments = [ VerificationCodeFormFragment, PanelSpecsFormFragment, UserCustomizationFormFragment ];
+    const adminFragments = [ AdminFormFragment ];
+
+    const fragments: ((props: FormFragmentProps<any>) => JSX.Element)[] = useMemo(() => {
+        if (userType === null) return [];
+
+        const selectedPath = userType === "customer"? customerFragments: adminFragments;
+        return selectedPath.slice(0, formStatus + 1);
+    }, [ userType ]);
+
+    const saveFragmentData = (data: object) => {
+        setFormData(previous => {
+            const newData = [...previous];
+            newData[formIndex] = data;
+            return newData;
+        });
+    }
+    const goBack = () => setFormIndex(previous => Math.max(0, previous - 1));
+    const goNext = (data: object) => {
+        if (formIndex === fragments.length - 1) {
+            saveFragmentData(data);
+            // submit form
+            return;
+        }
+
+        if (formIndex === 0) {
+            const userType = (data as CustomerRegistrationInputFragment | AdminRegistrationInputFragment).type;
+            setUserType(userType);
+        }
+
+        saveFragmentData(data);
+
+        if (formIndex === formStatus) {
+            setFormStatus((previous) => previous + 1);
+        }
+
+        setFormIndex((previous) => previous + 1);
     };
-    panel_specifications?: any;
-    adminEmail?: string;
-    adminCode?: string;
+
+    return (
+        <div className="relative">
+            <div className="absolute w-full h-full top-0" style={{ left: `${- formIndex * 100}%` }}>
+                <FormFragmentWrapper
+                    goBack={goBack}
+                    onSuccess={goNext}
+                    onError={() => {}}
+                    isLast={fragments.length === 0}
+                    position={0}
+                    inputs={
+                        (props: FormFragmentProps<_UserRegistrationInput & { type: CustomerLabel | AdminLabel }>) => 
+                            UserFormFragment({ 
+                                ...props, 
+                                onUserTypeChange: (userType) => setUserType(userType),
+                                userType
+                            }
+                        )
+                    }
+                    />
+                {
+                    fragments.map((fragment, index) => (
+                        <FormFragmentWrapper
+                            goBack={goBack}
+                            onSuccess={goNext}
+                            onError={() => {}}
+                            isLast={index + 1 === fragments.length}
+                            position={index + 1}
+                            key={index}
+                            inputs={fragment}
+                            />
+                    ))
+                }
+            </div>
+        </div>
+    );
 }
 
 export default function Registro() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<RegistroFormData>();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<_UserRegistrationInput & { type: CustomerLabel | AdminLabel }>();
     const router = useRouter();
     const [mensajeError, setMensajeError] = useState("");
     const [loading, setLoading] = useState(false);
     const userType = watch("type");
 
-    const onSubmit = async (data: RegistroFormData) => {
+    const onSubmit = async (data: CustomerRegistrationInput | AdminRegistrationInput) => {
         try {
             setLoading(true);
 
             const payload: any = {
-                name: data.nombre,
-                surname: data.apellido,
+                name: data.name,
+                surname: data.surname,
                 email: data.email,
                 password: data.password,
                 type: data.type,
@@ -79,106 +158,11 @@ export default function Registro() {
     };
 
     return (
-        <div className={styles.container}>
-            
-           <div>
-                <img src="/images/register.png" alt="Logo" className={styles.logo} />
-                <h1 className={styles.d}>Regístrate</h1>
-           </div>
-
-            <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
-
-                <p>Nombre:</p>
-                <input
-                    type="text"
-                    placeholder="Nombre"
-                    {...register("nombre", { required: "El nombre es obligatorio" })}
-                    className={styles.input}
-                />
-                {errors.nombre && <p className={styles.error}>{errors.nombre.message}</p>}
-
-                <p>Apellido:</p>
-                <input
-                    type="text"
-                    placeholder="Apellido"
-                    {...register("apellido", { required: "El apellido es obligatorio" })}
-                    className={styles.input}
-                />
-                {errors.apellido && <p className={styles.error}>{errors.apellido.message}</p>}
-
-                <p>Correo:</p>
-                <input
-                    type="email"
-                    placeholder="Correo"
-                    {...register("email", {
-                        required: "El correo es obligatorio",
-                        pattern: { value: /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/, message: "Correo inválido" }
-                    })}
-                    className={styles.input}
-                />
-                {errors.email && <p className={styles.error}>{errors.email.message}</p>}
-
-                <p>Contraseña:</p>
-                <input
-                    type="password"
-                    placeholder="Contraseña"
-                    {...register("password", { required: "La contraseña es obligatoria", minLength: { value: 6, message: "Mínimo 6 caracteres" } })}
-                    className={styles.input}
-                />
-                {errors.password && <p className={styles.error}>{errors.password.message}</p>}
-
-                <p>Tipo de usuario:</p>
-                <select {...register("type", { required: "Selecciona un tipo de usuario" })} className={styles.input}>
-                    <option value="">Selecciona...</option>
-                    <option value="customer">Cliente</option>
-                    <option value="admin">Administrador</option>
-                </select>
-                {errors.type && <p className={styles.error}>{errors.type.message}</p>}
-
-                {/* Campos adicionales según el tipo de usuario */}
-                {userType === "customer" && (
-                    <>
-                        <p>Código de Activación:</p>
-                        <input
-                            type="text"
-                            placeholder="Código de activación"
-                            {...register("activation_code", { required: "El código de activación es obligatorio" })}
-                            className={styles.input}
-                        />
-                        {errors.activation_code && <p className={styles.error}>{errors.activation_code.message}</p>}
-                    </>
-                )}
-
-                {userType === "admin" && (
-                    <>
-                        <p>Correo del Administrador Autorizante:</p>
-                        <input
-                            type="email"
-                            placeholder="Correo del administrador"
-                            {...register("adminEmail", { required: "Este campo es obligatorio" })}
-                            className={styles.input}
-                        />
-                        {errors.adminEmail && <p className={styles.error}>{errors.adminEmail.message}</p>}
-
-                        <p>Código del Administrador:</p>
-                        <input
-                            type="text"
-                            placeholder="Código de administrador"
-                            {...register("adminCode", { required: "Este campo es obligatorio" })}
-                            className={styles.input}
-                        />
-                        {errors.adminCode && <p className={styles.error}>{errors.adminCode.message}</p>}
-                    </>
-                )}
-
-                {mensajeError && <p className={styles.error}>{mensajeError}</p>}
-
-                <Link href="/login" className={styles.loginLink}>&lt;- Regresar</Link>
-
-                <button type="submit" className={styles.loginButton} disabled={loading}>
-                    {loading ? "Registrando..." : "Registrar usuario"}
-                </button>
-            </form>
+        <div>
+            <h1>
+                Registrarse
+            </h1>
+            <SignupForm />
         </div>
     );
 }
