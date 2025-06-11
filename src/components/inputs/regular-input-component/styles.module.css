@@ -1,0 +1,32 @@
+.regular-input-component__input {
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.regular-input-component__error-message {
+    position: absolute;
+    left: 0;
+    font-size: 0.75rem;
+    transition: 500ms ease-in-out top, 500ms ease-in-out opacity;
+}
+
+.regular-input-component__div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.regular-input-component__div[data-is-error="false"] .regular-input-component__error-message {
+    top: calc(100% - 0.75rem);
+    opacity: 0;
+}
+
+.regular-input-component__div[data-is-error="true"] .regular-input-component__error-message {
+    top: 105%;
+    opacity: 1;
+}

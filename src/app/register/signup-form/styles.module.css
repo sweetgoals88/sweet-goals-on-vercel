@@ -1,0 +1,35 @@
+.signup-form__window-wrapper {
+    position: relative;
+    width: 50vw;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.signup-form__window {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: 500ms ease-in-out left;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+}
+
+.signup-form__button-tray {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.signup-form__button {
+}
+
+.signup-form__button--previous {
+    grid-column-start: 1;
+}
+
+.signup-form__button--next {
+    grid-column-start: 2;
+}

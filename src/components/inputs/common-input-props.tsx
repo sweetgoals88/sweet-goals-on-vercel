@@ -7,4 +7,5 @@ export type CommonInputProps<K extends string, InputType> = {
     isError: boolean;
     register: UseFormRegisterReturn<K>;
     onChange?: ChangeEventHandler<InputType>;
+    className?: string;
 };

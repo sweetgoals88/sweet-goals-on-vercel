@@ -1,0 +1,11 @@
+.select-input-component__div {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-input-component__select {
+    height: 100%;
+    box-sizing: border-box;
+    padding-inline: 1rem;
+}
+
