@@ -9,6 +9,7 @@ import { encryptString, validateString } from "../../lib/encryption";
 import { UserEntity } from "../../db/entities/user/entity";
 import { ApiResponseError } from "../../lib/api-response-error";
 import { _UserEntity } from "../../db/entities/user/_user/entity";
+import makeOkResponse from "../../lib/ok-response";
 
 // Updates the user profile with the new data given
 export async function POST(request: NextRequest) {
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
         console.log("This is the update object", updateObject);
         await updateDoc(user.ref, updateObject);
         
-        return Response.json({ message: "Successful operation" }, { status: 200 })
+        return makeOkResponse();
     } catch (error: any) {
         console.log(error);
         return makeErrorResponse("Couldn't update the user profile", 500, error);

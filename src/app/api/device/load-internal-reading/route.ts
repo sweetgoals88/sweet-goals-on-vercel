@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import { addDoc, arrayUnion, Timestamp, updateDoc } from "firebase/firestore";
 import { authenticateDevice } from "../../lib/authenticate-device";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST(request: NextRequest) {
     return await authenticateDevice(request)
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
             await updateDoc(prototype, {
                 internal_readings: arrayUnion(reading.id)
             });
-            return Response.json({ message: "Successful operation" });
+            return makeOkResponse();
         })
         .catch(error => makeErrorResponse("Couldn't load the internal reading", 500, error))
     ;

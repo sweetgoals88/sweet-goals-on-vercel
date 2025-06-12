@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { ApiResponseError } from "../../lib/api-response-error";
 import { AdminEntity } from "../../db/entities/user/admin/entity";
 import { UserEntity } from "../../db/entities/user/entity";
+import makeOkResponse from "../../lib/ok-response";
 
 // Deletes the account of a user (either an admin or customer); only allowed
 // for admins. When their accounts are deleted, regular users' prototypes are
@@ -67,7 +68,7 @@ export async function POST(request: NextRequest) {
         // Eliminar la cuenta del usuario
         await deleteDoc(usersSnapshot.docs[0].ref);
 
-        return NextResponse.json({ success: true, message: "User account deleted successfully" });
+        return makeOkResponse();
     } catch (error: any) {
         return makeErrorResponse("Couldn't delete the user account", 500, error);
     }

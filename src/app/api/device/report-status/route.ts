@@ -3,6 +3,7 @@ import { makeErrorResponse } from "../../lib/make-error-response";
 import { authenticateDevice } from "../../lib/authenticate-device";
 import { updateDoc } from "firebase/firestore";
 import { ApiResponseError } from "../../lib/api-response-error";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST(request: NextRequest) {
     try {
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
             operational: booleanStatus
         });
 
-        return Response.json({ message: "Successful operation" });
+        return makeOkResponse();
     } catch (error) {
         return makeErrorResponse("Couldn't report operational status", 500, error);
     }

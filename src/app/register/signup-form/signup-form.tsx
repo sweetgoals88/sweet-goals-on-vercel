@@ -15,6 +15,8 @@ import { FormFragmentProps } from "../form-fragment-props";
 import styles from "./styles.module.css";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { UserRegistrationInput } from "@/app/api/db/entities/user/entity";
+import apiCall from "@/utils/api-call";
+import { API_ENDPOINTS } from "@/app/api/endpoints";
 
 type FormFragmentTuple = [ 
     formReturn: UseFormReturn<any>, 
@@ -105,7 +107,7 @@ export default function SignupForm() {
                 user_customization: userCustomization,
             };
 
-            
+            apiCall(API_ENDPOINTS.USER.REGISTER, data);
         }
     };
 

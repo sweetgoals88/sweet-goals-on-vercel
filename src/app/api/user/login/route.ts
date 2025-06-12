@@ -7,6 +7,7 @@ import { validateString } from "../../lib/encryption";
 import { parseEntity } from "../../db/parse-entity";
 import { UserEntity, UserJwtPayload } from "../../db/entities/user/entity";
 import { cookies } from "next/headers";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST(request: NextRequest) {
     try {
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
             sameSite: "lax",
         });
 
-        const response = NextResponse.json({ success: true, type: userData.type });
+        const response = makeOkResponse({ success: true, type: userData.type });
 
         response.headers.set("Access-Control-Allow-Credentials", "true");
         response.headers.set("Access-Control-Allow-Origin", "*");

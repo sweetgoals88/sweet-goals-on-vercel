@@ -5,6 +5,7 @@ import { authenticateUser } from "../../lib/authenticate-user";
 import { getDashboardDataOfCustomer } from "../../db/entities/user/customer/behavior/get-dashboard-data-of-customer";
 import { getDashboardDataOfAdmin } from "../../db/entities/user/admin/behavior/get-dashboard-data-of-admin";
 import { NextRequest } from "next/server";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,11 +13,11 @@ export async function POST(request: NextRequest) {
     const user = userSnapshot.data() as UserEntity;
 
     if (user.type === "customer") {
-      return Response.json(
+      return makeOkResponse(
         await getDashboardDataOfCustomer(user, userSnapshot.id)
       );
     } else if (user.type === "admin") {
-      return Response.json(
+      return makeOkResponse(
         await getDashboardDataOfAdmin(user, userSnapshot.id)
       );
     } else {

@@ -17,6 +17,7 @@ import { PrototypeEntity } from "../../db/entities/prototype/entity";
 import { ApiResponseError } from "../../lib/api-response-error";
 import { getExternalReadingsAfterLastReading } from "../../db/entities/prototype/behavior/get-external-readings-after-last-reading";
 import { getInternalReadingsAfterLastReading } from "../../db/entities/prototype/behavior/get-internal-readings-after-last-reading";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST(request: NextRequest) {
   try {
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
     const nextLastInternalReading = internalReadings.length > 0? internalReadings[internalReadings.length - 1]: null;
     const nextLastExternalReading = externalReadings.length > 0? externalReadings[externalReadings.length - 1]: null;
 
-    return NextResponse.json({ 
+    return makeOkResponse({ 
         externalReadings, 
         internalReadings, 
         nextLastExternalReading ,

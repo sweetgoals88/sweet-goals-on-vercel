@@ -4,6 +4,7 @@ import { makeErrorResponse } from "../../lib/make-error-response";
 import { addDoc, arrayUnion, DocumentData, getDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { authenticateDevice } from "../../lib/authenticate-device";
 import { ExternalReadingEntity } from "../../db/entities/external-reading/entity";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST(request: NextRequest) {
     return await authenticateDevice(request)
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
                 external_readings: arrayUnion(reading.id)
             });
 
-            return Response.json({ message: "Successful operation" });
+            return makeOkResponse();
         })
         .catch(error => makeErrorResponse("Couldn't load the external reading", 500, error))
     ;

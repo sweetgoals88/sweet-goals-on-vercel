@@ -4,6 +4,7 @@ import { UserRegistrationInput } from "../../db/entities/user/entity";
 import { signupAsCustomer } from "../../db/entities/user/customer/behavior/signup-as-customer";
 import { signupAsAdmin } from "../../db/entities/user/admin/behavior/signup-as-admin";
 import { ApiResponseError } from "../../lib/api-response-error";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST(request: NextRequest) {
     try {
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
             await signupAsAdmin(input);
         }
         
-        return NextResponse.json({ message: "Successful operation" }, { status: 201 });
+        return makeOkResponse();
     } catch (error) {
         console.log(error);
         return makeErrorResponse("Couldn't sign the user up", 500, error);

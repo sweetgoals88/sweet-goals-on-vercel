@@ -2,6 +2,7 @@ import { makeErrorResponse } from "../lib/make-error-response";
 import { NextRequest } from "next/server";
 import { geocode } from "../lib/geocoding";
 import { ApiResponseError } from "../lib/api-response-error";
+import makeOkResponse from "../lib/ok-response";
 
 export type LocationOption = {
     latitude: number;
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
         longitude: result.latitude
       })); 
       
-      return Response.json(mappedResults);
+      return makeOkResponse(mappedResults);
     } catch (error) {
         return makeErrorResponse("Geocoding failed", 500, error);
     }

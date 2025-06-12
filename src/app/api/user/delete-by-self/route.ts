@@ -6,6 +6,7 @@ import { verifyJwt } from "@/app/api/lib/jwt";
 import { authenticateUser } from "../../lib/authenticate-user";
 import { cookies } from "next/headers";
 import { UserEntity } from "../../db/entities/user/entity";
+import makeOkResponse from "../../lib/ok-response";
 
 // Deletes the account of the user themselves (i. e., the use who wants to 
 // delete their account must be the one to call this endpoint)
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
 
         await deleteDoc(userSnapshot.ref);
 
-        return NextResponse.json({ success: true, message: "User account deleted successfully" });
+        return makeOkResponse();
     } catch (error: any) {
         return makeErrorResponse("Couldn't delete the user account", 500, error);
     }

@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { makeErrorResponse } from "../../lib/make-error-response";
+import makeOkResponse from "../../lib/ok-response";
 
 export async function POST() {
     try {
@@ -15,7 +16,7 @@ export async function POST() {
             expires: new Date(0),
         });
 
-        const response = NextResponse.json({ success: true, message: "User logged out successfully" });
+        const response = makeOkResponse({ success: true, message: "User logged out successfully" });
 
         // Configurar encabezados CORS
         response.headers.set("Access-Control-Allow-Credentials", "true");
