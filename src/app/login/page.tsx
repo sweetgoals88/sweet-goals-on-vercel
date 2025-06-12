@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 import React from "react";
 import { API_ENDPOINTS } from "../api/endpoints";
 import { useRouter } from "next/navigation";
+import apiCall from "@/utils/api-call";
 
 export default function LoginPage() {
     const [mensaje, setMensaje] = useState("");
@@ -16,12 +17,17 @@ export default function LoginPage() {
 
     const login = async ({ username, password }: { username: string; password: string }) => {
         try {
-            const response = await fetch(API_ENDPOINTS.USER.LOGIN, {
-              method: "POST",
-              headers: { "Content-Type": "text/plain" },
-              body: JSON.stringify({ email: username, password }),
-              credentials: "include",
-            });
+          const response = await apiCall(
+            API_ENDPOINTS.USER.LOGIN,
+            { email: username, password }
+          );
+
+            // const response = await fetch(API_ENDPOINTS.USER.LOGIN, {
+            //   method: "POST",
+            //   headers: { "Content-Type": "text/plain" },
+            //   body: JSON.stringify({ email: username, password }),
+            //   credentials: "include",
+            // });
 
             const data = await response.json();
 

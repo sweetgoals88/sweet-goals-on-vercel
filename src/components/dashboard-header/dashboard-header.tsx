@@ -6,6 +6,7 @@ import React, { useRef, useState } from "react";
 import { useOutsideAlerter } from "@/utils/use-outside-alerter";
 import { API_ENDPOINTS } from "@/app/api/endpoints";
 import { useRouter } from "next/navigation";
+import apiCall from "@/utils/api-call";
 
 type Props = React.HTMLAttributes<HTMLHeadingElement> & {
   data: UserPreview;
@@ -78,16 +79,17 @@ export function UserInfoButton({ name, surname, id }: UserInfoButtonProps) {
             <button
               onClick={async () => {
                 try {
-                  await fetch(
-                    API_ENDPOINTS.USER.LOGOUT,
-                    {
-                      method: "POST",
-                      credentials: "include",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                    }
-                  );
+                  await apiCall(API_ENDPOINTS.USER.LOGOUT);
+                  // await fetch(
+                  //   API_ENDPOINTS.USER.LOGOUT,
+                  //   {
+                  //     method: "POST",
+                  //     credentials: "include",
+                  //     headers: {
+                  //       "Content-Type": "application/json",
+                  //     },
+                  //   }
+                  // );
                   router.push("/login");
                 } catch (error) {
                   console.error("Error trying to log out", error);

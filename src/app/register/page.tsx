@@ -9,6 +9,8 @@ import { AdminRegistrationInput } from "../api/db/entities/user/admin/input";
 import { CustomerLabel } from "../api/db/entities/user/customer/entity";
 import { CustomerRegistrationInput } from "../api/db/entities/user/customer/input";
 import SignupForm from "./signup-form/signup-form";
+import apiCall from "@/utils/api-call";
+import { API_ENDPOINTS } from "../api/endpoints";
 
 export default function Registro() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<_UserRegistrationInput & { type: CustomerLabel | AdminLabel }>();
@@ -43,11 +45,12 @@ export default function Registro() {
                 payload.adminCode = data.adminCode;
             }
 
-            const respuesta = await fetch(`${process.env.API_ENDPOINT}/user/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
+            const respuesta = await apiCall<Response>(API_ENDPOINTS.USER.REGISTER, payload);
+            // const respuesta = await fetch(`${process.env.API_ENDPOINT}/user/register`, {
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify(payload),
+            // });
 
             const resultado = await respuesta.json();
 

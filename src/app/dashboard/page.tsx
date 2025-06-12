@@ -12,6 +12,7 @@ import {
 } from "../api/db/entities/user/preview";
 import { AdminPreview } from "../api/db/entities/user/admin/preview";
 import { useRouter } from "next/navigation";
+import apiCall from "@/utils/api-call";
 
 export default function DashboardPage() {
   const [userData, setUserData] = useState<UserPreview | null>(null);
@@ -20,22 +21,24 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchData = async () =>
-      fetch(API_ENDPOINTS.USER.IS_LOGGED_IN, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "text/plain",
-        },
-      })
-        .then(() =>
-          fetch(API_ENDPOINTS.USER.GET_DASHBOARD_DATA, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              "Content-Type": "text/plain",
-            },
-          })
-        )
+      apiCall(API_ENDPOINTS.USER.IS_LOGGED_IN)
+      // fetch(API_ENDPOINTS.USER.IS_LOGGED_IN, {
+      //   method: "POST",
+      //   credentials: "include",
+      //   headers: {
+      //     "Content-Type": "text/plain",
+      //   },
+      // })
+        // .then(() =>
+        //   fetch(API_ENDPOINTS.USER.GET_DASHBOARD_DATA, {
+        //     method: "POST",
+        //     credentials: "include",
+        //     headers: {
+        //       "Content-Type": "text/plain",
+        //     },
+        //   })
+        // )
+        .then(() => apiCall<Response>(API_ENDPOINTS.USER.GET_DASHBOARD_DATA))
         .then((response) => response.json())
         .then((json) => {
           if (json.type === "customer") {

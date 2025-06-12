@@ -104,6 +104,8 @@ export default function SignupForm() {
                 type: userType,
                 user_customization: userCustomization,
             };
+
+            
         }
     };
 

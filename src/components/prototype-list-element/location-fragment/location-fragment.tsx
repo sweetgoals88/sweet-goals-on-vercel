@@ -4,6 +4,7 @@ import debounce from "lodash.debounce";
 import { OnChangeProps } from "../prototype-list-element";
 import { LocationOption } from "@/app/api/geocoding/route";
 import { API_ENDPOINTS } from "@/app/api/endpoints";
+import apiCall from "@/utils/api-call";
 
 type DisplayLocationOption = {
   label: string;
@@ -34,7 +35,8 @@ export default function LocationFragment(props: OnChangeProps<LocationOption>) {
       if (!query) return;
 
       try {
-        const response = await fetch(`${API_ENDPOINTS.GEOCODING}?query=${encodeURIComponent(query)}`);
+        const response = await apiCall(`${API_ENDPOINTS.GEOCODING}?query=${encodeURIComponent(query)}`, null, "GET");
+        // const response = await fetch(`${API_ENDPOINTS.GEOCODING}?query=${encodeURIComponent(query)}`);
         const data: LocationOption[] = await response.json();
 
         const formatted = data.map((result) => (displayFromLocation(result)));
