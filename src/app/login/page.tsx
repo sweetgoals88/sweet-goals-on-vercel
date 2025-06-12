@@ -9,6 +9,7 @@ import React from "react";
 import { API_ENDPOINTS } from "../api/endpoints";
 import { useRouter } from "next/navigation";
 import apiCall from "@/utils/api-call";
+import ShortNavbarComponent from "@/components/short-navbar-component/short-navbar-component";
 
 export default function LoginPage() {
     const [mensaje, setMensaje] = useState("");
@@ -42,6 +43,8 @@ export default function LoginPage() {
     };
 
     return (
+      <>
+        <ShortNavbarComponent />
         <div className={styles.container}>
             <div className={styles.leftPanel}>
                 <h1 className={styles.welcomeTitle}>¡Bienvenido!</h1>
@@ -80,5 +83,6 @@ export default function LoginPage() {
                 </form>   
             </div>
         </div>
+      </>
     );
 }

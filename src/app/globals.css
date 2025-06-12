@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-@import "tailwindcss";
-
 :root {
   --sidebar-width: 20vw;
   --navbar-height: 10vh;
@@ -55,34 +53,7 @@ main {
   flex: 1;
 }
 
-.header {
-  position: absolute;
-  top: 15px;
-  left: 10%;
-  z-index: 2;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #cfcbcb53;
-  color: #ffffff;
-  padding-left: 20px;
-  border-radius: 50px;
-  border: 1px solid #ffffff; /* Añadir borde */
-  
-}
 
-.header .logo-title {
-  font-size: 5 rem;
-  display: flex;
-  align-items: center;
-}
-
-.header .logo-title img {
-  margin-right: 10px;
-  height: 50px; /* Ajustar el tamaño del logo */
-}
 
 
 

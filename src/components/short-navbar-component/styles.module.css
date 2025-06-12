@@ -1,0 +1,55 @@
+.short-navbar-component {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem 2rem;
+}
+
+.short-navbar-component__logo-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 3rem;
+}
+
+.short-navbar-component__logo-title {
+  font-size: 1.5rem;
+  color: var(--dark-blue);
+  margin-block: 0;
+}
+
+.short-navbar-component__logo {
+  margin-right: 10px;
+  height: 50px; /* Ajustar el tamaño del logo */
+}
+
+.short-navbar-component__list {
+    padding: 0;
+    margin: 0;
+    display: contents;
+}
+
+.short-navbar-component__list > * {
+    margin-right: 0.5rem;
+}
+
+.short-navbar-component__list > *:last-child {
+    margin-right: 0;
+}
+
+.short-navbar-component__button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: max-content;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.short-navbar-component__button > span {
+    margin-left: 0.5rem;
+}

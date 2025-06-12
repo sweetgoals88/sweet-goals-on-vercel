@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX, useMemo, useState } from "react";
-import { AdminRegistrationInputFragment } from "../../api/db/entities/user/admin/input";
+import { AdminRegistrationInput, AdminRegistrationInputFragment } from "../../api/db/entities/user/admin/input";
 import { CustomerRegistrationInput, CustomerRegistrationInputFragment } from "../../api/db/entities/user/customer/input";
 import { _UserRegistrationInput } from "../../api/db/entities/user/_user/input";
 import { CustomerLabel } from "../../api/db/entities/user/customer/entity";
@@ -17,13 +17,18 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { UserRegistrationInput } from "@/app/api/db/entities/user/entity";
 import apiCall from "@/utils/api-call";
 import { API_ENDPOINTS } from "@/app/api/endpoints";
+import { PanelSpecificationsEntity, UserCustomizationType } from "@/app/api/db/entities/prototype/entity";
 
 type FormFragmentTuple = [ 
     formReturn: UseFormReturn<any>, 
     formFragment: (props: FormFragmentProps<any>) => JSX.Element 
 ];
 
-export default function SignupForm() {
+export type SignupFormProps = {
+    onSubmit?: (data: CustomerRegistrationInput | AdminRegistrationInput) => Promise<void>;
+};
+
+export default function SignupForm(props: SignupFormProps) {
     const [ userType, setUserType ] = useState<CustomerLabel | AdminLabel | null>(null);
     const [ formStatus, setFormStatus ] = useState(0);
     const [ formIndex, setFormIndex ] = useState(0);
@@ -93,22 +98,34 @@ export default function SignupForm() {
         if (userType === null) return;
         if (!await validateCurrentFragment()) return;
 
+        let data: CustomerRegistrationInput | AdminRegistrationInput;
+
         if (userType === "customer") {
             const userData = userFragmentFormReturn.getValues();
-            const activationCode = customerFragments[0][0].getValues();
-            const panelSpecifications = customerFragments[1][0].getValues();
-            const userCustomization = customerFragments[2][0].getValues();
+            const activationCode = customerFragments[0][0].getValues() as ActivationCodeFormFragmentOutput;
+            const panelSpecifications = customerFragments[1][0].getValues() as PanelSpecificationsEntity;
+            const userCustomization = customerFragments[2][0].getValues() as UserCustomizationType;
 
-            const data: CustomerRegistrationInput = {
+            data = {
                 ...userData,
                 activation_code: activationCode.activation_code,
                 panel_specifications: panelSpecifications,
                 type: userType,
                 user_customization: userCustomization,
-            };
+            } as CustomerRegistrationInput;
+        } else {
+            const userData = userFragmentFormReturn.getValues();
+            const adminData = adminFragments[0][0].getValues() as AdminFormFragmentOutput;
 
-            apiCall(API_ENDPOINTS.USER.REGISTER, data);
+            data = {
+                ...userData,
+                adminCode: adminData.adminCode,
+                adminEmail: adminData.adminEmail,
+                type: userType,
+            } as AdminRegistrationInput;
         }
+
+        await props.onSubmit?.(data);
     };
 
     return (

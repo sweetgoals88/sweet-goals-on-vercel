@@ -41,6 +41,16 @@ export default function UserCustomizationFormFragment(props: UserCustomizationFo
                 isError={!!props.errors.latitude}
                 errorMessage={props.errors.latitude?.message}
                 />
+            <RegularInputComponent
+                label="Ícono"
+                type="text"
+                placeholder="default"
+                register={props.register("icon", {
+                    required: "El ícono es necesario",
+                })}
+                isError={!!props.errors.icon}
+                errorMessage={props.errors.icon?.message}
+                />
         </FormFragmentWrapper>
     );
 }

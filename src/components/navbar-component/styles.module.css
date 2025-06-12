@@ -1,0 +1,55 @@
+.navbar-component {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #cfcbcb53;
+  color: #ffffff;
+  padding-left: 20px;
+  border-radius: 999px;
+  border: 1px solid #ffffff;
+  transform: translateX(-50%);
+  padding: 1.5rem 2rem;
+}
+
+.navbar-component__logo-title {
+  font-size: 5 rem;
+  display: flex;
+  align-items: center;
+  margin-right: 3rem;
+}
+
+.navbar-component__logo {
+  margin-right: 10px;
+  height: 50px; /* Ajustar el tamaño del logo */
+}
+
+.navbar-component__list {
+    padding: 0;
+    margin: 0;
+    display: contents;
+}
+
+.navbar-component__list > * {
+    margin-right: 0.5rem;
+}
+
+.navbar-component__list > *:last-child {
+    margin-right: 0;
+}
+
+.navbar-component__button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: max-content;
+}
+
+.navbar-component__button > span {
+    margin-left: 0.5rem;
+}

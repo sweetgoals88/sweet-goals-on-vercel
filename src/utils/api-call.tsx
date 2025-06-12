@@ -2,10 +2,9 @@
  * Makes a request to the API endpoint
  * @param endpoint The API endpoint to call
  * @param [method="POST"] The method to use
- * @template K The type of the response
- * @returns Promise<K> The response given by the API
+ * @returns Promise<Response> The response given by the API
  */
-export default function apiCall<K = Response>(endpoint: string, body: object | null = {}, method: "GET" | "POST" = "POST"): Promise<K> {
+export default function apiCall(endpoint: string, body: object | null = {}, method: "GET" | "POST" = "POST"): Promise<Response> {
     return fetch(endpoint, {
         method,
         credentials: "include",
@@ -13,5 +12,5 @@ export default function apiCall<K = Response>(endpoint: string, body: object | n
             "Content-Type": "text/plain",
         },
         body: (body === undefined || body === null)? null: JSON.stringify(body),
-    }) as Promise<K>;
+    }) as Promise<Response>;
 };

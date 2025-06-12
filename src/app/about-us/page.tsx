@@ -1,6 +1,7 @@
 'use client'; // Asegúrate de que esta línea esté al inicio si usas hooks o funcionalidad cliente
-import './stylesinicio.css';
-import './stylesacerca.css';
+
+import styles from "./styles.module.css";
+
 import { IoHome } from "react-icons/io5";
 import { FaUserEdit, FaUserPlus } from "react-icons/fa";
 import { BsFillInfoCircleFill } from "react-icons/bs";
@@ -8,9 +9,10 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 import { ReactNode } from 'react';
+import ShortNavbarComponent from "@/components/short-navbar-component/short-navbar-component";
 
 const Button = ({ children }: { children: ReactNode }) => {
-    return <button className="button">{children}</button>;
+    return <button className={styles["button"]}>{children}</button>;
 };
 
 export default function Acerca() {
@@ -36,60 +38,30 @@ export default function Acerca() {
 
     return (
         <>
-            <header className="header">
-                <div className="logo-title">
-                    <img src="/images/LOGO.png" alt="Logo" className="logo" />
-                    <h1>Solar Sync</h1>
-                </div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link href="/">
-                                <Button><IoHome /> Inicio</Button>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/acerca">
-                                <Button><BsFillInfoCircleFill /> Acerca de Nosotros</Button>
-                            </Link>
-                        </li>
-                        <li>
-                        <Link href="/login">
-                            <Button><FaUserEdit /> Login</Button>
-                        </Link>
-                        </li>
-                        
-                        <li>
-                        <Link href="/login">
-                            <Button><FaUserPlus /> Registro</Button>
-                        </Link>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
+            <ShortNavbarComponent />
 
-            <div className="image-container">
-                <video autoPlay loop muted className="video-background">
+            <div className={styles["image-container"]}>
+                <video autoPlay loop muted className={styles["video-background"]}>
                     <source src="/videos/publi.mp4" type="video/mp4" />
                     Tu navegador no soporta el elemento de video.
                 </video>
-                <div className="image-text">
+                <div className={styles["image-text"]}>
                     <h1>Solar Sync</h1>
                 </div>
             </div>
 
-            <div className="contenido">
-                <div className="problem-carousel-container">
-                    <div className="problem-section">
-                        <h2 className="titulo-seccion">PROBLEMÁTICA</h2>
-                        <p className="texto">
+            <div className={styles["contenido"]}>
+                <div className={styles["problem-carousel-container"]}>
+                    <div className={styles["problem-section"]}>
+                        <h2 className={styles["titulo-seccion"]}>PROBLEMÁTICA</h2>
+                        <p className={styles["texto"]}>
                             El rendimiento de los paneles solares puede disminuir debido a factores como suciedad,
                             sombras, mal funcionamiento o condiciones climáticas adversas. Actualmente, muchos
                             sistemas no cuentan con herramientas para monitorear su eficiencia de manera continua, lo
                             que limita su optimización de producción de energía.
                         </p>
-                        <h2 className="titulo-seccion">ALCANCE</h2>
-                        <ul className="texto">
+                        <h2 className={styles["titulo-seccion"]}>ALCANCE</h2>
+                        <ul className={styles["texto"]}>
                             <li>Instalación de sensores en los paneles solares.</li>
                             <li>Configuración del Raspberry Pi para recopilación y transmisión de datos.</li>
                             <li>Desarrollo de aplicaciones web y móviles.</li>
@@ -97,19 +69,19 @@ export default function Acerca() {
                         </ul>
                     </div>
 
-                    <div className="carousel-section">
-                        <div className="carousel">
-                            <button onClick={prevSlide} className="carousel-button">❮</button>
-                            <img src={images[currentIndex]} alt={`Imagen ${currentIndex + 1}`} className="carousel-image" />
-                            <button onClick={nextSlide} className="carousel-button">❯</button>
+                    <div className={styles["carousel-section"]}>
+                        <div className={styles["carousel"]}>
+                            <button onClick={prevSlide} className={styles["carousel-button"]}>❮</button>
+                            <img src={images[currentIndex]} alt={`Imagen ${currentIndex + 1}`} className={styles["carousel-image"]} />
+                            <button onClick={nextSlide} className={styles["carousel-button"]}>❯</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="resultados-section">
-                <h2 className="titulo-seccion">RESULTADOS</h2>
-                <p className="textol">
+            <div className={styles["resultados-section"]}>
+                <h2 className={styles["titulo-seccion"]}>RESULTADOS</h2>
+                <p className={styles["textol"]}>
                 Se logró implementar un sistema de monitoreo 
                 en tiempo real para paneles solares, capaz de 
                 detectar y alertar automáticamente sobre fallos 
@@ -123,23 +95,23 @@ export default function Acerca() {
                   permitiendo futuras mejoras y la incorporación de nuevas 
                   funcionalidades sin comprometer su rendimiento o accesibilidad.
                 </p>
-                <div className="imagenes-resultados">
+                <div className={styles["imagenes-resultados"]}>
                     <img src="/images/p1.jpeg" alt="Panel solar 1" />
                     <img src="/images/p2.jpeg" alt="Panel solar 2" />
                     <img src="/images/p3.jpeg" alt="Panel solar 3" />
                 </div>
             </div>
 
-            <div className="metodologia-container">
+            <div className={styles["metodologia-container"]}>
                 {/* Imagen al lado izquierdo */}
-                <div className="metodologia-imagen">
+                <div className={styles["metodologia-imagen"]}>
                     <img src="/images/a1.jpg" alt="Metodología" />
                 </div>
 
                 {/* Contenido de Metodología */}
-                <div className="metodologia-section">
-                    <h2 className="titulo-seccion">METODOLOGÍA</h2>
-                    <p className="texto">
+                <div className={styles["metodologia-section"]}>
+                    <h2 className={styles["titulo-seccion"]}>METODOLOGÍA</h2>
+                    <p className={styles["texto"]}>
                         Para llevar a cabo el proyecto, y como es costumbre en los entornos modernos de
                         desarrollo de software, la metodología a trabajar en el equipo será un modelo basado en
                         Scrum con ciclos de entrega de 2 semanas; se planea tener stand-ups diarios, pero por
@@ -147,7 +119,7 @@ export default function Acerca() {
                         reuniones a cada dos o tres días; se busca tener sesiones de sprint review y de sprint
                         planning también.
                     </p>
-                    <p className="texto">
+                    <p className={styles["texto"]}>
                         Se implementará la técnica de pair programming para agilizar la escritura del código fuente
                         y se buscará utilizar DevOps en las fases de pruebas y despliegue del proyecto, ya sea por
                         medio de soluciones de terceros que automaticen los flujos de trabajo, o herramientas
@@ -156,93 +128,93 @@ export default function Acerca() {
                 </div>
             </div>
 
-            <div className="video-section">
-                <h2 className="titulo-seccion">VIDEO PUBLICITARIO</h2>
+            <div className={styles["video-section"]}>
+                <h2 className={styles["titulo-seccion"]}>VIDEO PUBLICITARIO</h2>
                 <video controls>
                     <source src="/videos/comercial.mp4" type="video/mp4" />
                     Tu navegador no soporta el elemento de video.
                 </video>
                 <button
-                    className="drive-button"
+                    className={styles["drive-button"]}
                     onClick={() => alert("Serás redirigido al enlace de Google Drive.")}
                 >
                     Abrir en Google Drive
                 </button>
             </div>
 
-            <div className="equipo-section">
-    <h2 className="titulo-seccion">EQUIPO DE DESARROLLO</h2>
-    <div className="equipo-cards">
+            <div className={styles["equipo-section"]}>
+    <h2 className={styles["titulo-seccion"]}>EQUIPO DE DESARROLLO</h2>
+    <div className={styles["equipo-cards"]}>
         {/* Primera fila con una tarjeta */}
-        <div className="card">
-            <img src="/images/ñañi.jpeg" className="card-img-top" alt="Desarrollador 1" />
-            <div className="card-body">
-                <p className="card-text">Daniela Ortiz - Líder de Proyecto</p>
+        <div className={styles["card"]}>
+            <img src="/images/ñañi.jpeg" className={styles["card-img-top"]} alt="Desarrollador 1" />
+            <div className={styles["card-body"]}>
+                <p className={styles["card-text"]}>Daniela Ortiz - Líder de Proyecto</p>
             </div>
         </div>
 
         {/* Segunda fila con tres tarjetas */}
-        <div className="card">
-            <img src="/images/mariana.jpeg" className="card-img-top" alt="Desarrollador 2" />
-            <div className="card-body">
-                <p className="card-text">Mariana Cano - Desarrolladora Frontend</p>
+        <div className={styles["card"]}>
+            <img src="/images/mariana.jpeg" className={styles["card-img-top"]} alt="Desarrollador 2" />
+            <div className={styles["card-body"]}>
+                <p className={styles["card-text"]}>Mariana Cano - Desarrolladora Frontend</p>
             </div>
         </div>
-        <div className="card">
-            <img src="/images/karol.jpeg" className="card-img-top" alt="Desarrollador 3" />
-            <div className="card-body">
-                <p className="card-text">Karol Gonzales - Desarrollador Backend</p>
+        <div className={styles["card"]}>
+            <img src="/images/karol.jpeg" className={styles["card-img-top"]} alt="Desarrollador 3" />
+            <div className={styles["card-body"]}>
+                <p className={styles["card-text"]}>Karol Gonzales - Desarrollador Backend</p>
             </div>
         </div>
-        <div className="card">
-            <img src="/images/nancy.jpg" className="card-img-top" alt="Desarrollador 4" />
-            <div className="card-body">
-            <p className="card-text">Nancy Moreno - Tester QA</p>
+        <div className={styles["card"]}>
+            <img src="/images/nancy.jpg" className={styles["card-img-top"]} alt="Desarrollador 4" />
+            <div className={styles["card-body"]}>
+            <p className={styles["card-text"]}>Nancy Moreno - Tester QA</p>
                 
             </div>
         </div>
 
         {/* Tercera fila con tres tarjetas */}
-        <div className="card">
-            <img src="/images/edgar.jpeg" className="card-img-top" alt="Desarrollador 5" />
-            <div className="card-body">
-                <p className="card-text">Edgar Ávila - Ingeniero de Datos</p>
+        <div className={styles["card"]}>
+            <img src="/images/edgar.jpeg" className={styles["card-img-top"]} alt="Desarrollador 5" />
+            <div className={styles["card-body"]}>
+                <p className={styles["card-text"]}>Edgar Ávila - Ingeniero de Datos</p>
             </div>
         </div>
-        <div className="card">
-            <img src="/images/ulises.jpg" className="card-img-top" alt="Desarrollador 6" />
-            <div className="card-body">
-            <p className="card-text">Ulises Acosta - Diseñador UX/UI</p>
+        <div className={styles["card"]}>
+            <img src="/images/ulises.jpg" className={styles["card-img-top"]} alt="Desarrollador 6" />
+            <div className={styles["card-body"]}>
+            <p className={styles["card-text"]}>Ulises Acosta - Diseñador UX/UI</p>
             </div>
         </div>
-        <div className="card">
-            <img src="/images/aldo.jpeg" className="card-img-top" alt="Desarrollador 7" />
-            <div className="card-body">
-                <p className="card-text">Aldo Martínez - DevOps</p>
+        <div className={styles["card"]}>
+            <img src="/images/aldo.jpeg" className={styles["card-img-top"]} alt="Desarrollador 7" />
+            <div className={styles["card-body"]}>
+                <p className={styles["card-text"]}>Aldo Martínez - DevOps</p>
             </div>
         </div>
     </div>
 </div>
 
-            <footer className="footer">
-                <div className="waves">
-                    <div className="wave" id="wave1"></div>
-                    <div className="wave" id="wave2"></div>
-                    <div className="wave" id="wave3"></div>
-                    <div className="wave" id="wave4"></div>
+            {/* <footer className={styles["footer"]}>
+                <div className={styles["waves"]}>
+                    <div className={styles["wave"]} id="wave1"></div>
+                    <div className={styles["wave"]} id="wave2"></div>
+                    <div className={styles["wave"]} id="wave3"></div>
+                    <div className={styles["wave"]} id="wave4"></div>
                 </div>
-                <ul className="social_icon">
-                    <li><a href="#"><i className="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#"><i className="fab fa-twitter"></i></a></li>
-                    <li><a href="#"><i className="fab fa-instagram"></i></a></li>
-                    <li><a href="#"><i className="fab fa-youtube"></i></a></li>
+                <ul className={styles["social_icon"]}>
+                    <li><a href="#"><i className={`${styles["fab"]} ${styles["fa-facebook-f"]}`}></i></a></li>
+                    <li><a href="#"><i className={`${styles["fab"]} ${styles["fa-twitter"]}`}></i></a></li>
+                    <li><a href="#"><i className={`${styles["fab"]} ${styles["fa-instagram"]}`}></i></a></li>
+                    <li><a href="#"><i className={`${styles["fab"]} ${styles["fa-youtube"]}`}></i></a></li>
                 </ul>
-                <ul className="menu">
+                <ul className={styles["menu"]}>
                     <li><a href="#">Inicio</a></li>
                     <li><a href="#">Descargar la App</a></li>
                 </ul>
                 <p>&copy; 2025 Solar Sync. Todos los derechos reservados.</p>
-            </footer>
+            </footer> */}
         </>
     );
 }

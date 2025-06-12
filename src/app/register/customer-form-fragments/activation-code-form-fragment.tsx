@@ -11,11 +11,11 @@ export default function ActivationCodeFormFragment(props: ActivationCodeFormFrag
             position={props.position}
             >
             <RegularInputComponent
-                label="Código de Verificación"
+                label="Código de Activación"
                 type="text"
                 placeholder="0123456789ABCDEF"
                 register={props.register("activation_code", {
-                    required: "El código de verificación es necesario",
+                    required: "El código de activación es necesario",
                 })}
                 isError={!!props.errors.activation_code}
                 errorMessage={props.errors.activation_code?.message}
