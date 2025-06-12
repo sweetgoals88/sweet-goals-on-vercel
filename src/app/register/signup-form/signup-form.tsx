@@ -158,16 +158,13 @@ export default function SignupForm(props: SignupFormProps) {
                 </div>
             </div>
             <div className={styles["signup-form__button-tray"]}>
-                {
-                    !isFirst && (
-                        <button 
-                            onClick={goBack}
-                            className={`${styles["signup-form__button"]} ${styles["signup-form__button--previous"]}`}
-                            >
-                            Regresar
-                        </button>
-                    )
-                }
+                <button 
+                    onClick={goBack}
+                    className={`${styles["signup-form__button"]} ${styles["signup-form__button--previous"]}`}
+                    style={{ visibility: isFirst ? "hidden" : "visible" }}
+                    >
+                    Regresar
+                </button>
                 {
                     !isLast 
                     && (

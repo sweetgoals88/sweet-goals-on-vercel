@@ -7,6 +7,8 @@ import SignupForm from "./signup-form/signup-form";
 import apiCall from "@/utils/api-call";
 import { API_ENDPOINTS } from "../api/endpoints";
 import ShortNavbarComponent from "@/components/short-navbar-component/short-navbar-component";
+import Image from "next/image";
+import styles from "./styles.module.css";
 
 export default function Registro() {
     const registerData = async (data: CustomerRegistrationInput | AdminRegistrationInput) => {
@@ -19,14 +21,24 @@ export default function Registro() {
     };
 
     return (
-        <div>
+        <>
             <ShortNavbarComponent />
-            <h1>
-                Registrarse
-            </h1>
-            <SignupForm 
-                onSubmit={registerData}
-                />
-        </div>
+            <div className={styles["register__container"]}>
+                <div className={styles["register__hero-container"]}>
+                    <Image
+                        src="/images/LOGO.png"
+                        width={200}
+                        height={200}
+                        alt="Picture of the author"
+                        />
+                    <h1>
+                        Regístrate
+                    </h1>
+                </div>
+                <SignupForm 
+                    onSubmit={registerData}
+                    />
+            </div>
+        </>
     );
 }
