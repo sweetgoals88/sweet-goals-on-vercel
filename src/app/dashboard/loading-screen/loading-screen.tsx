@@ -18,7 +18,7 @@ export default function LoadingScreen() {
                 <header>
                     <h1 style={{
                         margin: 0,
-                        color: "white",
+                        color: "lightgray",
                         textAlign: "center",
                         fontSize: "2rem"
                     }}>

@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:workers": "tsc -p tsconfig.worker.json",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "watch:workers": "tsc -p tsconfig.worker.json --watch"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

@@ -16,8 +16,8 @@ export type PrototypePreview = {
     panelSpecifications: PanelSpecificationsPreview;
     internalReadings: InternalReadingPreview[];
     externalReadings: ExternalReadingPreview[];
-    oldestInternalReading: string | null;
-    oldestExternalReading: string | null;
+    lastInternalReading: string | null;
+    lastExternalReading: string | null;
 };
 
 export type PanelSpecificationsPreview = {
@@ -57,7 +57,7 @@ export function getPrototypePreviewFromJson(json: any): PrototypePreview {
         panelSpecifications: getPanelSpecificationsPreviewFromJson(json.panelSpecifications),
         internalReadings: json.internalReadings.map(getInternalReadingPreviewFromJson),
         externalReadings: json.externalReadings.map(getExternalReadingPreviewFromJson),
-        oldestInternalReading: json.oldestInternalReading,
-        oldestExternalReading: json.oldestExternalReading
+        lastInternalReading: json.oldestInternalReading,
+        lastExternalReading: json.oldestExternalReading
     };
 }

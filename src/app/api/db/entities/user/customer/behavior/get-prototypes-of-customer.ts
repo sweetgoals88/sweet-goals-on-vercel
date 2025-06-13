@@ -3,10 +3,10 @@ import { CustomerEntity } from "../entity";
 import { FirebaseConfiguration } from "@/app/api/db/firebase-configuration";
 import { panelSpecificationsEntityToPreview, PrototypePreview } from "../../../prototype/preview";
 import { PrototypeEntity } from "../../../prototype/entity";
-import { getExternalReadingsOfPrototype } from "../../../prototype/behavior/get-external-readings-of-prototype";
 import { reverseGeocoding } from "@/app/api/lib/geocoding";
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
-import { getInternalReadingsOfPrototype } from "../../../prototype/behavior/get-internal-readings-of-prototype";
+import { getExternalReadingsAfterLastReading } from "../../../prototype/behavior/get-external-readings-after-last-reading";
+import { getInternalReadingsAfterLastReading } from "../../../prototype/behavior/get-internal-readings-after-last-reading";
 
 export async function getPrototypesOfCustomer(customer: CustomerEntity, id: string) {
   try {
@@ -22,16 +22,16 @@ export async function getPrototypesOfCustomer(customer: CustomerEntity, id: stri
         if (!prototype) return null;
   
         const [ internalReadingsData, externalReadingsData, locationNameData ] = await Promise.all([
-          getInternalReadingsOfPrototype(prototype),
-          getExternalReadingsOfPrototype(prototype),
+          getInternalReadingsAfterLastReading(prototype, null),
+          getExternalReadingsAfterLastReading(prototype, null),
           reverseGeocoding(
             prototype.user_customization.latitude, 
             prototype.user_customization.longitude
           )
         ]);
   
-        const [ internalReadings, oldestInternalReading ] = internalReadingsData;
-        const [ externalReadings, oldestExternalReading ]= externalReadingsData;
+        const [ internalReadings, lastInternalReading ] = internalReadingsData;
+        const [ externalReadings, lastExternalReading ]= externalReadingsData;
         const locationName = locationNameData[0].formattedAddress as string;
   
         return {
@@ -45,8 +45,8 @@ export async function getPrototypesOfCustomer(customer: CustomerEntity, id: stri
           panelSpecifications: panelSpecificationsEntityToPreview(prototype.panel_specifications),
           internalReadings,
           externalReadings,
-          oldestInternalReading,
-          oldestExternalReading,
+          lastInternalReading,
+          lastExternalReading,
         };
       })
     )).filter(prototype => prototype !== null);

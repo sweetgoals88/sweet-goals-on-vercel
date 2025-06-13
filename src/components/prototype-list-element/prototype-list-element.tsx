@@ -244,8 +244,8 @@ export default function PrototypeListElement(props: {
                 externalReadings: props.data.externalReadings,
                 internalReadings: props.data.internalReadings,
                 id: props.data.id,
-                oldestExternalReading: props.data.oldestExternalReading,
-                oldestInternalReading: props.data.oldestInternalReading,
+                lastExternalReading: props.data.lastExternalReading,
+                lastInternalReading: props.data.lastInternalReading,
                 operational: props.data.operational,
                 panelSpecifications: specifications,
                 userCustomization: {

@@ -12,7 +12,7 @@ import {
 
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import styles from "./Dashboard.module.css";
+import styles from "./styles.module.css";
 import { PrototypePreview } from "@/app/api/db/entities/prototype/preview";
 
 const defaultLayout: Layout[] = [

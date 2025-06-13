@@ -12,7 +12,15 @@ const USER = {
     IS_LOGGED_IN: `${BASE_USER_URL}/is-logged-in`,
 };
 
+const BASE_PROTOTYPE_URL = `${BASE_URL}/prototype`;
+const PROTOTYPE = {
+    _BASE: BASE_PROTOTYPE_URL,
+    GET_LAST_INTERNAL_READINGS: `${BASE_PROTOTYPE_URL}/get-last-internal-readings`,
+    GET_LAST_EXTERNAL_READINGS: `${BASE_PROTOTYPE_URL}/get-last-external-readings`,
+};
+
 export const API_ENDPOINTS = {
     USER,
+    PROTOTYPE,
     GEOCODING: `${BASE_URL}/geocoding`
 };

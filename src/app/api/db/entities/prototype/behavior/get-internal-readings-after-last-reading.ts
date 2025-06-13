@@ -10,15 +10,19 @@ type InternalReadingEntityWithId = InternalReadingEntity & { id: string };
 export async function getInternalReadingsAfterLastReading(
   prototype: PrototypeEntity,
   lastReadingId: string | null
-): Promise<InternalReadingPreview[]> {
+): Promise<[ InternalReadingPreview[], string | null ]> {
   try {
-    if (!prototype.internal_readings || prototype.internal_readings.length === 0) {
-      return [];
+    if (
+      prototype.external_readings === undefined || 
+      prototype.external_readings === null || 
+      prototype.external_readings.length === 0
+    ) {
+      return [ [], null ];
     }
 
     let lastReadingDate: Date | null = null;
 
-    if (lastReadingId) {
+    if (lastReadingId !== null) {
       const lastReadingRef = doc(FirebaseConfiguration.INTERNAL_READING, lastReadingId);
       const lastReadingSnapshot = await getDoc(lastReadingRef);
 
@@ -47,22 +51,29 @@ export async function getInternalReadingsAfterLastReading(
           const docRef = doc(FirebaseConfiguration.INTERNAL_READING, id);
           const snapshot = await getDoc(docRef);
           return snapshot.exists() ? ({ id: snapshot.id, ...snapshot.data() } as InternalReadingEntityWithId) : null;
+          // @review I should probably throw an error in case the reading doesn't exist
         })
       ).then(readings => readings.filter(Boolean) as InternalReadingEntityWithId[]);
     }
-
-    internalReadings.sort((a, b) => a.datetime.toMillis() - b.datetime.toMillis());
-
+    
     const filteredReadings = lastReadingDate
-      ? internalReadings.filter(reading => reading.datetime.toDate() > lastReadingDate)
-      : internalReadings;
+    ? internalReadings.filter(reading => reading.datetime.toDate() > lastReadingDate)
+    : internalReadings;
 
-    return filteredReadings.map(reading => ({
-      id: reading.id,
-      dateTime: reading.datetime.toDate(),
-      temperature: reading.temperature,
-      humidity: reading.humidity,
-    }));
+    filteredReadings.sort((a, b) => a.datetime.toMillis() - b.datetime.toMillis());
+    // @todo Consider a limit in the number of readings provided (20 sounds like good enough)
+
+    const newLastReadingId = filteredReadings.length > 0 ? filteredReadings[filteredReadings.length - 1].id : null;
+
+    return [ 
+      filteredReadings.map(reading => ({
+        id: reading.id,
+        dateTime: reading.datetime.toDate(),
+        temperature: reading.temperature,
+        humidity: reading.humidity,
+      })),
+      newLastReadingId
+    ];
   } catch (error) {
     throw ApiResponseError.aggregateWith("Couldn't fetch readings after the last reading", error, 500);
   }

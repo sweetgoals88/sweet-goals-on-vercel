@@ -22,23 +22,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchData = async () =>
       apiCall(API_ENDPOINTS.USER.IS_LOGGED_IN)
-      // fetch(API_ENDPOINTS.USER.IS_LOGGED_IN, {
-      //   method: "POST",
-      //   credentials: "include",
-      //   headers: {
-      //     "Content-Type": "text/plain",
-      //   },
-      // })
-        // .then(() =>
-        //   fetch(API_ENDPOINTS.USER.GET_DASHBOARD_DATA, {
-        //     method: "POST",
-        //     credentials: "include",
-        //     headers: {
-        //       "Content-Type": "text/plain",
-        //     },
-        //   })
-        // )
-        .then(() => apiCall<Response>(API_ENDPOINTS.USER.GET_DASHBOARD_DATA))
+        .then(() => apiCall(API_ENDPOINTS.USER.GET_DASHBOARD_DATA))
         .then((response) => response.json())
         .then((json) => {
           if (json.type === "customer") {
@@ -46,6 +30,7 @@ export default function DashboardPage() {
             setLoading(false);
             setUserData(data);
         } else if (json.type === "admin") {
+          // Here I'd have to call a getAdminPreviewFromJson method or anything similar
             setLoading(false);
             setUserData(json as AdminPreview);
           } else {
