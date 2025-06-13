@@ -9,12 +9,15 @@ import { API_ENDPOINTS } from "../api/endpoints";
 import ShortNavbarComponent from "@/components/short-navbar-component/short-navbar-component";
 import Image from "next/image";
 import styles from "./styles.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Registro() {
+    const router = useRouter();
+
     const registerData = async (data: CustomerRegistrationInput | AdminRegistrationInput) => {
         try {
             await apiCall(API_ENDPOINTS.USER.REGISTER, data);
-            return console.log("User signed up succesfully");
+            return router.push("/dashboard");
         } catch {
             return console.log("Error logging in user");
         }

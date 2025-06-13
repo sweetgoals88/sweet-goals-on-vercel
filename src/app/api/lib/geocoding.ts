@@ -4,7 +4,8 @@ import { ApiResponseError } from "./api-response-error";
 
 function getGeocoder() {
     const options: NodeGeocoder.Options = {
-        provider: "openstreetmap",
+        provider: "locationiq",
+        apiKey: process.env.LOCATIONIQ_API_KEY || "",
         fetch,
     };
     const geocoder = NodeGeocoder(options);
