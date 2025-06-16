@@ -83,7 +83,11 @@ export function CustomerDashboard(props: {
       </aside>
 
       <DashboardHeader
-        data={props.data}
+        data={{ 
+          name: props.data.name, 
+          surname: props.data.surname, 
+          type: props.data.type 
+        }}
         style={{
           gridColumn: "1 / 3",
           gridRow: "1 / 2",

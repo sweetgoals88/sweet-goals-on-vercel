@@ -4,11 +4,10 @@ import { ExternalReadingPreview } from "@/app/api/db/entities/external-reading/p
 import { InternalReadingPreview } from "@/app/api/db/entities/internal-reading/preview";
 import { PrototypePreview } from "@/app/api/db/entities/prototype/preview";
 import { CustomerPreview } from "@/app/api/db/entities/user/customer/preview";
-import { API_ENDPOINTS } from "@/app/api/endpoints";
-import { GetLastReadingsParams, GetLastReadingsResponse } from "@/app/api/prototype/get-last-internal-readings/route";
 import apiCall from "@/utils/api-call";
 import { useEffect, useRef, useState } from "react";
 import { ItemType } from "@/app/api/lib/item-type";
+import { GetLastReadingsParams, GetLastReadingsResponse } from "@/app/api/prototype/shared/get-last-readings-types";
 
 export function shouldMakeRequest(interval: number, currentDate: Date, dateOfLastRequest: Date | null): boolean {
     if (currentDate.getMinutes() % interval === 1) {

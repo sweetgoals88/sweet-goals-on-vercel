@@ -7,7 +7,13 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { AdminLabel } from "../db/entities/user/admin/entity";
 import { CustomerLabel } from "../db/entities/user/customer/entity";
 
-export async function authenticateUser(cookies: () => Promise<ReadonlyRequestCookies>, options: { requiredType?: CustomerLabel | AdminLabel }): Promise<DocumentSnapshot<DocumentData, DocumentData>> {
+/**
+ * Checks that the user is logged in and also has a valid user type
+ */
+export async function authenticateUser(
+    cookies: () => Promise<ReadonlyRequestCookies>, 
+    options: { requiredType?: CustomerLabel | AdminLabel }
+): Promise<DocumentSnapshot<DocumentData, DocumentData>> {
     const token = (await cookies()).get("token");
     if (token === undefined) {
         throw new ApiResponseError("The token is not present", 401);
@@ -23,11 +29,15 @@ export async function authenticateUser(cookies: () => Promise<ReadonlyRequestCoo
         throw new ApiResponseError("User not found", 404);
     }
 
+    const userData = userSnapshot.data() as UserEntity;
+
+    if (userData.type !== "admin" && userData.type !== "customer") { 
+        throw new ApiResponseError(`User type not recognized (${(userData as any).type})`, 400);
+    }
+
     if (options.requiredType === undefined) {
         return userSnapshot;
     }
-
-    const userData = userSnapshot.data() as UserEntity;
 
     if (options.requiredType !== userData.type) {
         throw new ApiResponseError(`User type not authorized (required ${options.requiredType} but ${userData.type} was found instead)`, 403);

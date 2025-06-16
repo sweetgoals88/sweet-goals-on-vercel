@@ -44,7 +44,6 @@ export async function POST(request: NextRequest) {
         const updateObject = Object.fromEntries(
             updateEntries.flatMap(entry => Object.entries(entry))
         );
-        console.log("This is the update object", updateObject);
         await updateDoc(user.ref, updateObject);
         
         return makeOkResponse();

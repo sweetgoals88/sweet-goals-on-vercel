@@ -1,0 +1,14 @@
+.password-subform__container {
+    position: relative;
+}
+
+.password-subform__inputs {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+}
+
+.password-subform__inner-div {
+    position: relative;
+}

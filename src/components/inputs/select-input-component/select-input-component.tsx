@@ -1,4 +1,4 @@
-import { CommonInputProps } from "../common-input-props";
+import { CommonInputProps } from "../input-props";
 import { v4 } from "uuid";
 
 import styles from "./styles.module.css";

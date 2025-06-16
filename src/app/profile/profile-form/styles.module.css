@@ -1,0 +1,25 @@
+.profile-form__form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr 50vh;
+    padding: 12px;
+    background-color: white;
+    gap: 12px;
+}
+
+.profile-form__email-input {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.profile-form__submit-button {
+    grid-row: 3 / 4;
+    grid-column: 3 / 4;
+    height: fit-content;
+    align-self: flex-end;
+}
+
+.profile-form__password-subform {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}

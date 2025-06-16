@@ -13,10 +13,10 @@ export type AdminPreview = {
     adminCode: string;
     permissions: AdminPermissions;
     admins: AdminEntry[];
-    customers: CustomerEntry[],
-    lastCustomer: string | null,
-    prototypes: PrototypeEntry[],
-    lastPrototype: string | null,
-    notifications: NotificationPreview[],
-    lastNotification: string | null,
+    customers: CustomerEntry[];
+    lastCustomer: string | null;
+    prototypes: PrototypeEntry[];
+    lastPrototype: string | null;
+    notifications: NotificationPreview[];
+    lastNotification: string | null;
 };

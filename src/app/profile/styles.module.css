@@ -1,0 +1,15 @@
+.profile-page__container {
+    display: grid;
+    grid-template-columns: 10vw 1fr 10vw;
+    gap: 12px;
+    background-color: var(--light-gray);
+}
+
+.profile-page__header {
+    grid-column: 1 / 4;
+    display: flex;
+}
+
+.profile-page__form {
+    grid-column: 2 / 3;
+}

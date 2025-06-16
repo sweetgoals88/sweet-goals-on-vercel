@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./DashboardHeader.module.css";
+import styles from "./styles.module.css";
 import { Bell, HelpCircle, User } from "lucide-react";
 import { UserPreview } from "@/app/api/db/entities/user/preview";
 import React, { useRef, useState } from "react";
@@ -7,14 +7,22 @@ import { useOutsideAlerter } from "@/utils/use-outside-alerter";
 import { API_ENDPOINTS } from "@/app/api/endpoints";
 import { useRouter } from "next/navigation";
 import apiCall from "@/utils/api-call";
+import Link from "next/link";
+import { AdminLabel } from "@/app/api/db/entities/user/admin/entity";
+import { CustomerLabel } from "@/app/api/db/entities/user/customer/entity";
 
-type Props = React.HTMLAttributes<HTMLHeadingElement> & {
-  data: UserPreview;
+type DashboardHeaderProps = React.HTMLAttributes<HTMLHeadingElement> & {
+  data: {
+    name: string;
+    surname: string;
+    type: AdminLabel | CustomerLabel;
+  };
 };
 
-export default function DashboardHeader({ data, ...rest }: Props) {
+export default function DashboardHeader({ data, ...rest }: DashboardHeaderProps) {
+  const { className: additionalClassNames, ..._rest } = rest;
   return (
-    <header className={styles.dashboardHeader} {...rest}>
+    <header className={`${styles.dashboardHeader} ${additionalClassNames}`} {..._rest}>
       <div
         style={{
           height: "48px",
@@ -36,7 +44,7 @@ export default function DashboardHeader({ data, ...rest }: Props) {
           <HelpCircle size={20} />
           <Bell size={20} className={styles.notificationIcon} />
         </div>
-        <UserInfoButton name={data.name} surname={data.surname} id={data.id} />
+        <UserInfoButton name={data.name} surname={data.surname} />
       </div>
     </header>
   );
@@ -45,10 +53,9 @@ export default function DashboardHeader({ data, ...rest }: Props) {
 type UserInfoButtonProps = {
   name: string;
   surname: string;
-  id: string;
 };
 
-export function UserInfoButton({ name, surname, id }: UserInfoButtonProps) {
+export function UserInfoButton({ name, surname }: UserInfoButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const reference = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -73,23 +80,15 @@ export function UserInfoButton({ name, surname, id }: UserInfoButtonProps) {
       >
         <ul className={styles.optionsPanelList}>
           <li className={styles.option}>
-            <button>Ver perfil</button>
+            <Link href={"/profile"}>
+              Ver perfil
+            </Link>
           </li>
           <li className={`${styles.option} ${styles.logoutOption}`}>
             <button
               onClick={async () => {
                 try {
                   await apiCall(API_ENDPOINTS.USER.LOGOUT);
-                  // await fetch(
-                  //   API_ENDPOINTS.USER.LOGOUT,
-                  //   {
-                  //     method: "POST",
-                  //     credentials: "include",
-                  //     headers: {
-                  //       "Content-Type": "application/json",
-                  //     },
-                  //   }
-                  // );
                   router.push("/login");
                 } catch (error) {
                   console.error("Error trying to log out", error);

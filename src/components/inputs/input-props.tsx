@@ -8,4 +8,5 @@ export type CommonInputProps<K extends string, InputType> = {
     register: UseFormRegisterReturn<K>;
     onChange?: ChangeEventHandler<InputType>;
     className?: string;
+    value?: string | number | Date;
 };
