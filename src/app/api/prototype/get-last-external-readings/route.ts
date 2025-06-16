@@ -3,9 +3,9 @@ import { NextRequest } from "next/server";
 import { authenticateUser } from "../../lib/authenticate-user";
 import { makeErrorResponse } from "../../lib/make-error-response";
 import makeOkResponse from "../../lib/ok-response";
-import { InternalReadingPreview } from "../../db/entities/internal-reading/preview";
+import { ExternalReadingPreview } from "../../db/entities/external-reading/preview";
 import { fetchReadingsAfterLastReading } from "../shared/fetch-readings-after-last-reading";
-import { getInternalReadingsAfterLastReading } from "../../db/entities/prototype/behavior/get-internal-readings-after-last-reading";
+import { getExternalReadingsAfterLastReading } from "../../db/entities/prototype/behavior/get-external-readings-after-last-reading";
 import { FirebaseConfiguration } from "../../db/firebase-configuration";
 import { ApiResponseError } from "../../lib/api-response-error";
 import { GetLastReadingsParams } from "../shared/get-last-readings-types";
@@ -33,16 +33,16 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    const response = await fetchReadingsAfterLastReading<InternalReadingPreview>(
+    const response = await fetchReadingsAfterLastReading<ExternalReadingPreview>(
       lastReadingIds,
       FirebaseConfiguration.PROTOTYPE,
-      getInternalReadingsAfterLastReading
+      getExternalReadingsAfterLastReading
     );
 
     return makeOkResponse(response);
   } catch (error: any) {
     return makeErrorResponse(
-      "Couldn't fetch the last internal readings for the prototypes",
+      "Couldn't fetch the last external readings for the prototypes",
       500,
       error
     );
