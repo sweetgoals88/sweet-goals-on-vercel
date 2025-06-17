@@ -7,6 +7,7 @@ import { reverseGeocoding } from "@/app/api/lib/geocoding";
 import { ApiResponseError } from "@/app/api/lib/api-response-error";
 import { getExternalReadingsAfterLastReading } from "../../../prototype/behavior/get-external-readings-after-last-reading";
 import { getInternalReadingsAfterLastReading } from "../../../prototype/behavior/get-internal-readings-after-last-reading";
+import makeOkResponse from "@/app/api/lib/ok-response";
 
 export async function getPrototypesOfCustomer(customer: CustomerEntity, id: string) {
   try {
@@ -50,7 +51,7 @@ export async function getPrototypesOfCustomer(customer: CustomerEntity, id: stri
         };
       })
     )).filter(prototype => prototype !== null);
-  
+
     return prototypes;
   } catch (error) {
     throw ApiResponseError.aggregateWith("Couldn't get the customer prototypes", error, 500);

@@ -37,7 +37,9 @@ export function useDummyWebWorker<K extends InternalReadingPreview | ExternalRea
     interval: number,
     apiEndpoint: string,
     prototypes: PrototypePreview[],
+
     transformProtoype: (prototype: PrototypePreview) => ItemType<GetLastReadingsParams>,
+    parseReadings: (json: any) => GetLastReadingsResponse<K>,
     mergeReadings: (prototype: PrototypePreview, readingObject: GetLastReadingsResponse<K>[number]) => PrototypePreview,
     setUserData: (callback: (data: CustomerPreview) => CustomerPreview) => void,
     onError: (error: Error) => void = (error: Error) => {
@@ -57,7 +59,12 @@ export function useDummyWebWorker<K extends InternalReadingPreview | ExternalRea
                 setDateOfLastRequest(currentDate);
                 await apiCall(apiEndpoint, lastReadings)
                     .then(response => response.json())
-                    .then((data: GetLastReadingsResponse<K>) => {
+                    .then((json: any) => {
+                        const data = parseReadings(json);
+
+                        console.log("New readings were parsed succesfully");
+                        console.log(data);
+
                         const updatedPrototypes = prototypes.map((prototype) => {
                             const readingObject = data.find(item => item.prototypeId === prototype.id);
                             if (readingObject) {
@@ -72,7 +79,7 @@ export function useDummyWebWorker<K extends InternalReadingPreview | ExternalRea
                     })
                     .catch(error => onError(error));
             }
-        }, 30 * 1000);
+        }, 15 * 1000);
 
         return () => {
             workerRef.current && clearInterval(workerRef.current);

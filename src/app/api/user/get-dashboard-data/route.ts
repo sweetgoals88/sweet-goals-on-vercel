@@ -20,8 +20,6 @@ export async function POST(request: NextRequest) {
       return makeOkResponse(
         await getDashboardDataOfAdmin(user, userSnapshot.id)
       );
-    } else {
-      return makeErrorResponse("User type not recognized", 400);
     }
   } catch (error) {
     console.log(error);

@@ -38,17 +38,25 @@ export default function ChartComponent(props: ChartWrapperProps) {
     props.chartType === "internal"
       ? INTERNAL_READINGS_REQUEST_INTERVAL
       : EXTERNAL_READINGS_REQUEST_INTERVAL;
-  const timeWindow = MAX_READINGS_PER_CHART * readingInterval * 1000;
+  const timeWindow = MAX_READINGS_PER_CHART * readingInterval * 60 * 1000;
 
-  const modifiedData: {
+  let modifiedData: {
     value: number;
     time: number;
     name: string;
-  }[] = props.data.map((entry) => ({
-    value: entry.value,
-    time: entry.date.getTime(),
-    name: entry.date.toLocaleTimeString(),
-  }));
+  }[] = [];
+
+  try {
+    modifiedData = props.data.map((entry) => ({
+      value: entry.value,
+      time: entry.date.getTime(),
+      name: entry.date.toLocaleTimeString(),
+    }));
+  } catch (error) {
+    console.log("Something went wrong reading the new data");
+    console.log(props.data);
+    console.log(error)
+  }
 
   return (
     <>

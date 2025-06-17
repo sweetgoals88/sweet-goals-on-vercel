@@ -24,7 +24,7 @@ export async function getDashboardDataOfCustomer(
       type: user.type,
       notifications,
       oldestNotification,
-      prototypes: prototypes.filter((prototype) => prototype !== null),
+      prototypes,
     };
 
     return payload;

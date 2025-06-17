@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       }
       if (object.lastReadingId === undefined) {
         throw new ApiResponseError(
-          `Last reading id is required in all items. It was missing in element ${index}`,
+          `Last reading id is required in all items. It was missing in element ${index}. ${JSON.stringify(object)}`,
           400
         );
       }
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
 
     return makeOkResponse(response);
   } catch (error: any) {
+    console.log("There was an error trying to fetch internal data", error);
     return makeErrorResponse(
       "Couldn't fetch the last internal readings for the prototypes",
       500,

@@ -57,7 +57,7 @@ export function getPrototypePreviewFromJson(json: any): PrototypePreview {
         panelSpecifications: getPanelSpecificationsPreviewFromJson(json.panelSpecifications),
         internalReadings: json.internalReadings.map(getInternalReadingPreviewFromJson),
         externalReadings: json.externalReadings.map(getExternalReadingPreviewFromJson),
-        lastInternalReading: json.oldestInternalReading,
-        lastExternalReading: json.oldestExternalReading
+        lastInternalReading: json.lastInternalReading,
+        lastExternalReading: json.lastExternalReading
     };
 }
