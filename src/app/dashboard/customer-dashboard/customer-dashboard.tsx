@@ -5,7 +5,7 @@ import { Plus } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import styles from "../styles.module.css";
-import CustomerCharts from "./customer-charts";
+import DashboardCharts from "./dashboard-charts/dashboard-charts";
 import { CustomerPreview } from "@/app/api/db/entities/user/customer/preview";
 import DashboardHeader from "@/components/dashboard-header/dashboard-header";
 import { useReadingsWorkers } from "@/utils/use-readings-workers";
@@ -15,13 +15,13 @@ export function CustomerDashboard(props: {
   setUserData: Dispatch<SetStateAction<CustomerPreview>>;
 }) {
   const [selectedPrototypeIndex, selectSelectedPrototypeIndex] = useState(0);
-    const [internalReadingsWorker, externalReadingsWorker] = useReadingsWorkers(
-        props.data.prototypes,
-        props.setUserData,
-        (error: Error) => {
-            console.error("Error fetching readings:", error);
-        }
-    );
+  const [internalReadingsWorker, externalReadingsWorker] = useReadingsWorkers(
+    props.data.prototypes,
+    props.setUserData,
+    (error: Error) => {
+        console.error("Error fetching readings:", error);
+    }
+  );
 
   return (
     <div className={styles.dashboardContainer}>
@@ -96,7 +96,7 @@ export function CustomerDashboard(props: {
 
       <main className={styles.mainContent}>
         {selectedPrototypeIndex < props.data.prototypes.length && (
-          <CustomerCharts
+          <DashboardCharts
             prototype={props.data.prototypes[selectedPrototypeIndex]}
           />
         )}

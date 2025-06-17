@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./styles.module.css";
-import { Bell, HelpCircle, User } from "lucide-react";
+import { Bell, HelpCircle, User, LayoutDashboard } from "lucide-react";
 import { UserPreview } from "@/app/api/db/entities/user/preview";
 import React, { useRef, useState } from "react";
 import { useOutsideAlerter } from "@/utils/use-outside-alerter";
@@ -10,8 +10,9 @@ import apiCall from "@/utils/api-call";
 import Link from "next/link";
 import { AdminLabel } from "@/app/api/db/entities/user/admin/entity";
 import { CustomerLabel } from "@/app/api/db/entities/user/customer/entity";
+import DashboardHeaderLink from "./dashboard-header-link/dashboard-header-link";
 
-type DashboardHeaderProps = React.HTMLAttributes<HTMLHeadingElement> & {
+export type DashboardHeaderProps = React.HTMLAttributes<HTMLHeadingElement> & {
   data: {
     name: string;
     surname: string;
@@ -37,12 +38,18 @@ export default function DashboardHeader({ data, ...rest }: DashboardHeaderProps)
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "8px",
+          gap: "2rem",
         }}
       >
         <div className={styles.headerIcons}>
-          <HelpCircle size={20} />
-          <Bell size={20} className={styles.notificationIcon} />
+          <DashboardHeaderLink 
+            icon={HelpCircle}
+            href="/about-us"
+            />
+          <DashboardHeaderLink 
+            icon={LayoutDashboard}
+            href="/dashboard"
+            />
         </div>
         <UserInfoButton name={data.name} surname={data.surname} />
       </div>

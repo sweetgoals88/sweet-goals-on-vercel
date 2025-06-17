@@ -1,0 +1,12 @@
+.dashboard-header-link__link {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem;
+    border-radius: 999px;
+    color: black;
+    transition: 200ms ease-in-out background-color;
+}
+
+.dashboard-header-link__link:hover {
+    background-color: var(--light-gray);
+}

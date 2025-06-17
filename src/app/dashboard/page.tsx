@@ -21,8 +21,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchData = async () =>
-      apiCall(API_ENDPOINTS.USER.IS_LOGGED_IN)
-        .then(() => apiCall(API_ENDPOINTS.USER.GET_DASHBOARD_DATA))
+      apiCall(API_ENDPOINTS.USER.GET_DASHBOARD_DATA)
         .then((response) => response.json())
         .then((json) => {
           if (json.type === "customer") {
