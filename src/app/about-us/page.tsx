@@ -50,16 +50,48 @@ export default function Acerca() {
                 </div>
             </div>
 
-            <div className={styles["contenido"]}>
+
+            <div className="doLugarSecction">
+                <div className="sdo-img">
+              <img src="/images/2doLugar.png"/>
+                 </div>
+
+                 <div className="SS-img">
+              <img src="/images/SS-img.png"/>
+                 </div>
+
+              
+
+                  <div className="sdo-img2">
+              <img src="/images/s2.jpeg"/>
+                 </div>
+
+                  <div className="sdo-img3">
+              <img src="/images/s3.jpeg"/>
+                 </div>
+
+                  <div className="sdo-img4">
+              <img src="/images/s1.jpeg"/>
+                 </div>
+
+
+                  <div className="sdo-img5">
+              <img src="/images/s5.jpeg"/>
+                 </div>
+
+
+                  <div className="sdo-img6">
+              <img src="/images/s6.jpeg"/>
+                 </div>
+
+                  <div className="sdo-img7">
+              <img src="/images/s7.jpeg"/>
+                 </div>
+            </div>
+
+            
                 <div className={styles["problem-carousel-container"]}>
-                    <div className={styles["problem-section"]}>
-                        <h2 className={styles["titulo-seccion"]}>PROBLEMÁTICA</h2>
-                        <p className={styles["texto"]}>
-                            El rendimiento de los paneles solares puede disminuir debido a factores como suciedad,
-                            sombras, mal funcionamiento o condiciones climáticas adversas. Actualmente, muchos
-                            sistemas no cuentan con herramientas para monitorear su eficiencia de manera continua, lo
-                            que limita su optimización de producción de energía.
-                        </p>
+                   
                         <h2 className={styles["titulo-seccion"]}>ALCANCE</h2>
                         <ul className={styles["texto"]}>
                             <li>Instalación de sensores en los paneles solares.</li>
@@ -76,9 +108,6 @@ export default function Acerca() {
                             <button onClick={nextSlide} className={styles["carousel-button"]}>❯</button>
                         </div>
                     </div>
-                </div>
-            </div>
-
             <div className={styles["resultados-section"]}>
                 <h2 className={styles["titulo-seccion"]}>RESULTADOS</h2>
                 <p className={styles["textol"]}>

@@ -886,3 +886,18 @@
     z-index: 1; /* Asegura que el texto esté por encima de otros elementos */
     position: relative; /* Posiciona el texto correctamente */
 }
+
+
+.doLugarSecction{
+  height: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 500px;
+  width: 100%;
+}
+
+.doLugar-tittle{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 4.5rem;
+}

@@ -6,7 +6,6 @@
   --light-green: #2ecc71;
   --dark-green: #27ae60;
   --dark-blue: #2d404e;
-  --light-gray: #e5e4ec;
   --red: #e74c3c;
   --default-icon-size: 24px;
 }
@@ -54,7 +53,34 @@ main {
   flex: 1;
 }
 
+.header {
+  position: absolute;
+  top: 15px;
+  left: 10%;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #cfcbcb53;
+  color: #ffffff;
+  padding-left: 20px;
+  border-radius: 50px;
+  border: 1px solid #ffffff; /* Añadir borde */
+  
+}
 
+.header .logo-title {
+  font-size: 5 rem;
+  display: flex;
+  align-items: center;
+}
+
+.header .logo-title img {
+  margin-right: 10px;
+  height: 50px; /* Ajustar el tamaño del logo */
+}
 
 
 
@@ -867,34 +893,46 @@ button:active {
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-seccionN {
+    font-size: 2.5em;
+    color: #ffffff;
+    text-align: CENTER;
+    margin: 6%;
+    margin-bottom: 2%;
 
 }
 
-.titulo-seccion{
-  font-size: 2.5em;
-  color: #ffffff;
-  text-align:start;
-  margin: 6%;
-  margin-bottom: 2%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+.titulo-seccionS {
+    font-size: 3em;
+    color: #192d4f;
+    text-align: center;
+    margin: 6%;
+    margin-bottom: 2%;
+    position: absolute;
+    top: -53%;
+    left: 35%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.titulo-seccion {
+    font-size: 2.5em;
+    color: #0f095b;
+    text-align: CENTER;
+    margin: 6%;
+    margin-bottom: 2%;
 
-.titulo-seccion_ANT{
-  font-size: 2.5em;
-  color: #38688a;
-  text-align: center;
-  margin: 6%;
-  margin-bottom: 2%;
 }
 
-.texto-solucion{
-  font-size: 1.5em;
-  color: #383838;
-  text-align: center;
-  margin: 20px auto; /* Centrar y añadir margen */
-  max-width: 800px; /* Limitar el ancho máximo */
-  line-height: 1.6; /* Mejorar la legibilidad */
+.texto-solucion {
+    font-size: 1.5em;
+    color: #383838;
+    text-align: center;
+    margin: 20px auto;
+    max-width: 800px;
+    line-height: 1.6;
+    MARGIN-BOTTOM: 109PX;
 }
 
 .antecedentes-section{
@@ -915,13 +953,34 @@ button:active {
   width: 100%;
 }
 
-.justificacion-section{
-    margin-top:100px;
+.justificacion-section {
     position: relative;
+    margin-top: 702px;
     display: flex;
     flex-direction: column;
-    align-items:baseline;
-    width: 100%
+    width: 100%;
+    height: 700px;
+}
+
+.justificacion-sectionV {
+    position: relative;
+    margin-top: 745px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 700px;
+    margin-bottom: 500px;
+}
+
+
+.justificacion-sectionI {
+    position: relative;
+    margin-top: 745px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 700px;
+    margin-bottom: 500px;
 }
 
 .texto_antecedentes{
@@ -1010,10 +1069,10 @@ button:active {
   left: 47%;
 }
 
-.ns-img img{
-  width: 500px;
-  border-radius: 20px;
-  margin-top: 20px;
+.ns-img img {
+    width: 78%;
+    border-radius: 20px;
+    margin-top: 20px;
 }
 
 .full-moon img{
@@ -1065,7 +1124,95 @@ button:active {
   margin-top: 20px;
 }
 
+.g1 img {
+    position: absolute;
+    top: -30%;
+    left: 1%;
+    width: 250px;
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: -1;
+}
 
+.g2 img {
+    position: absolute;
+    top: -20%;
+    left: 82%;
+    width: 150px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+.g3 img {
+    position: absolute;
+    top: 80%;
+    left: 2%;
+    width: 180px;
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+.g4 img {
+    position: absolute;
+    top: 63%;
+    left: 63%;
+    width: 508px;
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+.v1 img {
+    position: absolute;
+    top: 63%;
+    left: 63%;
+    width: 508px;
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: 1;
+}
+
+.I1 img {
+    position: absolute;
+    top: 52%;
+    left: 17%;
+    width: 233px;
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: 0;
+}
+
+.t1 img {
+    position: absolute;
+    top: 23%;
+    left: 70%;
+    width: 600px;
+    border-radius: 20px;
+}
+.t2 img {
+    position: absolute;
+    top: 31%;
+    left: 10%;
+    width: 180px;
+    border-radius: 20px;
+}
+
+.DHT22-IMG img {
+    position: absolute;
+    top: 87%;
+    left: 26%;
+    width: 298px;
+    border-radius: 20px;
+}
+
+.DS18B20-IMG img {
+    position: absolute;
+    top: 107%;
+    left: 2%;
+    width: 404px;
+    border-radius: 20px;
+    z-index: -1;
+}
 
 .core-value-gif {
   display: flex;
@@ -1078,4 +1225,200 @@ button:active {
 .core-value-gif img {
   width: 20%;
   height: auto;
+}
+
+.circulo {
+    position: absolute;
+    top: 15%;
+    left: 48%;
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff4804 20%, #fff, #ffffff00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+}
+
+
+.circulo2 {
+    position: absolute;
+    top: 0%;
+    left: -7%;
+    width: 741px;
+    height: 783px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #0482ff 19%, #fff0, #fff0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+}
+
+.circuloV {
+    position: absolute;
+    top: -21%;
+    left: 1%;
+    width: 1440px;
+    height: 1186px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #0482ff 37%, #fff0, #fff0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+}
+
+
+.circuloI {
+    position: absolute;
+    top: -21%;
+    left: 30%;
+    width: 1440px;
+    height: 1186px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f1ffa3 37%, #fff0, #fff0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+}
+
+
+.circulx {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff526 15%, #ffffff00, #ffffff0a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+}
+    
+
+.titulo-TEMP {
+    position: absolute;
+    top: 43%;
+    left: 20%;
+    width: 50%;
+    font-size: 4.5em;
+    color: #ffffff;
+    text-align: center;
+    margin: 6%;
+    margin-bottom: 2%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    z-index: 2;
+}
+
+
+.titulo-ILLU{
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    width: 50%;
+    font-size: 4.5em;
+    color: #000000;
+    text-align: center;
+    margin: 6%;
+    margin-bottom: 2%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    z-index: 2;
+}
+
+.doLugarSecction {
+    position: relative;
+    height: 962px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 20%;
+}
+
+.sdo-img img {
+    position: absolute;
+    top: 10%;
+    left: 26%;
+    width: 50%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.SS-img img {
+    position: absolute;
+    top: 63%;
+    left: 26%;
+    width: 50%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.sdo-img1 img {
+    position: absolute;
+    top: 20%;
+    left: 26%;
+    width: 10%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.sdo-img2 img {
+    position: absolute;
+    top: 55%;
+    left: 78%;
+    width: 15%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.sdo-img3 img {
+    position: absolute;
+    top: 33%;
+    left: 74%;
+    width: 10%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.sdo-img4 img {
+    position: absolute;
+    top: 6%;
+    left: 76%;
+    width: 18%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.sdo-img5 img {
+    position: absolute;
+    top: 33%;
+    left: 5%;
+    width: 18%;
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: 2;
+}
+
+.sdo-img6 img {
+    position: absolute;
+    top: 55%;
+    left: -2%;
+    width: 20%;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.sdo-img7 img {
+    position: absolute;
+    top: 5%;
+    left: 1%;
+    width: 19%;
+    border-radius: 20px;
+    margin-top: 20px;
 }
